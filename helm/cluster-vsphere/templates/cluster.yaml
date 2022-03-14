@@ -9,7 +9,7 @@ spec:
   clusterNetwork:
     pods:
       cidrBlocks:
-      {{- range .Values.podsCidr }}
+      {{- range .Values.network.podsCidr }}
       - {{ . }}
       {{- end }}
   controlPlaneRef:
