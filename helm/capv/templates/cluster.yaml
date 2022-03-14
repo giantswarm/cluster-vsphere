@@ -1,0 +1,22 @@
+apiVersion: cluster.x-k8s.io/v1beta1
+kind: Cluster
+metadata:
+  labels:
+    cluster.x-k8s.io/cluster-name: {{ include "vmwarecluster.fullname" . }}
+  name: {{ include "vmwarecluster.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  clusterNetwork:
+    pods:
+      cidrBlocks:
+      {{- range .Values.podsCidr }}
+      - {{ . }}
+      {{- end }}
+  controlPlaneRef:
+    apiVersion: controlplane.cluster.x-k8s.io/v1beta1
+    kind: KubeadmControlPlane
+    name: {{ include "vmwarecluster.fullname" . }}
+  infrastructureRef:
+    apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+    kind: VSphereCluster
+    name: {{ include "vmwarecluster.fullname" . }}

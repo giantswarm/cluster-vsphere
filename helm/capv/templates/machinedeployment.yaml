@@ -1,0 +1,28 @@
+apiVersion: cluster.x-k8s.io/v1beta1
+kind: MachineDeployment
+metadata:
+  labels:
+    cluster.x-k8s.io/cluster-name: {{ include "vmwarecluster.fullname" . }}
+  name: {{ include "vmwarecluster.fullname" . }}-md-0
+  namespace: {{ .Release.Namespace }}
+spec:
+  clusterName: {{ include "vmwarecluster.fullname" . }}
+  replicas: {{ .Values.worker.replicas }}
+  selector:
+    matchLabels: {}
+  template:
+    metadata:
+      labels:
+        cluster.x-k8s.io/cluster-name: {{ include "vmwarecluster.fullname" . }}
+    spec:
+      bootstrap:
+        configRef:
+          apiVersion: bootstrap.cluster.x-k8s.io/v1beta1
+          kind: KubeadmConfigTemplate
+          name: {{ include "vmwarecluster.fullname" . }}-md-0
+      clusterName: {{ include "vmwarecluster.fullname" . }}
+      infrastructureRef:
+        apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+        kind: VSphereMachineTemplate
+        name: {{ include "vmwarecluster.fullname" . }}
+      version: {{ .Values.kubernetesVersion }}
