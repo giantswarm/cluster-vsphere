@@ -9,7 +9,7 @@ kubeVersion: ">=1.19.0 < 1.23.0"
 maintainers:
 - name: Team Rocket
   email: team-rocket@giantswarm.io
-name: capv
+name: cluster-vsphere
 restrictions:
   compatibleProviders:
     - vsphere
