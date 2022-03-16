@@ -25,4 +25,4 @@ spec:
         apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
         kind: VSphereMachineTemplate
         name: {{ include "vmwarecluster.fullname" . }}
-      version: {{ .Values.kubernetesVersion }}
+      version: {{ .Values.cluster.kubernetesVersion }}

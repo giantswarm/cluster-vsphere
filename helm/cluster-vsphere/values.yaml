@@ -1,4 +1,15 @@
-kubernetesVersion: ""
+# cluster
+# Cluster-specific configuration
+cluster:
+
+  # cluster.kubernetesVersion
+  # Kubernetes version to deploy. Must match the version available in the
+  # image defined at template.templateName
+  kubernetesVersion: ""
+
+  # cluster.name
+  # Cluster name; used as a base for names of all cluster resources.
+  name: ""
 
 # network
 # Network-specific configuration options.
