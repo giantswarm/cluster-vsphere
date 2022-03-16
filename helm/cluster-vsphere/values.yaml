@@ -21,7 +21,7 @@ network:
   - 192.168.0.0/16
 
 # vcenter
-# VSphere configuration.
+# Configuration for vSphere API access.
 vcenter:
 
   # vcenter.datacenter
