@@ -86,9 +86,11 @@ kubeadm:
   # kubeadm.users
   # If defined then all users will be added to all nodes.
   users:
+
     # kubeadm.users.[]
     # List of users to be created on all nodes.
     - name: ""
+
       # kubeadm.users.[].authorizedKeys.[]
       # All public SSH keys to assign to this user.
       authorizedKeys:
