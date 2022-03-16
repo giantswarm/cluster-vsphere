@@ -50,7 +50,7 @@ template:
 
   # template.diskGiB
   # Node disk size in GB. Must be at least as large as the source image.
-  diskGiB: 25
+  diskGiB: 0
 
   # template.folder
   # VSphere folder to deploy instances in. Must already exist.
@@ -58,14 +58,14 @@ template:
 
   # template.memoryMiB
   # Node memory allocation in MB.
-  memoryMiB: 8192
+  memoryMiB: 0
 
   # template.networkName
   # Segment name to attach nodes to. Must already exist.
 
   # template.numCPUs
   # Number of CPUs to assign to nodes.
-  numCPUs: 2
+  numCPUs: 0
 
   # template.resourcePool
   # Resource pool to allocate nodes from. Must already exist.
@@ -100,7 +100,7 @@ controlPlane:
 
   # controlPlane.replicas
   # Number of control plance instances to create. Must be an odd number.
-  replicas: 1
+  replicas: 0
 
   # controlPlane.endpoint
   # Kubernetes API configuration.
@@ -120,4 +120,4 @@ worker:
 
   # worker.replicas
   # Number of worker instances to create.
-  replicas: 3
+  replicas: 0
