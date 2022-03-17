@@ -19,6 +19,6 @@ spec:
       numCPUs: {{ .Values.template.numCPUs }}
       resourcePool: {{ .Values.template.resourcePool }}
       server: {{ .Values.vcenter.server }}
-      storagePolicyName: ""
+      storagePolicyName: {{ .Values.template.storagePolicyName }}
       template: {{ .Values.template.templateName }}
       thumbprint: {{ .Values.vcenter.thumbprint }}
