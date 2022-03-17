@@ -1,5 +1,5 @@
 annotations:
-  application.giantswarm.io/team: "rocket"
+  application.giantswarm.io/team: rocket
 apiVersion: v2
 description: "A helm chart for creating Cluster API clusters with the vSphere provider (CAPV)."
 keywords:
