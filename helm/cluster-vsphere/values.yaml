@@ -78,7 +78,7 @@ template:
 
   # template.storagePolicyName
   # Storage policy to use. Optional, but if specified then it must already exist.
-  storagePolicyName: null
+  storagePolicyName: ""
 
   # template.templateName
   # Image template name to use for nodes.
