@@ -1,32 +1,16 @@
-apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
+{{- range $name, $value := (merge .Values.nodeClasses (dict "control-plane" .Values.controlPlane.machineTemplate)) }}
+{{- $c := (merge (dict "currentClass"  $value) $.Values) }}
+---
+apiVersion: {{ include "infrastructureApiVersion" . }}
 kind: VSphereMachineTemplate
 metadata:
+  name: {{ include "resource.default.name" $ }}-{{ $name }}-{{ include "mtRevision" $c }}
+  namespace: {{ $.Release.Namespace }}
   labels:
-    {{- include "labels.common" . | nindent 4 }}
-  name: {{ include "resource.default.name" $ }}
-  namespace: {{ .Release.Namespace }}
+    {{- include "labels.common" $ | nindent 4 }}
 spec:
   template:
     spec:
-      {{- with .Values.template }}
-      cloneMode: {{ .cloneMode }}
-      diskGiB: {{ .diskGiB }}
-      folder: {{ .folder }}
-      memoryMiB: {{ .memoryMiB }}
-      network:
-        devices:
-        - dhcp4: true
-          networkName: {{ .networkName }}
-      numCPUs: {{ .numCPUs }}
-      resourcePool: {{ .resourcePool }}
-      {{- with .storagePolicyName }}
-      storagePolicyName: {{ . }}
-      {{- end }}
-      template: {{ .templateName }}
-      {{- end }}
-      {{- with .Values.vcenter }}      
-      datacenter: {{ .datacenter }}
-      datastore: {{ .datastore }}
-      server: {{ .server }}
-      thumbprint: {{ .thumbprint }}
-      {{- end }}
+      {{- include "mtSpec" $c | nindent 6 -}}
+
+{{- end }}
