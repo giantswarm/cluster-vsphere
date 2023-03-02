@@ -1,7 +1,7 @@
 apiVersion: {{ include "infrastructureApiVersion" . }}
 kind: VSphereClusterIdentity
 metadata:
-  name: {{ include "resource.default.name" $ }}
+  name: {{ .Release.Namespace }}-{{ include "resource.default.name" $ }}
   annotations:
     "helm.sh/resource-policy": keep
   labels:
