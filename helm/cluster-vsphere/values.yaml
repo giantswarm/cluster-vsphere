@@ -20,12 +20,12 @@ network:
 
 controlPlane:  # Must match nodeClasses' fields except "name" and must contain "replicas".
   replicas: 0  # Number of control plane instances to create (odd number).
-  machineTemplate: # check .nodeClasses.default for docs
+  machineTemplate:  # check .nodeClasses.default for docs
     template: ""  # template used to create (or) upgrade control plane nodes.
     resourcePool: ""  # ResourcePool is the name or inventory path of the resource pool in which the virtual machine is created/located.
     memoryMiB: 8192
     network:
-      devices: 
+      devices:
       - dhcp4: true
         networkName: 'grasshopper-capv'
   etcd:
@@ -38,7 +38,7 @@ controlPlane:  # Must match nodeClasses' fields except "name" and must contain "
     repository: projects.registry.vmware.com/tkg
   resourceRatio: 8  # Ratio between node resources and apiserver resource requests.
 
-nodePools: 
+nodePools:
   worker:
     class: default
     replicas: 2
@@ -95,7 +95,7 @@ cluster:
   enableEncryptionProvider: true
 
 # Class definitions for worker node pools or controle planes. The "name" of the class is the key of the object. Example:
-nodeClasses: 
+nodeClasses:
   # Provisioning options for node templates.
   # kubectl explain VSphereMachineTemplate.spec.template.spec
   default:
