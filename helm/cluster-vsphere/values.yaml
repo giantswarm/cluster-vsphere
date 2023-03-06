@@ -96,6 +96,18 @@ cluster:
   # enable encryption at REST feature of API server
   enableEncryptionProvider: true
 
+connectivity:
+  containerRegistries: {}
+#   docker.io:
+#   - endpoint: "registry-1.docker.io"
+#     credentials:
+#       username: ""
+#       password: ""
+#   - endpoint: "my-mirror-registry.mydomain.io"
+#     credentials:
+#       auth: ""
+#       identitytoken: ""
+
 # Class definitions for worker node pools or controle planes. The "name" of the class is the key of the object. Example:
 nodeClasses:
   # Provisioning options for node templates.
