@@ -9,10 +9,10 @@ cluster:
   enableEncryptionProvider: false
 
 vcenter:
-  server: "https://vcenter-rhr3c72bx1.ionoscloud.tools"
+  server: "https://foo.example.com"
   datacenter: "Datacenter"
   datastore: "vsanDatastore"
-  # openssl s_client -connect vcenter-rhr3c72bx1.ionoscloud.tools:443 < /dev/null 2>/dev/null | openssl x509 -fingerprint -noout -in /dev/stdin
+  # openssl s_client -connect https://foo.example.com < /dev/null 2>/dev/null | openssl x509 -fingerprint -noout -in /dev/stdin
   thumbprint: "F7:CF:F9:E5:99:39:FF:C1:D7:14:F1:3F:8A:42:21:95:3B:A1:6E:16"
 
 controlPlane:
@@ -23,7 +23,7 @@ controlPlane:
     thumbprint: "F7:CF:F9:E5:99:39:FF:C1:D7:14:F1:3F:8A:42:21:95:3B:A1:6E:16"
     cloneMode: "linkedClone"
     # template: ubuntu-1804-kube-v1.20.10
-    server: https://vcenter-rhr3c72bx1.ionoscloud.tools
+    server: https://foo.example.com
     diskGiB: 25
     numCPUs: 2
     resourcePool: "grasshopper"
@@ -58,7 +58,7 @@ nodeClasses:
     resourcePool: "grasshopper"
     datacenter: "Datacenter"
     datastore: "vsanDatastore"
-    server: https://vcenter-rhr3c72bx1.ionoscloud.tools
+    server: https://foo.example.com
     network:
       devices:
       - networkName: 'grasshopper-capv'
@@ -72,9 +72,3 @@ nodePools:
 userContext:
   secretRef:
     secretName: "capv-credentials"
-
-ssh:
-  users:
-    - name: "root"
-      authorizedKeys:
-        - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAII/AViZ3C661ILLoFlfkbn7y3gKBFINNffnZpMB9WPTx jkremser@gs-mac14"
