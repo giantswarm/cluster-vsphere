@@ -68,17 +68,7 @@ spec:
           imageRepository: {{ .Values.controlPlane.etcd.imageRepository }}
           imageTag: {{ .Values.controlPlane.etcd.imageTag }}
       imageRepository: {{ .Values.controlPlane.image.repository }}
-    {{- with .Values.ssh.users }}
-    users:
-    {{- range . }}
-    - name: {{ .name }}
-      sshAuthorizedKeys:
-      {{- range .authorizedKeys }}
-      - {{ . }}
-      {{- end }}
-    {{- end }}
-      sudo: ALL=(ALL) NOPASSWD:ALL
-    {{- end }}
+      {{- include "sshUsers" . | nindent 4 }}
     initConfiguration:
       patches:
         directory: "/tmp/kubeadm/patches"
@@ -94,6 +84,7 @@ spec:
         kubeletExtraArgs:
           {{- include "kubeletExtraArgs" . | nindent 10}}
     files:
+      {{- include "sshFiles" . | nindent 6}}
       {{- if $.Values.proxy.enabled }}
       {{- include "containerdProxyConfig" . | nindent 6}}
       {{- end }}
@@ -171,6 +162,7 @@ spec:
       - systemctl restart containerd
       {{- end }}
     postKubeadmCommands:
+      {{- include "sshPostKubeadmCommands" . | nindent 6 }}
       {{- if $.Values.network.staticRoutes }}
       # - systemctl daemon-reload
       # - systemctl enable --now static-routes.service

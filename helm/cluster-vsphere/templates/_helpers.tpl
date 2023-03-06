@@ -73,17 +73,7 @@ See https://github.com/kubernetes-sigs/cluster-api/issues/4910
 See https://github.com/kubernetes-sigs/cluster-api/pull/5027/files
 */}}
 {{- define "kubeadmConfigTemplateSpec" -}}
-  {{- with $.Values.ssh.users }}
-users:
-    {{- range . }}
-- name: {{ .name }}
-  sshAuthorizedKeys:
-      {{- range .authorizedKeys }}
-  - {{ . }}
-      {{- end }}
-  sudo: ALL=(ALL) NOPASSWD:ALL
-    {{- end -}}
-  {{- end }}
+{{- include "sshUsers" . }}
 joinConfiguration:
   nodeRegistration:
     criSocket: /run/containerd/containerd.sock
@@ -91,6 +81,7 @@ joinConfiguration:
       {{- include "kubeletExtraArgs" . | nindent  6}}
       node-labels: "giantswarm.io/node-pool={{ .pool.name }}"
 files:
+  {{- include "sshFiles" . | nindent 2}}
   {{- if $.Values.proxy.enabled }}
     {{- include "containerdProxyConfig" . | nindent 2}}
   {{- end }}
@@ -105,6 +96,7 @@ preKubeadmCommands:
 - systemctl restart containerd
   {{- end }}
 postKubeadmCommands:
+{{ include "sshPostKubeadmCommands" . }}
 {{- end -}}
 
 {{- define "kubeProxyFiles" }}
