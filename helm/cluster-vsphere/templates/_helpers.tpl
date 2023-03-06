@@ -66,6 +66,15 @@ Create a prefix for all resource names.
 {{- .Files.Get "files/kubelet-args" -}}
 {{- end -}}
 
+{{- define "containerdProxyConfig" -}}
+- path: /etc/systemd/system/containerd.service.d/99-http-proxy.conf
+  permissions: "0600"
+  contentFrom:
+    secret:
+      name: {{ include "containerdProxySecret" $ }}
+      key: containerdProxy   
+{{- end -}}
+
 {{/*
 Updates in KubeadmConfigTemplate will not trigger any rollout for worker nodes.
 It is necessary to create a new template with a new name to trigger an upgrade.
@@ -87,17 +96,21 @@ files:
     {{- include "containerdProxyConfig" . | nindent 2}}
   {{- end }}
 preKubeadmCommands:
-- hostname  '{{ "{{" }} ds.meta_data.hostname {{ "}}" }}'
-- echo "::1         ipv6-localhost ipv6-loopback" >/etc/hosts
-- echo "127.0.0.1   localhost" >>/etc/hosts
-- echo  '127.0.0.1   {{ "{{" }} ds.meta_data.hostname {{ "}}" }}'  >>/etc/hosts
-- echo  '{{ "{{" }} ds.meta_data.hostname {{ "}}" }}'  >/etc/hostname
+  {{- include "hostsAndHostname" . }}
   {{- if $.Values.proxy.enabled }}
 - systemctl daemon-reload
 - systemctl restart containerd
   {{- end }}
 postKubeadmCommands:
 {{ include "sshPostKubeadmCommands" . }}
+{{- end -}}
+
+{{- define "hostsAndHostname" }}
+- hostname  '{{ "{{" }} ds.meta_data.hostname {{ "}}" }}'
+- echo "::1         ipv6-localhost ipv6-loopback" >/etc/hosts
+- echo "127.0.0.1   localhost" >>/etc/hosts
+- echo  '127.0.0.1   {{ "{{" }} ds.meta_data.hostname {{ "}}" }}'  >>/etc/hosts
+- echo  '{{ "{{" }} ds.meta_data.hostname {{ "}}" }}'  >/etc/hostname
 {{- end -}}
 
 {{- define "kubeProxyFiles" }}

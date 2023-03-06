@@ -153,11 +153,7 @@ spec:
     preKubeadmCommands:
       # - bash /tmp/kubeadm/patches/kube-apiserver-patch.sh {{ .Values.controlPlane.resourceRatio }}
       # - bash /run/kubeadm/gs-kube-proxy-patch.sh
-      - hostname  '{{ "{{" }} ds.meta_data.hostname {{ "}}" }}'
-      - echo "::1         ipv6-localhost ipv6-loopback" >/etc/hosts
-      - echo "127.0.0.1   localhost" >>/etc/hosts
-      - echo  '127.0.0.1   {{ "{{" }} ds.meta_data.hostname {{ "}}" }}'  >>/etc/hosts
-      - echo  '{{ "{{" }} ds.meta_data.hostname {{ "}}" }}'  >/etc/hostname
+      {{- include "hostsAndHostname" . | nindent 6 }}
       {{- if $.Values.proxy.enabled }}
       - systemctl daemon-reload
       - systemctl restart containerd
