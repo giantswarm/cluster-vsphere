@@ -150,10 +150,7 @@
                 "storagePolicyName": {
                     "description": "Storage policy to use. If specified, it must already exist.",
                     "title": "Storage policy",
-                    "type": [
-                        "null",
-                        "string"
-                    ]
+                    "type": "string"
                 },
                 "templateName": {
                     "description": "Image template name to use for nodes.",
