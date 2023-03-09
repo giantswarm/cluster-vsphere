@@ -212,3 +212,8 @@ To enforce upgrades, a version suffix is appended to secret name.
 {{- $secretSuffix := include "registrySecretContent" . | b64enc | quote | sha1sum | trunc 8 }}
 {{- include "resource.default.name" $ }}-registry-configuration-{{$secretSuffix}}
 {{- end -}}
+
+{{- define "copyHookAnnotations" -}}
+"helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
+"helm.sh/hook": "pre-install,pre-upgrade"
+{{- end -}}

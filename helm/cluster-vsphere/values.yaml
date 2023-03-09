@@ -51,9 +51,10 @@ osUsers:
 - name: "giantswarm"
   sudo: "ALL=(ALL) NOPASSWD:ALL"
 
-userContext:
+userContext:  # Ref to the pre-existing secret containing the credentials of the VSphere user.
   secretRef:
-    secretName: ""  # Name of the pre-existing secret containing the credentials of the VSphere user.
+    secretNamespace: "giantswarm"
+    secretName: "capv-credentials"
 
 
 # Configuration for vSphere API access.
