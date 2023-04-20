@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `loadBalancersCidrBlocks` parameter that is used by kube-vip for `LoadBalancer` services.
 - Add `apiServer.certSANs` option.
 
+### Fixed
+
+- Set `.network.servicesCidrBlocks` value in Cluster CR.
+
 ## [0.3.1] - 2023-04-05
 
 ### Added
