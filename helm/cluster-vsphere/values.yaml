@@ -11,6 +11,7 @@ organization: ""  # The organization which owns this cluster.
 servicePriority: "highest"
 clusterLabels: {}
 network:
+  allowAllEgress: false
   podsCidrBlocks:
   - "10.244.0.0/16"
   servicesCidrBlocks:
