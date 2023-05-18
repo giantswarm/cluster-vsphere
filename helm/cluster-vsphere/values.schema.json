@@ -132,6 +132,11 @@
         },
         "network": {
             "properties": {
+                "allowAllEgress": {
+                    "default": false,
+                    "title": "Allow all egress",
+                    "type": "boolean"
+                },
                 "loadBalancersCidrBlocks": {
                     "items": {
                         "description": "IPv4 address range for LoadBalancer IPs, in CIDR notation.",
