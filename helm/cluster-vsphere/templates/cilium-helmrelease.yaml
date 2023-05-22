@@ -38,7 +38,7 @@ spec:
     hubble:
       relay:
         enabled: true
-{{- if .Values.network.allowAllEgress }}
+{{- if .Values.connectivity.network.allowAllEgress }}
     defaultPolicies:
       enabled: true
       tolerations:
