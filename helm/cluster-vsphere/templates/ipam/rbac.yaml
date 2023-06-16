@@ -1,0 +1,64 @@
+{{- if eq (include "isIpamEnabled" $) "true" -}}
+# every resource in this file has "helm.sh/hook-weight": "-1"
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: "{{ include "resource.default.name" $ }}-update-values-hook"
+  namespace: "{{ $.Release.Namespace }}"
+  annotations:
+    "helm.sh/hook": "post-install,pre-upgrade,post-upgrade"
+    "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
+    "helm.sh/hook-weight": "-1"
+  labels:
+    {{- include "labels.common" $ | nindent 4 }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: "{{ include "resource.default.name" $ }}-update-values-hook"
+  namespace: "{{ $.Release.Namespace }}"
+  annotations:
+    "helm.sh/hook": "post-install,pre-upgrade,post-upgrade"
+    "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
+    "helm.sh/hook-weight": "-1"
+  labels:
+    {{- include "labels.common" $ | nindent 4 }}
+rules:
+  - apiGroups: ["infrastructure.cluster.x-k8s.io"]
+    resources: ["vsphereclusters"]
+    resourceNames: ["{{ include "resource.default.name" $ }}"]
+    verbs: ["get", "patch"]
+  - apiGroups: ["cluster.x-k8s.io"]
+    resources: ["clusters"]
+    resourceNames: ["{{ include "resource.default.name" $ }}"]
+    verbs: ["get", "patch"]
+  - apiGroups: ["ipam.cluster.x-k8s.io"]
+    resources: ["ipaddress"]
+    resourceNames: ["{{ include "resource.default.name" $ }}"]
+    verbs: ["get"]
+  - apiGroups: ["helm.toolkit.fluxcd.io"]
+    resources: ["helmreleases"]
+    resourceNames: ["{{ include "resource.default.name" $ }}-cilium"]
+    verbs: ["get", "patch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: "{{ include "resource.default.name" $ }}-update-values-hook"
+  namespace: "{{ $.Release.Namespace }}"
+  annotations:
+    "helm.sh/hook": "post-install,pre-upgrade,post-upgrade"
+    "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
+    "helm.sh/hook-weight": "-1"
+  labels:
+    {{- include "labels.common" $ | nindent 4 }}
+subjects:
+  - kind: ServiceAccount
+    name: "{{ include "resource.default.name" $ }}-update-values-hook"
+    namespace: "{{ $.Release.Namespace }}"
+roleRef:
+  kind: Role
+  name: "{{ include "resource.default.name" $ }}-update-values-hook"
+  apiGroup: rbac.authorization.k8s.io
+---
+{{- end -}}

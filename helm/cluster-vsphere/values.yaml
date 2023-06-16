@@ -100,8 +100,9 @@ connectivity:
   network:
     allowAllEgress: false
     controlPlaneEndpoint:
-      host: ""  # [string] Manually select an IP for kube API. "" for auto selection from pool.
+      host: ""  # [string] Manually select an IP for kube API. "" for auto selection from the ipPoolName pool.
       port: ""  # [int] Port to use. "" defaults to 6443.
+      ipPoolName: ""  # [string] Ip for control plane will be drawn from this InClusterIPPool.
     loadBalancers:
       cidrBlocks: []
     pods:
@@ -110,6 +111,8 @@ connectivity:
     services:
       cidrBlocks:
       - "172.31.0.0/16"
+    workloadClusters:  # Specify this section only for management clusters.
+      cidrBlocks: []
 
   containerRegistries: {}
 #   docker.io:
