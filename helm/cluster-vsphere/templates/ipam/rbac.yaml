@@ -34,7 +34,7 @@ rules:
     verbs: ["get", "patch"]
   - apiGroups: ["ipam.cluster.x-k8s.io"]
     resources: ["ipaddress"]
-    verbs: ["get"]
+    verbs: ["get", "list"]
   - apiGroups: ["helm.toolkit.fluxcd.io"]
     resources: ["helmreleases"]
     resourceNames: ["{{ include "resource.default.name" $ }}-cilium"]
