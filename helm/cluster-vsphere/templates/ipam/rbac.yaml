@@ -7,7 +7,7 @@ metadata:
   namespace: "{{ $.Release.Namespace }}"
   annotations:
     "helm.sh/hook": "post-install,pre-upgrade,post-upgrade"
-    "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
+    # "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
     "helm.sh/hook-weight": "-2"
   labels:
     {{- include "labels.common" $ | nindent 4 }}
@@ -19,7 +19,7 @@ metadata:
   namespace: "{{ $.Release.Namespace }}"
   annotations:
     "helm.sh/hook": "post-install,pre-upgrade,post-upgrade"
-    "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
+    # "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
     "helm.sh/hook-weight": "-2"
   labels:
     {{- include "labels.common" $ | nindent 4 }}
@@ -36,6 +36,7 @@ rules:
     resources: ["ipaddresses"]
     resourceNames: ["{{ include "resource.default.name" $ }}"]
     verbs: ["get", "list"]
+
   - apiGroups: [""]
     resources: ["secrets"]
     resourceNames: ["{{ include "resource.default.name" $ }}-kubevip-pod"]
@@ -52,7 +53,7 @@ metadata:
   namespace: "{{ $.Release.Namespace }}"
   annotations:
     "helm.sh/hook": "post-install,pre-upgrade,post-upgrade"
-    "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
+    # "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
     "helm.sh/hook-weight": "-1"
   labels:
     {{- include "labels.common" $ | nindent 4 }}
