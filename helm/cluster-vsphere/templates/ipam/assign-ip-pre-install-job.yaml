@@ -91,13 +91,12 @@ spec:
               # patch also the static pod for kube-vip
               # export new_ip
               
-              changed=$(kubectl get secret -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }}-kubevip-pod -o jsonpath={.data.content} \
+              encoded=$(kubectl get secret -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }}-kubevip-pod -o jsonpath={.data.content} \
                 | base64 --decode \
                 | tr '\n' '\r' \
                 | sed -e "s/vip_address\\r[^$(printf '\r')]*/vip_address\\r      value: ${new_ip}/" \
-                | tr '\r' '\n')
-              # echo -e "New configuration of static pod for kubevip:\n${changed}"
-              encoded=$(echo ${changed} | base64 -w 0)
+                | tr '\r' '\n' \
+                | base64 -w 0)
               kubectl patch secret -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }}-kubevip-pod --type=merge -p '{"data": {"content": "'${encoded}'"}}'
 
               # kubectl get kubeadmcontrolplane -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} -ojsonpath="{.spec.kubeadmConfigSpec.files}" \
