@@ -104,25 +104,7 @@ spec:
         kubeletExtraArgs:
           {{- include "kubeletExtraArgs" . | nindent 10}}
     files:
-      {{- include "sshFiles" . | nindent 6}}
-      {{- include "auditLogFiles" . | nindent 6 }}
-      {{- if $.Values.proxy.enabled }}
-      {{- include "containerdProxyConfig" . | nindent 6}}
-      {{- end }}
-      {{- include "registryFiles" . | nindent 6 }}
-      {{- range $kubeadmPatch, $_ :=  .Files.Glob  "files/etc/patches/**" }}
-      - path: {{ (printf "/tmp/kubeadm/patches/%s" (base $kubeadmPatch)) }}
-        content: |-
-          {{- $.Files.Get $kubeadmPatch | nindent 10 }}
-      {{- end }}
-      {{- if $.Values.cluster.enableEncryptionProvider }}
-      - path: /etc/kubernetes/encryption/config.yaml
-        permissions: "0600"
-        contentFrom:
-          secret:
-            name: {{ include "resource.default.name" $ }}-encryption-provider-config
-            key: encryption
-      {{- end }}
+      # first file here needs to be the static pod for kube-vip
       - content: |
           apiVersion: v1
           kind: Pod
@@ -170,6 +152,25 @@ spec:
           status: {}
         owner: root:root
         path: /etc/kubernetes/manifests/kube-vip.yaml
+      {{- include "sshFiles" . | nindent 6}}
+      {{- include "auditLogFiles" . | nindent 6 }}
+      {{- if $.Values.proxy.enabled }}
+      {{- include "containerdProxyConfig" . | nindent 6}}
+      {{- end }}
+      {{- include "registryFiles" . | nindent 6 }}
+      {{- range $kubeadmPatch, $_ :=  .Files.Glob  "files/etc/patches/**" }}
+      - path: {{ (printf "/tmp/kubeadm/patches/%s" (base $kubeadmPatch)) }}
+        content: |-
+          {{- $.Files.Get $kubeadmPatch | nindent 10 }}
+      {{- end }}
+      {{- if $.Values.cluster.enableEncryptionProvider }}
+      - path: /etc/kubernetes/encryption/config.yaml
+        permissions: "0600"
+        contentFrom:
+          secret:
+            name: {{ include "resource.default.name" $ }}-encryption-provider-config
+            key: encryption
+      {{- end }}
     preKubeadmCommands:
       # - bash /tmp/kubeadm/patches/kube-apiserver-patch.sh {{ .Values.controlPlane.resourceRatio }}
       - /bin/test ! -d /var/lib/kubelet && (/bin/mkdir -p /var/lib/kubelet && /bin/chmod 0750 /var/lib/kubelet)
