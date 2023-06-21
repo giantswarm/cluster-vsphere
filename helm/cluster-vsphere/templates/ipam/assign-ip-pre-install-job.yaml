@@ -97,8 +97,8 @@ spec:
                 | sed -e "s/vip_address\\r[^$(printf '\r')]*/vip_address\\r      value: ${new_ip}/" \
                 | tr '\r' '\n')
               # echo -e "New configuration of static pod for kubevip:\n${changed}"
-              encoded=$(echo ${changed} | base64)
-              kubectl patch secret -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }}-kubevip-pod -p '{"data": {"content": "'${encoded}'"}}'
+              encoded=$(echo ${changed} | base64 -w 0)
+              kubectl patch secret -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }}-kubevip-pod --type=merge -p '{"data": {"content": "'${encoded}'"}}'
 
               # kubectl get kubeadmcontrolplane -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} -ojsonpath="{.spec.kubeadmConfigSpec.files}" \
               #   | yq '.[] | select(.path == "*kube-vip.yaml")' \
