@@ -89,7 +89,7 @@ spec:
               kubectl patch vspherecluster -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} --type=merge -p '{"spec":{"controlPlaneEndpoint":{"host": "'${new_ip}'"}}}'
 
               # patch also the static pod for kube-vip
-              export {new_ip}
+              export new_ip
               kubectl get kubeadmcontrolplane -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} -ojsonpath="{.spec.kubeadmConfigSpec.files}" \
                 | yq '.[] | select(.path == "*kube-vip.yaml")' \
                 | jq '.content' \
