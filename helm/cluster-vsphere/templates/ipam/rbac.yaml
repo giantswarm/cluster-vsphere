@@ -1,5 +1,5 @@
 {{- if eq (include "isIpamEnabled" $) "true" -}}
-# every resource in this file has "helm.sh/hook-weight": "-1"
+# every resource in this file has "helm.sh/hook-weight": "-1" or "-2"
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -8,7 +8,7 @@ metadata:
   annotations:
     "helm.sh/hook": "post-install,pre-upgrade,post-upgrade"
     "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
-    "helm.sh/hook-weight": "-1"
+    "helm.sh/hook-weight": "-2"
   labels:
     {{- include "labels.common" $ | nindent 4 }}
 ---
@@ -20,7 +20,7 @@ metadata:
   annotations:
     "helm.sh/hook": "post-install,pre-upgrade,post-upgrade"
     "helm.sh/hook-delete-policy": "before-hook-creation,hook-succeeded,hook-failed"
-    "helm.sh/hook-weight": "-1"
+    "helm.sh/hook-weight": "-2"
   labels:
     {{- include "labels.common" $ | nindent 4 }}
 rules:
@@ -36,10 +36,6 @@ rules:
     resources: ["ipaddresses"]
     resourceNames: ["{{ include "resource.default.name" $ }}"]
     verbs: ["get", "list"]
-  # - apiGroups: ["controlplane.cluster.x-k8s.io"]
-  #   resources: ["kubeadmcontrolplanes"]
-  #   resourceNames: ["{{ include "resource.default.name" $ }}"]
-  #   verbs: ["get", "patch"]
   - apiGroups: [""]
     resources: ["secrets"]
     resourceNames: ["{{ include "resource.default.name" $ }}-kubevip-pod"]
