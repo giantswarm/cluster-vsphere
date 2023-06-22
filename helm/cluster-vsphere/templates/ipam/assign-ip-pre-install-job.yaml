@@ -89,8 +89,6 @@ spec:
               kubectl patch vspherecluster -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} --type=merge -p '{"spec":{"controlPlaneEndpoint":{"host": "'${new_ip}'"}}}'
 
               # patch also the static pod for kube-vip
-              # export new_ip
-              
               encoded=$(kubectl get secret -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }}-kubevip-pod -o jsonpath={.data.content} \
                 | base64 --decode \
                 | tr '\n' '\r' \
@@ -99,6 +97,8 @@ spec:
                 | base64 -w 0)
               kubectl patch secret -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }}-kubevip-pod --type=merge -p '{"data": {"content": "'${encoded}'"}}'
 
+              # yq is not present on the container image
+              # export new_ip
               # kubectl get kubeadmcontrolplane -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} -ojsonpath="{.spec.kubeadmConfigSpec.files}" \
               #   | yq '.[] | select(.path == "*kube-vip.yaml")' \
               #   | jq '.content' \
@@ -109,6 +109,7 @@ spec:
               #   | jq '[{"op":"replace", "path":"/spec/kubeadmConfigSpec/files/0", "value":{ "path": "/etc/kubernetes/manifests/kube-vip.json", "owner": "root:root", "content":. }}]' > /tmp/ip_patch
 
               # kubectl patch kubeadmcontrolplane -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} --type json  --patch-file /tmp/ip_patch
+              
               # new_content=$(echo ${old_content} | yq '.spec.containers[].env |= map(select(.name=="vip_address").value=(env(new_ip) | .. style="double"))')
               # kubectl patch kubeadmcontrolplane -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} --type=merge -p '{"spec":{"kubeadmConfigSpec":{"files": [{"path": "/etc/kubernetes/manifests/kube-vip.yaml", "content": "'${new_content}'"}] }}}'
               kubectl patch cluster -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} --type=merge -p '{"spec":{"paused":false}}'
