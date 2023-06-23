@@ -1,17 +1,10 @@
 {{- if eq (include "isIpamEnabled" $) "true" -}}
-# every resource in this file has "helm.sh/hook-weight": "-2"
 apiVersion: ipam.cluster.x-k8s.io/v1alpha1
 kind: IPAddressClaim
 metadata:
   name: {{ include "resource.default.name" $ }}
   labels:
     {{- include "ipamLabels" $ | nindent 4 }}
-  annotations:
-    "helm.sh/hook-delete-policy": "before-hook-creation,hook-failed"
-    "helm.sh/hook": "pre-install,pre-upgrade"
-    "helm.sh/hook-weight": "-2"
-    "meta.helm.sh/release-name": {{ include "resource.default.name" $ }}
-    "meta.helm.sh/release-namespace": "{{ $.Release.Namespace }}"
 spec:
   poolRef:
     apiGroup: ipam.cluster.x-k8s.io

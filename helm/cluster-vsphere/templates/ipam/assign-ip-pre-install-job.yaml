@@ -78,14 +78,17 @@ spec:
           image: "{{ .Values.kubectlImage.registry }}/{{ .Values.kubectlImage.name }}:{{ .Values.kubectlImage.tag }}"
           command:
             - "/bin/sh"
-            - "-xc"
+            - "-c"
             - |
+              set -o errexit
+              set -o pipefail
+              set -o nounset
               while [ -z "${new_ip}" ] ; do
                 echo "waiting for a free IP address.."
                 new_ip=$(kubectl get ipaddress -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} -o 'jsonpath={.spec.address}')
                 sleep 2
               done
-              echo "Got IP: ${new_ip}"
+              echo "Got the IP: ${new_ip}"
               kubectl patch vspherecluster -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} --type=merge -p '{"spec":{"controlPlaneEndpoint":{"host": "'${new_ip}'"}}}'
 
               # patch also the static pod for kube-vip
@@ -96,23 +99,10 @@ spec:
                 | tr '\r' '\n' \
                 | base64 -w 0)
               kubectl patch secret -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }}-kubevip-pod --type=merge -p '{"data": {"content": "'${encoded}'"}}'
-
-              # yq is not present on the container image
-              # export new_ip
-              # kubectl get kubeadmcontrolplane -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} -ojsonpath="{.spec.kubeadmConfigSpec.files}" \
-              #   | yq '.[] | select(.path == "*kube-vip.yaml")' \
-              #   | jq '.content' \
-              #   | yq -P '.' \
-              #   | yq '.spec.containers[].env |= map(select(.name=="vip_address").value=(env(new_ip) | .. style="double"))' \
-              #   | yq -ojson \
-              #   | jq @json \
-              #   | jq '[{"op":"replace", "path":"/spec/kubeadmConfigSpec/files/0", "value":{ "path": "/etc/kubernetes/manifests/kube-vip.json", "owner": "root:root", "content":. }}]' > /tmp/ip_patch
-
-              # kubectl patch kubeadmcontrolplane -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} --type json  --patch-file /tmp/ip_patch
-              
-              # new_content=$(echo ${old_content} | yq '.spec.containers[].env |= map(select(.name=="vip_address").value=(env(new_ip) | .. style="double"))')
-              # kubectl patch kubeadmcontrolplane -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} --type=merge -p '{"spec":{"kubeadmConfigSpec":{"files": [{"path": "/etc/kubernetes/manifests/kube-vip.yaml", "content": "'${new_content}'"}] }}}'
+              echo "New IP has been assigned, upausing the Cluster '{{ include "resource.default.name" $ }}' resource.."
               kubectl patch cluster -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} --type=merge -p '{"spec":{"paused":false}}'
+          securityContext:
+            readOnlyRootFilesystem: true
           resources:
             requests:
               memory: "64Mi"
