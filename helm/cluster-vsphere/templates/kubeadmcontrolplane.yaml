@@ -10,6 +10,7 @@ spec:
     clusterConfiguration:
       apiServer:
         certSANs:
+        - {{ .Values.connectivity.network.controlPlaneEndpoint.host }}
         - localhost
         - 127.0.0.1
         - "api.{{ include "resource.default.name" $ }}.{{ .Values.baseDomain }}"

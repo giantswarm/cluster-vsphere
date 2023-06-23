@@ -111,8 +111,6 @@ connectivity:
     services:
       cidrBlocks:
       - "172.31.0.0/16"
-    workloadClusters:  # Specify this section only for management clusters.
-      cidrBlocks: []
 
   containerRegistries: {}
 #   docker.io:

@@ -4,8 +4,9 @@
 # This IPAddress CR should be created by cluster-api-ipam-provider-in-cluster controller as a
 # response to creating the IPAddressClaim CR (the name of both is the same). 
 # The IP is set to:
-# - vspherecluster.spec.controlPlaneEndpoint.host
-# - static pod definition for kubevip (.spec.containers.env[vip_address])
+#   - vspherecluster.spec.controlPlaneEndpoint.host
+#   - static pod definition for kubevip (.spec.containers.env[vip_address])
+#   - kubeadmcontrolplane.spec.kubeadmConfigSpec.clusterConfiguration.apiServer.certSANs[0]
 #
 # In case of upgrade, the Cluster CR is first paused, then IP is assigned and then the cluster is unpaused
 #
@@ -95,7 +96,12 @@ spec:
                 sleep 2
               done
               echo "Got the IP: ${new_ip}"
+              # patch the vspherecluster.spec.controlPlaneEndpoint.host
               kubectl patch vspherecluster -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} --type=merge -p '{"spec":{"controlPlaneEndpoint":{"host": "'${new_ip}'"}}}'
+
+              # patch the kubeadmcontrolplane.spec.kubeadmConfigSpec.clusterConfiguration.apiServer.certSANs[0]
+              kubectl patch kubeadmcontrolplane -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} --type json \
+                -p '[{"op":"replace", "path":"/spec/kubeadmConfigSpec/clusterConfiguration/apiServer/certSANs/0", "value": "'${new_ip}'"}]'
 
               # patch also the static pod for kube-vip
               encoded=$(kubectl get secret -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }}-kubevip-pod -o jsonpath={.data.content} \
