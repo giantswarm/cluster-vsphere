@@ -77,12 +77,13 @@ spec:
         - name: post-install-job
           image: "{{ .Values.kubectlImage.registry }}/{{ .Values.kubectlImage.name }}:{{ .Values.kubectlImage.tag }}"
           command:
-            - "/bin/sh"
+            - "/bin/bash"
             - "-c"
             - |
               set -o errexit
               set -o pipefail
               set -o nounset
+              new_ip=""
               while [ -z "${new_ip}" ] ; do
                 echo "waiting for a free IP address.."
                 new_ip=$(kubectl get ipaddress -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} -o 'jsonpath={.spec.address}')
@@ -99,6 +100,7 @@ spec:
                 | tr '\r' '\n' \
                 | base64 -w 0)
               kubectl patch secret -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }}-kubevip-pod --type=merge -p '{"data": {"content": "'${encoded}'"}}'
+
               echo "New IP has been assigned, upausing the Cluster '{{ include "resource.default.name" $ }}' resource.."
               kubectl patch cluster -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} --type=merge -p '{"spec":{"paused":false}}'
           securityContext:
