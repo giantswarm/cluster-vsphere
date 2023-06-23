@@ -1,8 +1,13 @@
 {{- if eq (include "isIpamEnabled" $) "true" -}}
 # Because IP for control plane of new workload cluster is not known at the time of cluster creation
 # we use a post-install/post-upgrade hook Job to assign the IP from IPAddress CR.
-# This CR should be created by cluster-api-ipam-provider-in-cluster controller as a
-# response to creating the IPAddressClaim CR (the name of both is the same).
+# This IPAddress CR should be created by cluster-api-ipam-provider-in-cluster controller as a
+# response to creating the IPAddressClaim CR (the name of both is the same). 
+# The IP is set to:
+# - vspherecluster.spec.controlPlaneEndpoint.host
+# - static pod definition for kubevip (.spec.containers.env[vip_address])
+#
+# In case of upgrade, the Cluster CR is first paused, then IP is assigned and then the cluster is unpaused
 #
 # every resource in this file has "helm.sh/hook-weight": "0"
 apiVersion: batch/v1
