@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add `connectivity.network.controlPlaneEndpoint.host` to `certSANs` list.
+- Bind `kube-scheduler` metrics to 0.0.0.0.
 
 ## [0.5.1] - 2023-06-07
 
