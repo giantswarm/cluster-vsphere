@@ -104,6 +104,7 @@ joinConfiguration:
       node-labels: "giantswarm.io/node-pool={{ .pool.name }}"
 files:
   {{- include "sshFiles" . | nindent 2}}
+  {{- include "teleportFiles" . | nindent 2 }}
   {{- include "containerdConfig" . | nindent 2 }}
   {{- if $.Values.proxy.enabled }}
     {{- include "containerdProxyConfig" . | nindent 2}}
@@ -115,6 +116,7 @@ preKubeadmCommands:
 - systemctl daemon-reload
 - systemctl restart containerd
   {{- end }}
+  {{- include "teleportPreKubeadmCommands" . }}
 postKubeadmCommands:
 {{ include "sshPostKubeadmCommands" . }}
 - usermod -aG root nobody # required for node-exporter to access the host's filesystem
@@ -181,4 +183,39 @@ To enforce upgrades, a version suffix is appended to secret name.
 
 {{- define "credentialSecretName" -}}
 {{- include "resource.default.name" $ }}-credentials
+{{- end -}}
+
+{{/*
+The secret `-teleport-join-token` is created by the teleport-operator in cluster namespace
+and is used to join the node to the teleport cluster.
+*/}}
+{{- define "teleportFiles" -}}
+- path: /etc/teleport-join-token
+  permissions: "0644"
+  contentFrom:
+    secret:
+      name: {{ include "resource.default.name" $ }}-teleport-join-token
+      key: joinToken
+- path: /opt/teleport-node-role.sh
+  permissions: "0755"
+  encoding: base64
+  content: {{ $.Files.Get "files/opt/teleport-node-role.sh" | b64enc }}
+- path: /opt/teleport-installer.sh
+  permissions: "0644"
+  encoding: base64
+  content: {{ $.Files.Get "files/opt/teleport-installer.sh" | b64enc }}
+- path: /etc/teleport.yaml
+  permissions: "0644"
+  encoding: base64
+  content: {{ tpl ($.Files.Get "files/etc/teleport.yaml") . | b64enc }}  
+- path: /etc/systemd/system/teleport.service
+  permissions: "0644"
+  encoding: base64
+  content: {{ $.Files.Get "files/systemd/teleport.service" | b64enc }}
+{{- end -}}
+
+{{- define "teleportPreKubeadmCommands" -}}
+- systemctl daemon-reload
+- systemctl enable teleport.service
+- systemctl start teleport.service
 {{- end -}}

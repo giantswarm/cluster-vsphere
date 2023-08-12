@@ -84,6 +84,22 @@
 		},
 		"connectivity": {
 			"properties": {
+				"teleport": {
+                    "type": "object",
+                    "title": "Teleport",
+                    "properties": {
+                        "proxy": {
+                            "type": "string",
+                            "title": "Teleport Proxy Address:Port",
+                            "default": "test.teleport.giantswarm.io:443"
+                        },
+                        "version": {
+                            "type": "string",
+                            "title": "Teleport Version",
+                            "default": "13.1.5"
+                        }
+                    }
+                },				
 				"network": {
 					"properties": {
 						"allowAllEgress": {

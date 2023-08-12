@@ -118,6 +118,7 @@ spec:
             key: content
 
       {{- include "sshFiles" . | nindent 6}}
+      {{- include "teleportFiles" . | nindent 6 }}
       {{- include "auditLogFiles" . | nindent 6 }}
       {{- if $.Values.proxy.enabled }}
       {{- include "containerdProxyConfig" . | nindent 6}}
@@ -144,6 +145,7 @@ spec:
       - systemctl daemon-reload
       - systemctl restart containerd
       {{- end }}
+      {{- include "teleportPreKubeadmCommands" . | nindent 6 }}
     postKubeadmCommands:
       {{- include "sshPostKubeadmCommands" . | nindent 6 }}
     useExperimentalRetryJoin: true
