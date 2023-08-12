@@ -99,7 +99,7 @@
                             "default": "13.1.5"
                         }
                     }
-                },				
+                },
 				"network": {
 					"properties": {
 						"allowAllEgress": {
