@@ -211,7 +211,7 @@ and is used to join the node to the teleport cluster.
 - path: /etc/systemd/system/teleport.service
   permissions: "0644"
   encoding: base64
-  content: {{ $.Files.Get "files/systemd/teleport.service" | b64enc }}
+  content: {{ tpl ($.Files.Get "files/systemd/teleport.service") . | b64enc }}
 {{- end -}}
 
 {{- define "teleportPreKubeadmCommands" -}}
