@@ -112,7 +112,8 @@ connectivity:
       cidrBlocks:
       - "172.31.0.0/16"
   teleport:
-    proxy: test.teleport.giantswarm.io:443
+    proxy: test.teleport.giantswarm.io
+    port: 443
     version: 13.1.5
     enabled: false
 
