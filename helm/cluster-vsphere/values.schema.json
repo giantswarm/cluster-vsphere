@@ -84,34 +84,6 @@
 		},
 		"connectivity": {
 			"properties": {
-				"teleport": {
-					"type": "object",
-					"title": "Teleport",
-					"properties": {
-						"proxy": {
-							"type": "string",
-							"title": "Host",
-							"description": "Hostname of teleport proxy",
-							"default": "test.teleport.giantswarm.io"
-						},
-						"port": {
-							"type": "integer",
-							"title": "Port number",
-							"description": "Port number of teleport proxy",
-							"default": 443
-						},
-						"version": {
-							"type": "string",
-							"title": "Teleport version",
-							"default": "13.1.5"
-						},
-						"enabled": {
-							"type": "boolean",
-							"title": "Enable teleport",
-							"default": false
-						}						
-					}
-				},
 				"network": {
 					"properties": {
 						"allowAllEgress": {
@@ -255,6 +227,27 @@
 			"type": "object",
 			"additionalProperties": false,
 			"properties": {
+				"teleport": {
+					"type": "object",
+					"title": "Teleport",
+					"properties": {
+						"proxyAddr": {
+							"type": "string",
+							"title": "Teleport proxy address",
+							"default": "test.teleport.giantswarm.io:443"
+						},
+						"version": {
+							"type": "string",
+							"title": "Teleport version",
+							"default": "13.1.5"
+						},
+						"enabled": {
+							"type": "boolean",
+							"title": "Enable teleport",
+							"default": false
+						}						
+					}
+				},				
 				"sandboxContainerImage": {
 					"type": "object",
 					"title": "Sandbox Container image",

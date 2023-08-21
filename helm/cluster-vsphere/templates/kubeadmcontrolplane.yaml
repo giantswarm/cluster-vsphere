@@ -118,7 +118,7 @@ spec:
             key: content
 
       {{- include "sshFiles" . | nindent 6}}
-      {{- if $.Values.connectivity.teleport.enabled }}
+      {{- if $.Values.internal.teleport.enabled }}
       {{- include "teleportFiles" . | nindent 6 }}
       {{- end }}
       {{- include "auditLogFiles" . | nindent 6 }}
@@ -147,7 +147,7 @@ spec:
       - systemctl daemon-reload
       - systemctl restart containerd
       {{- end }}
-      {{- if $.Values.connectivity.teleport.enabled }}
+      {{- if $.Values.internal.teleport.enabled }}
       {{- include "teleportPreKubeadmCommands" . | nindent 6 }}
       {{- end }}
     postKubeadmCommands:

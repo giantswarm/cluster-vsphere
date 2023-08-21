@@ -104,7 +104,7 @@ joinConfiguration:
       node-labels: "giantswarm.io/node-pool={{ .pool.name }}"
 files:
   {{- include "sshFiles" . | nindent 2}}
-  {{- if $.Values.connectivity.teleport.enabled }}
+  {{- if $.Values.internal.teleport.enabled }}
   {{- include "teleportFiles" . | nindent 2 }}
   {{- end }}
   {{- include "containerdConfig" . | nindent 2 }}
@@ -118,7 +118,7 @@ preKubeadmCommands:
 - systemctl daemon-reload
 - systemctl restart containerd
   {{- end }}
-  {{- if $.Values.connectivity.teleport.enabled }}
+  {{- if $.Values.internal.teleport.enabled }}
   {{- include "teleportPreKubeadmCommands" . }}
   {{- end }}
 postKubeadmCommands:
