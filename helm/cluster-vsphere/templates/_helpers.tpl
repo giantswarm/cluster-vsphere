@@ -104,7 +104,9 @@ joinConfiguration:
       node-labels: "giantswarm.io/node-pool={{ .pool.name }}"
 files:
   {{- include "sshFiles" . | nindent 2}}
+  {{- if $.Values.connectivity.teleport.enabled }}
   {{- include "teleportFiles" . | nindent 2 }}
+  {{- end }}
   {{- include "containerdConfig" . | nindent 2 }}
   {{- if $.Values.proxy.enabled }}
     {{- include "containerdProxyConfig" . | nindent 2}}
@@ -116,7 +118,9 @@ preKubeadmCommands:
 - systemctl daemon-reload
 - systemctl restart containerd
   {{- end }}
+  {{- if $.Values.connectivity.teleport.enabled }}
   {{- include "teleportPreKubeadmCommands" . }}
+  {{- end }}
 postKubeadmCommands:
 {{ include "sshPostKubeadmCommands" . }}
 - usermod -aG root nobody # required for node-exporter to access the host's filesystem

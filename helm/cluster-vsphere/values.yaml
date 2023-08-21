@@ -114,6 +114,7 @@ connectivity:
   teleport:
     proxy: test.teleport.giantswarm.io:443
     version: 13.1.5
+    enabled: false
 
   containerRegistries: {}
 #   docker.io:

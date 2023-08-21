@@ -97,7 +97,12 @@
                             "type": "string",
                             "title": "Teleport Version",
                             "default": "13.1.5"
-                        }
+                        },
+						"enabled": {
+							"default": false,
+							"title": "Enable teleport",
+							"type": "boolean"
+						}
                     }
                 },
 				"network": {
