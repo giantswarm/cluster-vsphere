@@ -90,12 +90,14 @@
                     "properties": {
                         "proxy": {
                             "type": "string",
-                            "title": "Teleport proxy address",
+                            "title": "Host",
+                            "description": "Hostname of teleport proxy",
                             "default": "test.teleport.giantswarm.io"
                         },
                         "port": {
                             "type": "integer",
-                            "title": "Teleport proxy port",
+                            "title": "Port number",
+                            "description": "Port number of teleport proxy",
                             "default": 443
                         },
                         "version": {
