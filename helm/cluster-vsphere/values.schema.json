@@ -106,9 +106,9 @@
 							"default": "13.1.5"
 						},
 						"enabled": {
-							"default": false,
+							"type": "boolean",
 							"title": "Enable teleport",
-							"type": "boolean"
+							"default": false
 						}						
 					}
 				},
