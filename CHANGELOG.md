@@ -11,12 +11,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add teleport
 
+## [0.7.0] - 2023-08-17
+
+
 ## [0.6.2] - 2023-08-01
 
 ### Changed
 
 - Consolidate containerd `config.toml` into single file to address [#1737](https://github.com/giantswarm/roadmap/issues/1737)
 - Add host OS user `nobody` to `root` group to enable node-exporter's `filesystem` collector to access the host filesystem.
+- Bump `cilium` version to `0.10.0` 
 
 ## [0.6.1] - 2023-07-13
 
@@ -130,7 +134,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial chart implementation.
 
-[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v0.6.2...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.6.2...v0.7.0
 [0.6.2]: https://github.com/giantswarm/cluster-vsphere/compare/v0.6.1...v0.6.2
 [0.6.1]: https://github.com/giantswarm/cluster-vsphere/compare/v0.6.0...v0.6.1
 [0.6.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.5.1...v0.6.0
