@@ -52,6 +52,16 @@ rules:
       - "{{ include "resource.default.name" $ }}-cloud-provider-vsphere"
       - "{{ include "resource.default.name" $ }}-coredns"
     verbs: ["patch"]
+  - apiGroups: ["source.toolkit.fluxcd.io"]
+    resources: ["helmcharts"]
+    verbs: ["get", "list"]
+  - apiGroups: ["source.toolkit.fluxcd.io"]
+    resources: ["helmcharts"]
+    resourceNames:
+      - "{{ $.Release.Namespace }}-{{ include "resource.default.name" $ }}-cilium"
+      - "{{ $.Release.Namespace }}-{{ include "resource.default.name" $ }}-cloud-provider-vsphere"
+      - "{{ $.Release.Namespace }}-{{ include "resource.default.name" $ }}-coredns"
+    verbs: ["patch"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
