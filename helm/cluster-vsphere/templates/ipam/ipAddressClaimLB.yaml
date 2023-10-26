@@ -1,4 +1,4 @@
-{{- if eq (include "isIpamSvcLoadBalancerEnabled" $) "true" -}}
+{{- if (include "isIpamSvcLoadBalancerEnabled" $) -}}
 apiVersion: ipam.cluster.x-k8s.io/v1alpha1
 kind: IPAddressClaim
 metadata:

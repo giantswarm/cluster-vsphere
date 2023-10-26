@@ -1,4 +1,4 @@
-{{- if or (eq (include "isIpamEnabled" $) "true") (eq (include "isIpamSvcLoadBalancerEnabled" $) "true") -}}
+{{- if (include "isIpamEnabled" $) -}}
 # Because IP for control plane of new workload cluster is not known at the time of cluster creation
 # we use a post-install/post-upgrade hook Job to assign the IP from IPAddress CR.
 # This IPAddress CR should be created by cluster-api-ipam-provider-in-cluster controller as a
@@ -46,7 +46,7 @@ spec:
             - "/bin/bash"
             - "-xc"
             - kubectl patch cluster -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} --type=merge -p '{"spec":{"paused":true}}'
-{{- if eq (include "isIpamSvcLoadBalancerEnabled" $) "true" }}
+{{- if (include "isIpamSvcLoadBalancerEnabled" $) }}
             - kubectl patch helmrelease -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }}-cloud-provider-vsphere --type=merge -p '{"spec":{"suspend":true}}'
 {{- end }}
 ---
@@ -76,7 +76,7 @@ spec:
         runAsUser: {{ include "securityContext.runAsUser" $ }}
         runAsGroup: {{ include "securityContext.runAsGroup" $ }}
       initContainers:
-{{- if eq (include "isIpamEnabled" $) "true" }}
+{{- if (include "isIpamControlPlaneIPEnabled" $) }}
         - name: get-ip-for-control-plane
           {{- include "ipamJobContainerCommon" . | nindent 10 }}
           command:
@@ -110,7 +110,7 @@ spec:
               kubectl patch secret -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }}-kubevip-pod --type=merge -p '{"data": {"content": "'${encoded}'"}}'
 
 {{- end }}
-{{- if eq (include "isIpamSvcLoadBalancerEnabled" $) "true" }}
+{{- if (include "isIpamSvcLoadBalancerEnabled" $) }}
         - name: get-ip-for-control-plane
           {{- include "ipamJobContainerCommon" . | nindent 10 }}
           command:
