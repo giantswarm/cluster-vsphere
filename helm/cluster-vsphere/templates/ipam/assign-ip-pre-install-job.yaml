@@ -111,7 +111,7 @@ spec:
 
 {{- end }}
 {{- if (include "isIpamSvcLoadBalancerEnabled" $) }}
-        - name: get-ip-for-control-plane
+        - name: get-ip-for-svc-lb
           {{- include "ipamJobContainerCommon" . | nindent 10 }}
           command:
             - "/bin/bash"
