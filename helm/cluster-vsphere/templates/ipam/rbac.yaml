@@ -34,7 +34,6 @@ rules:
     verbs: ["get", "patch"]
   - apiGroups: ["ipam.cluster.x-k8s.io"]
     resources: ["ipaddresses"]
-    resourceNames: ["{{ include "resource.default.name" $ }}", "{{ include "lbClaimName" $ }}"]
     verbs: ["get", "list"]
   - apiGroups: ["controlplane.cluster.x-k8s.io"]
     resources: ["kubeadmcontrolplanes"]
