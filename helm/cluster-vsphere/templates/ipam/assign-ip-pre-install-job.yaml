@@ -128,10 +128,9 @@ spec:
               done
               echo "Got the IP: ${new_ip}"
               # patch the cloud-provider-vsphere-helmrelease
-              # all_cidrs={{ join "," .Values.connectivity.network.loadBalancers.cidrBlocks }}
               {{- if .Values.connectivity.network.loadBalancers.cidrBlocks }}
               new_ip="${new_ip},{{ join "," .Values.connectivity.network.loadBalancers.cidrBlocks }}"
-              {{- end -}}
+              {{- end }}
               kubectl patch helmrelease -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }}-cloud-provider-vsphere --type=merge -p '{"spec":{"suspend":false,"values":{"global": {"kube-vip-cloud-provider": {"cidrGlobal": "'${new_ip}'"}}}}}'
 {{- end }}
       containers:
