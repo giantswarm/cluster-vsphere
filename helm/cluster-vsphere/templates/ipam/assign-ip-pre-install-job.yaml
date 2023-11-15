@@ -127,7 +127,7 @@ spec:
                 sleep 2
               done
               echo "Got the IP: ${new_ip}"
-              new_ip=${new_ip}/32"
+              new_ip="${new_ip}/32"
               # patch the cloud-provider-vsphere-helmrelease
               {{- if .Values.connectivity.network.loadBalancers.cidrBlocks }}
               new_ip="${new_ip},{{ join "," .Values.connectivity.network.loadBalancers.cidrBlocks }}"
