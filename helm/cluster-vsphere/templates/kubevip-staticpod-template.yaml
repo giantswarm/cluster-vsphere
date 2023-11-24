@@ -21,7 +21,7 @@ stringData:
         - name: svc_enable
           value: "false"
         - name: prometheus_server
-          value: "2113"
+          value: ":2113"
         - name: vip_arp
           value: "true"
         - name: vip_leaderelection
