@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.9.2] - 2023-11-15
 
+### Fixed
+
+- Minor fix and use of `--ignore-not-found` in IPAM.
+
 ## [0.9.1] - 2023-11-15
 
 ### Changed
