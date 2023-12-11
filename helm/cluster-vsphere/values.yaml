@@ -1,9 +1,9 @@
 apiServer:
   enableAdmissionPlugins: "NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,PersistentVolumeClaimResize,DefaultStorageClass,Priority,DefaultTolerationSeconds,MutatingAdmissionWebhook,ValidatingAdmissionWebhook"
-  featureGates: ""
+  featureGates: {}
   certSANs: []
 controllerManager:
-  featureGates: ""
+  featureGates: {}
 
 clusterDescription: ""  # Cluster description used in metadata.
 organization: ""  # The organization which owns this cluster.
