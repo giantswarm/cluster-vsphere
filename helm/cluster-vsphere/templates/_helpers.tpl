@@ -88,6 +88,17 @@ Create a prefix for all resource names.
       key: containerdProxy   
 {{- end -}}
 
+{{- define "teleportProxyConfig" -}}
+{{- if $.Values.internal.teleport.enabled }}
+- path: /etc/systemd/system/teleport.service.d/99-http-proxy.conf
+  permissions: "0600"
+  contentFrom:
+    secret:
+      name: {{ include "containerdProxySecret" $ }}
+      key: containerdProxy
+{{- end }}
+{{- end -}}
+
 {{/*
 Updates in KubeadmConfigTemplate will not trigger any rollout for worker nodes.
 It is necessary to create a new template with a new name to trigger an upgrade.
@@ -95,7 +106,8 @@ See https://github.com/kubernetes-sigs/cluster-api/issues/4910
 See https://github.com/kubernetes-sigs/cluster-api/pull/5027/files
 */}}
 {{- define "kubeadmConfigTemplateSpec" -}}
-{{- include "sshUsers" . }}
+{{ include "sshUsers" . }}
+{{ include "ignitionSpec" . }}
 joinConfiguration:
   nodeRegistration:
     criSocket: /run/containerd/containerd.sock
@@ -104,35 +116,23 @@ joinConfiguration:
       node-labels: "giantswarm.io/node-pool={{ .pool.name }}"
 files:
   {{- include "sshFiles" . | nindent 2}}
-  {{- if $.Values.internal.teleport.enabled }}
   {{- include "teleportFiles" . | nindent 2 }}
-  {{- end }}
   {{- include "containerdConfig" . | nindent 2 }}
   {{- if $.Values.proxy.enabled }}
     {{- include "containerdProxyConfig" . | nindent 2}}
+    {{- include "teleportProxyConfig" . | nindent 2 }}
   {{- end }}
 preKubeadmCommands:
+{{ include "sshPreKubeadmCommands" . }}
 - /bin/test ! -d /var/lib/kubelet && (/bin/mkdir -p /var/lib/kubelet && /bin/chmod 0750 /var/lib/kubelet)
-  {{- include "hostsAndHostname" . }}
   {{- if $.Values.proxy.enabled }}
 - systemctl daemon-reload
 - systemctl restart containerd
   {{- end }}
-  {{- if $.Values.internal.teleport.enabled }}
-  {{- include "teleportPreKubeadmCommands" . }}
-  {{- end }}
 postKubeadmCommands:
-{{ include "sshPostKubeadmCommands" . }}
 - usermod -aG root nobody # required for node-exporter to access the host's filesystem
 {{- end -}}
 
-{{- define "hostsAndHostname" }}
-- hostname  '{{ "{{" }} ds.meta_data.hostname {{ "}}" }}'
-- echo "::1         ipv6-localhost ipv6-loopback" >/etc/hosts
-- echo "127.0.0.1   localhost" >>/etc/hosts
-- echo  '127.0.0.1   {{ "{{" }} ds.meta_data.hostname {{ "}}" }}'  >>/etc/hosts
-- echo  '{{ "{{" }} ds.meta_data.hostname {{ "}}" }}'  >/etc/hostname
-{{- end -}}
 
 {{- define "kubeadmConfigTemplateRevision" -}}
 {{- $inputs := (dict
@@ -194,6 +194,7 @@ The secret `-teleport-join-token` is created by the teleport-operator in cluster
 and is used to join the node to the teleport cluster.
 */}}
 {{- define "teleportFiles" -}}
+{{- if $.Values.internal.teleport.enabled }}
 - path: /etc/teleport-join-token
   permissions: "0644"
   contentFrom:
@@ -204,22 +205,101 @@ and is used to join the node to the teleport cluster.
   permissions: "0755"
   encoding: base64
   content: {{ $.Files.Get "files/opt/teleport-node-role.sh" | b64enc }}
-- path: /opt/teleport-installer.sh
-  permissions: "0644"
-  encoding: base64
-  content: {{ $.Files.Get "files/opt/teleport-installer.sh" | b64enc }}
 - path: /etc/teleport.yaml
   permissions: "0644"
   encoding: base64
-  content: {{ tpl ($.Files.Get "files/etc/teleport.yaml") . | b64enc }}  
-- path: /etc/systemd/system/teleport.service
-  permissions: "0644"
-  encoding: base64
-  content: {{ tpl ($.Files.Get "files/systemd/teleport.service") . | b64enc }}
+  content: {{ tpl ($.Files.Get "files/etc/teleport.yaml") . | b64enc }}
+{{- end }}
 {{- end -}}
 
-{{- define "teleportPreKubeadmCommands" -}}
-- systemctl daemon-reload
-- systemctl enable teleport.service
-- systemctl start teleport.service
+{{- define "ignitionSpec" -}}
+format: ignition
+ignition:
+  containerLinuxConfig:
+    additionalConfig: |-
+      storage:
+        files:
+        - path: /opt/set-hostname
+          filesystem: root
+          mode: 0744
+          contents:
+            inline: |
+              #!/bin/sh
+              set -x
+              echo "${COREOS_CUSTOM_HOSTNAME}" > /etc/hostname
+              hostname "${COREOS_CUSTOM_HOSTNAME}"
+              echo "::1         ipv6-localhost ipv6-loopback" >/etc/hosts
+              echo "127.0.0.1   localhost" >>/etc/hosts
+              echo "127.0.0.1   ${COREOS_CUSTOM_HOSTNAME}" >>/etc/hosts
+      systemd:
+        units:
+        - name: coreos-metadata.service
+          contents: |
+            [Unit]
+            Description=VMware metadata agent
+            After=nss-lookup.target
+            After=network-online.target
+            Wants=network-online.target
+            [Service]
+            Type=oneshot
+            Restart=on-failure
+            RemainAfterExit=yes
+            Environment=OUTPUT=/run/metadata/coreos
+            ExecStart=/usr/bin/mkdir --parent /run/metadata
+            ExecStart=/usr/bin/bash -cv 'echo "COREOS_CUSTOM_HOSTNAME=$(/usr/share/oem/bin/vmtoolsd --cmd "info-get guestinfo.metadata" | base64 -d | grep local-hostname | awk {\'print $2\'} | tr -d \'"\')" > ${OUTPUT}'
+        - name: set-hostname.service
+          enabled: true
+          contents: |
+            [Unit]
+            Description=Set the hostname for this machine
+            Requires=coreos-metadata.service
+            After=coreos-metadata.service
+            [Service]
+            Type=oneshot
+            RemainAfterExit=yes
+            EnvironmentFile=/run/metadata/coreos
+            ExecStart=/opt/set-hostname
+            [Install]
+            WantedBy=multi-user.target
+        - name: ethtool-segmentation.service
+          enabled: true
+          contents: |
+            [Unit]
+            After=network.target
+            [Service]
+            Type=oneshot
+            RemainAfterExit=yes
+            ExecStart=/usr/sbin/ethtool -K ens192 tx-udp_tnl-csum-segmentation off
+            ExecStart=/usr/sbin/ethtool -K ens192 tx-udp_tnl-segmentation off
+            [Install]
+            WantedBy=default.target
+        - name: kubeadm.service
+          enabled: true
+          dropins:
+          - name: 10-flatcar.conf
+            contents: |
+              [Unit]
+              # kubeadm must run after coreos-metadata populated /run/metadata directory.
+              Requires=coreos-metadata.service
+              After=coreos-metadata.service
+              [Service]
+              # Make metadata environment variables available for pre-kubeadm commands.
+              EnvironmentFile=/run/metadata/*
+        {{- if $.Values.internal.teleport.enabled }}
+        - name: teleport.service
+          enabled: true
+          contents: |
+            [Unit]
+            Description=Teleport Service
+            After=network.target
+            [Service]
+            Type=simple
+            Restart=on-failure
+            ExecStart=/opt/bin/teleport start --roles=node --config=/etc/teleport.yaml --pid-file=/run/teleport.pid
+            ExecReload=/bin/kill -HUP $MAINPID
+            PIDFile=/run/teleport.pid
+            LimitNOFILE=524288
+            [Install]
+            WantedBy=multi-user.targe
+          {{- end }}
 {{- end -}}

@@ -9,7 +9,78 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add teleport
+- Add teleport.service: Secure SSH access via Teleport
+
+### Changed
+
+- Bump Cilium to `0.19.0`.
+
+## [0.9.6] - 2023-12-14
+
+### Added
+
+- Add vSphere icon.
+
+### Fixed
+
+- Fix cleanup of netpol helmrelease.
+
+## [0.9.5] - 2023-12-12
+
+### Fixed
+
+- Fix templating issues of feature-gates.
+
+## [0.9.4] - 2023-12-11
+
+## [0.9.3] - 2023-12-07
+
+### Added
+
+- If `connectivity.network.allowAllEgress` is false (which is the default value), the deny-all network policies for
+namespaces `giantswarm` and `kube-system` will be applied to the resulting cluster. In terms of API, this is a compatible
+change but in terms of internal behavior it can be potentially :boom: **Breaking:**.
+
+### Changed
+
+- Remove `TTLAfterFinished` flag for Kubernetes 1.25 compatibility (enabled by default).
+- Remove `ExpandPersistentVolumes` flag for Kubernetes 1.27 compatibility (enabled by default).
+- Remove `logtostderr` for Kubernetes 1.27 compatibility (output is logged to stderr by default).
+
+## [0.9.2] - 2023-11-15
+
+### Fixed
+
+- Minor fix and use of `--ignore-not-found` in IPAM.
+
+## [0.9.1] - 2023-11-15
+
+### Changed
+
+- Bump `cilium` to `0.17.0`.
+- Bump `coredns` to `1.19.0`.
+- Enable renovate for `cilium` and `coredns`.
+
+
+## [0.9.0] - 2023-11-08
+
+### Changed
+
+- :boom: **Breaking:** Switch from Ubuntu to Flatcar and start support ignition.
+
+## [0.8.0] - 2023-10-31
+
+### Added
+
+- Add IPv4 addresses management (ipam) for WC's `kube-vip-cloud-provider`. If the ipPool is specified, currently one IP is requested from it
+and is added to the end of the list for this controller. `kube-vip-cloud-provider` is part of our Service-lvl load balancer solution in WC and
+at least 1 public IP is always needed for the ingress controller to be able to expose its stuff.
+
+## [0.7.1] - 2023-09-04
+
+### Fixed
+
+- Remove leftover `helmchart` CRs.
 
 ## [0.7.0] - 2023-08-17
 
@@ -134,7 +205,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Initial chart implementation.
 
-[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v0.9.6...HEAD
+[0.9.6]: https://github.com/giantswarm/cluster-vsphere/compare/v0.9.5...v0.9.6
+[0.9.5]: https://github.com/giantswarm/cluster-vsphere/compare/v0.9.4...v0.9.5
+[0.9.4]: https://github.com/giantswarm/cluster-vsphere/compare/v0.9.3...v0.9.4
+[0.9.3]: https://github.com/giantswarm/cluster-vsphere/compare/v0.9.2...v0.9.3
+[0.9.2]: https://github.com/giantswarm/cluster-vsphere/compare/v0.9.1...v0.9.2
+[0.9.1]: https://github.com/giantswarm/cluster-vsphere/compare/v0.9.0...v0.9.1
+[0.9.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.8.0...v0.9.0
+[0.8.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.7.1...v0.8.0
+[0.7.1]: https://github.com/giantswarm/cluster-vsphere/compare/v0.7.0...v0.7.1
 [0.7.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.6.2...v0.7.0
 [0.6.2]: https://github.com/giantswarm/cluster-vsphere/compare/v0.6.1...v0.6.2
 [0.6.1]: https://github.com/giantswarm/cluster-vsphere/compare/v0.6.0...v0.6.1

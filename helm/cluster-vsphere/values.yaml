@@ -1,9 +1,9 @@
 apiServer:
   enableAdmissionPlugins: "NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,PersistentVolumeClaimResize,DefaultStorageClass,Priority,DefaultTolerationSeconds,MutatingAdmissionWebhook,ValidatingAdmissionWebhook"
-  featureGates: "TTLAfterFinished=true"
+  featureGates: ""
   certSANs: []
 controllerManager:
-  featureGates: "ExpandPersistentVolumes=true,TTLAfterFinished=true"
+  featureGates: ""
 
 clusterDescription: ""  # Cluster description used in metadata.
 organization: ""  # The organization which owns this cluster.
@@ -14,7 +14,7 @@ clusterLabels: {}
 controlPlane:  # Must match nodeClasses' fields except "name" and must contain "replicas".
   replicas: 1  # Number of control plane instances to create (odd number).
   machineTemplate:  # check .nodeClasses.default for docs
-    template: "ubuntu-2004-kube-v1.24.11"  # template used to create (or) upgrade control plane nodes.
+    template: "flatcar-stable-3602.2.1-kube-v1.24.12-gs"  # template used to create (or) upgrade control plane nodes.
     resourcePool: ""  # ResourcePool is the name or inventory path of the resource pool in which the virtual machine is created/located.
     memoryMiB: 8192
     network:
@@ -86,7 +86,7 @@ oidc:
 # Cluster-specific configuration
 cluster:
   # Kubernetes version to deploy. Must match the version available in the image defined at template
-  kubernetesVersion: "v1.24.11"
+  kubernetesVersion: "v1.24.12"
 
   # enable encryption at REST feature of API server
   enableEncryptionProvider: true
@@ -102,9 +102,10 @@ connectivity:
     controlPlaneEndpoint:
       host: ""   # [string] Manually select an IP for kube API. "" for auto selection from the ipPoolName pool.
       port: 6443
-      ipPoolName: "wc-cp-ips"  # [string] Ip for control plane will be drawn from this InClusterIPPool.
+      ipPoolName: "wc-cp-ips"  # IP address for control plane will be drawn from this GlobalInClusterIPPool.
     loadBalancers:
       cidrBlocks: []
+      ipPoolName: ""  # If this field is not empty, we will allocate one IP from this GlobalInClusterIPPool and add it to loadBalancers.cidrBlocks with '/32' at the end
     pods:
       cidrBlocks:
       - "10.244.0.0/16"
@@ -281,4 +282,4 @@ nodeClasses:
     # Template is the name or inventory path of the template used to clone the
     # virtual machine.
     # <string> -required-
-    template: "ubuntu-2004-kube-v1.24.11"
+    template: "flatcar-stable-3602.2.1-kube-v1.24.12-gs"
