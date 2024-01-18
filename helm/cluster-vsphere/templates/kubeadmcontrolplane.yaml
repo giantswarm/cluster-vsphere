@@ -148,9 +148,6 @@ spec:
       - systemctl daemon-reload
       - systemctl restart containerd
       {{- end }}
-    postKubeadmCommands:
-      {{- include "sshPostKubeadmCommands" . | nindent 6 }}
-    useExperimentalRetryJoin: true
   machineTemplate:
     infrastructureRef:
       apiVersion: {{ include "infrastructureApiVersion" . }}
