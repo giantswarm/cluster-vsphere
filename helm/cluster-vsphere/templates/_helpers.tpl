@@ -301,6 +301,6 @@ ignition:
             PIDFile=/run/teleport.pid
             LimitNOFILE=524288
             [Install]
-            WantedBy=multi-user.targe
+            WantedBy=multi-user.target
           {{- end }}
 {{- end -}}
