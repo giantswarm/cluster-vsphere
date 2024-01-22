@@ -147,6 +147,9 @@ spec:
       {{- if $.Values.proxy.enabled }}
       - systemctl daemon-reload
       - systemctl restart containerd
+      {{- if $.Values.internal.teleport.enabled }}
+      - systemctl restart teleport
+      {{- end }}
       {{- end }}
   machineTemplate:
     infrastructureRef:

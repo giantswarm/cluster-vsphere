@@ -128,7 +128,9 @@ preKubeadmCommands:
   {{- if $.Values.proxy.enabled }}
 - systemctl daemon-reload
 - systemctl restart containerd
+  {{- if $.Values.internal.teleport.enabled }}
 - systemctl restart teleport
+  {{- end }}
   {{- end }}
 postKubeadmCommands:
 - usermod -aG root nobody # required for node-exporter to access the host's filesystem
