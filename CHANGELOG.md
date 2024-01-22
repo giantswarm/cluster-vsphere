@@ -84,7 +84,6 @@ at least 1 public IP is always needed for the ingress controller to be able to e
 
 ## [0.7.0] - 2023-08-17
 
-
 ## [0.6.2] - 2023-08-01
 
 ### Changed

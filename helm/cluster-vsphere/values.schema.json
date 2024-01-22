@@ -271,7 +271,7 @@
 						"enabled": {
 							"type": "boolean",
 							"title": "Enable teleport",
-							"default": false
+							"default": true
 						}
 					}
 				},
