@@ -31,6 +31,10 @@ controlPlane:  # Must match nodeClasses' fields except "name" and must contain "
     repository: registry.k8s.io  # For older k8s image templates (v1.22.5+vmware.1) use projects.registry.vmware.com/tkg here.
   resourceRatio: 8  # Ratio between node resources and apiserver resource requests.
 
+global:
+  podSecurityStandards:
+    enforced: false
+
 nodePools:
   worker:
     class: default

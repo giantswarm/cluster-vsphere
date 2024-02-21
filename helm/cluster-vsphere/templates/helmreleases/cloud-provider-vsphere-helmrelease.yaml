@@ -50,6 +50,8 @@ spec:
         region: "{{ .Values.vcenter.region }}"
         zone: "{{ .Values.vcenter.zone }}"
         thumbprint: "{{ .Values.vcenter.thumbprint }}"
+      podSecurityStandards:
+        enforced: {{ .Values.global.podSecurityStandards.enforced }}
     kube-vip-cloud-provider:
       cidrGlobal: '{{ join "," .Values.connectivity.network.loadBalancers.cidrBlocks }}'
       image:
