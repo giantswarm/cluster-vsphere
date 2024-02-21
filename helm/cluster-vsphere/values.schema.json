@@ -100,11 +100,6 @@
 			"properties": {
 				"network": {
 					"properties": {
-						"allowAllEgress": {
-							"default": false,
-							"title": "Allow all egress",
-							"type": "boolean"
-						},
 						"containerRegistries": {
 							"type": "object",
 							"title": "Container registries",
@@ -254,6 +249,18 @@
 			"type": "object",
 			"additionalProperties": false,
 			"properties": {
+                "ciliumNetworkPolicy": {
+                    "type": "object",
+                    "title": "CiliumNetworkPolicies",
+                    "properties": {
+                        "enabled": {
+                            "type": "boolean",
+                            "title": "Enable CiliumNetworkPolicies",
+                            "description": "Installs the network-policies-app (deny all by default) if set to true",
+                            "default": true
+                        }
+                    }
+                },
 				"teleport": {
 					"type": "object",
 					"title": "Teleport",
