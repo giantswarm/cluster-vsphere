@@ -8,6 +8,9 @@ controllerManager:
 clusterDescription: ""  # Cluster description used in metadata.
 organization: ""  # The organization which owns this cluster.
 
+metadata:
+  preventDeletion: false
+
 servicePriority: "highest"
 clusterLabels: {}
 
