@@ -57,24 +57,6 @@
 			"title": "Kubernetes API server",
 			"type": "object"
 		},
-		"global": {
-			"type": "object",
-			"title": "Global parameters",
-			"properties": {
-				"podSecurityStandards": {
-					"type": "object",
-					"title": "Pod Security Standards",
-					"properties": {
-						"enforced": {
-							"type": "boolean",
-							"title": "Enforced Pod Security Standards",
-							"description": "Use PSSs instead of PSPs.",
-							"default": false
-						}
-					}
-				}
-			}
-		},
 		"metadata": {
 			"type": "object",
 			"title": "Metadata",
