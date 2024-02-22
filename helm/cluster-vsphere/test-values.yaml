@@ -1,0 +1,51 @@
+baseDomain: test.gigantic.io
+cluster:
+  kubernetesVersion: v1.24.17
+connectivity:
+  network:
+    allowAllEgress: true
+    controlPlaneEndpoint:
+      host: ""
+      ipPoolName: wc-cp-ips
+      port: 6443
+    loadBalancers:
+      ipPoolName: svc-lb-ips 
+controlPlane:
+  image:
+    repository: registry.k8s.io
+  machineTemplate:
+    cloneMode: linkedClone
+    diskGiB: 50
+    memoryMiB: 8096
+    network:
+      devices:
+      - dhcp4: true
+        networkName: grasshopper-capv
+    numCPUs: 4
+    resourcePool: '*/Resources'
+    template: flatcar-stable-3602.2.1-kube-v1.24.17-gs
+  replicas: 1
+helmReleases:
+  cilium:
+    interval: 20s
+  coredns:
+    interval: 30s
+  cpi:
+    interval: 30s
+nodeClasses:
+  default:
+    cloneMode: linkedClone
+    diskGiB: 50
+    memoryMiB: 4096
+    network:
+      devices:
+      - dhcp4: true
+        networkName: grasshopper-capv
+    numCPUs: 4
+    resourcePool: '*/Resources'
+    template: flatcar-stable-3602.2.1-kube-v1.24.17-gs
+nodePools:
+  worker:
+    class: default
+    replicas: 2
+organization: giantswarm

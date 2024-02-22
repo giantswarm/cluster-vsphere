@@ -57,56 +57,56 @@
 			"title": "Kubernetes API server",
 			"type": "object"
 		},
-        "global": {
-            "type": "object",
-            "title": "Global parameters",
-            "properties": {
-                "podSecurityStandards": {
-                    "type": "object",
-                    "title": "Pod Security Standards",
-                    "properties": {
-                        "enforced": {
-                            "type": "boolean",
-                            "title": "Enforced Pod Security Standards",
-                            "description": "Use PSSs instead of PSPs.",
-                            "default": false
-                        }
-                    }
-                }
-            }
-        },
-        "metadata": {
-            "type": "object",
-            "title": "Metadata",
-            "additionalProperties": false,
-            "properties": {
-                "description": {
-                    "type": "string",
-                    "title": "Cluster description",
-                    "description": "User-friendly description of the cluster's purpose."
-                },
-                "labels": {
-                    "type": "object",
-                    "title": "Labels",
-                    "description": "These labels are added to the Kubernetes resources defining this cluster.",
-                    "additionalProperties": false,
-                    "patternProperties": {
-                        "^[a-zA-Z0-9/\\._-]+$": {
-                            "type": "string",
-                            "title": "Label",
-                            "maxLength": 63,
-                            "minLength": 0,
-                            "pattern": "^[a-zA-Z0-9\\._-]+$"
-                        }
-                    }
-                },
-                "preventDeletion": {
-                    "type": "boolean",
-                    "title": "Prevent cluster deletion",
-                    "default": false
-                }
-            }
-        },
+		"global": {
+			"type": "object",
+			"title": "Global parameters",
+			"properties": {
+				"podSecurityStandards": {
+					"type": "object",
+					"title": "Pod Security Standards",
+					"properties": {
+						"enforced": {
+							"type": "boolean",
+							"title": "Enforced Pod Security Standards",
+							"description": "Use PSSs instead of PSPs.",
+							"default": false
+						}
+					}
+				}
+			}
+		},
+		"metadata": {
+			"type": "object",
+			"title": "Metadata",
+			"additionalProperties": false,
+			"properties": {
+				"description": {
+					"type": "string",
+					"title": "Cluster description",
+					"description": "User-friendly description of the cluster's purpose."
+				},
+				"labels": {
+					"type": "object",
+					"title": "Labels",
+					"description": "These labels are added to the Kubernetes resources defining this cluster.",
+					"additionalProperties": false,
+					"patternProperties": {
+						"^[a-zA-Z0-9/\\._-]+$": {
+							"type": "string",
+							"title": "Label",
+							"maxLength": 63,
+							"minLength": 0,
+							"pattern": "^[a-zA-Z0-9\\._-]+$"
+						}
+					}
+				},
+				"preventDeletion": {
+					"type": "boolean",
+					"title": "Prevent cluster deletion",
+					"default": false
+				}
+			}
+		},
 		"controllerManager": {
 			"properties": {
 				"featureGates": {
