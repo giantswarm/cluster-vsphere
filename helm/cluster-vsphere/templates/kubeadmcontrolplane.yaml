@@ -97,7 +97,6 @@ spec:
     initConfiguration:
       skipPhases:
         - addon/coredns
-        - addon/kube-proxy
       patches:
         directory: "/etc/kubernetes/patches"
       nodeRegistration:
