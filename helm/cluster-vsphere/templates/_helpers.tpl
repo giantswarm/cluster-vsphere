@@ -31,6 +31,17 @@ thumbprint: {{ $.vcenter.thumbprint }}
 {{ toYaml .currentClass }}
 {{- end -}}
 
+{{- define "kubeProxyFiles" }}
+- path: /run/kubeadm/gs-kube-proxy-config.yaml
+  permissions: "0600"
+  content: |
+    {{- .Files.Get "files/etc/gs-kube-proxy-config.yaml" | nindent 4 }}
+- path: /run/kubeadm/gs-kube-proxy-patch.sh
+  permissions: "0700"
+  content: |
+    {{- .Files.Get "files/etc/gs-kube-proxy-patch.sh" | nindent 4 }}
+{{- end -}}
+
 {{- define "mtRevision" -}}
 {{- $inputs := (dict
   "spec" (include "mtSpec" .)
