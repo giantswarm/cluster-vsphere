@@ -7,9 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add CiliumNetworkPolicies for the cleanup job.
+- Add flags to disable PSPs.
+- Add `global.metadata.preventDeletion` to add the [deletion prevention label](https://docs.giantswarm.io/advanced/deletion-prevention/) to Cluster resources.
+
 ### Changed
 
 - Switch container registry to `gsoci.azurecr.io`.
+- Adapt cleanup hook for cluster policies.
 
 ## [0.9.9] - 2024-02-14
 

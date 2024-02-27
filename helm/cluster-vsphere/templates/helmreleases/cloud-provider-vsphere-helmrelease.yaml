@@ -17,7 +17,9 @@ spec:
   chart:
     spec:
       chart: cloud-provider-vsphere
-      version: 1.5.1
+      # used by renovate
+      # repo: giantswarm/cloud-provider-vsphere-app
+      version: 1.6.0
       sourceRef:
         kind: HelmRepository
         name: {{ include "resource.default.name" $ }}-default
@@ -50,6 +52,8 @@ spec:
         region: "{{ .Values.vcenter.region }}"
         zone: "{{ .Values.vcenter.zone }}"
         thumbprint: "{{ .Values.vcenter.thumbprint }}"
+      podSecurityStandards:
+        enforced: {{ .Values.global.podSecurityStandards.enforced }}
     kube-vip-cloud-provider:
       cidrGlobal: '{{ join "," .Values.connectivity.network.loadBalancers.cidrBlocks }}'
       image:

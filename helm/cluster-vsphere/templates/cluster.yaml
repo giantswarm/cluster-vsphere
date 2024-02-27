@@ -12,6 +12,10 @@ metadata:
     {{- range $key, $val := .Values.clusterLabels }}
     {{ $key }}: {{ $val | quote }}
     {{- end}}
+    {{- if .Values.global.podSecurityStandards.enforced }}
+    policy.giantswarm.io/psp-status: disabled
+    {{- end }}
+    {{- include "preventDeletionLabel" $ | nindent 4 }}
 spec:
   clusterNetwork:
     pods:
