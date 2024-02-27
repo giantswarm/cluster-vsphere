@@ -99,7 +99,7 @@ cluster:
   enableEncryptionProvider: true
 
 kubectlImage:
-  registry: quay.io
+  registry: gsoci.azurecr.io
   name: giantswarm/kubectl
   tag: 1.23.5
 
@@ -139,7 +139,7 @@ internal:
     enabled: true
   sandboxContainerImage:
     name: giantswarm/pause
-    registry: quay.io
+    registry: gsoci.azurecr.io
     tag: "3.9"
 
 # Class definitions for worker node pools or controle planes. The "name" of the class is the key of the object. Example:
