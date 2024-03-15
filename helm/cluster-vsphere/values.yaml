@@ -25,7 +25,7 @@ controlPlane:  # Must match nodeClasses' fields except "name" and must contain "
       - dhcp4: true
         networkName: 'grasshopper-capv'
   etcd:
-    imageRepository: "giantswarm"
+    imageRepository: "gsoci.azurecr.io/giantswarm"
     imageTag: 3.5.4-0-k8s
   dns:
     imageRepository: projects.registry.vmware.com/tkg
