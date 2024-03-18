@@ -25,13 +25,13 @@ controlPlane:  # Must match nodeClasses' fields except "name" and must contain "
       - dhcp4: true
         networkName: 'grasshopper-capv'
   etcd:
-    imageRepository: "giantswarm"
+    imageRepository: "gsoci.azurecr.io/giantswarm"
     imageTag: 3.5.4-0-k8s
   dns:
     imageRepository: projects.registry.vmware.com/tkg
     imageTag: v1.7.0_vmware.12
   image:
-    repository: registry.k8s.io  # For older k8s image templates (v1.22.5+vmware.1) use projects.registry.vmware.com/tkg here.
+    repository: gsoci.azureci.io  # For older k8s image templates (v1.22.5+vmware.1) use projects.registry.vmware.com/tkg here.
   resourceRatio: 8  # Ratio between node resources and apiserver resource requests.
 
 global:

@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Pull `kube-vip` image from Azure CR.
+
 ## [0.10.1] - 2024-03-07
 
 ### Changed
