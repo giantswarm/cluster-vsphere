@@ -78,6 +78,7 @@ spec:
           operator: Exists
 {{- end }}
     extraPolicies:
+      remove: true
       allowEgressToCoreDNS:
-        enabled: true
+        enabled: false
 
