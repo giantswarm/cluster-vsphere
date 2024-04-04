@@ -111,7 +111,7 @@ connectivity:
       ipPoolName: "wc-cp-ips"  # IP address for control plane will be drawn from this GlobalInClusterIPPool.
     loadBalancers:
       cidrBlocks: []
-      ipPoolName: ""  # If this field is not empty, we will allocate one IP from this GlobalInClusterIPPool and add it to loadBalancers.cidrBlocks with '/32' at the end
+      ipPoolName: "svc-lb-ips"  # If this field is not empty, we will allocate one IP from this GlobalInClusterIPPool and add it to loadBalancers.cidrBlocks with '/32' at the end
     pods:
       cidrBlocks:
       - "10.244.0.0/16"
