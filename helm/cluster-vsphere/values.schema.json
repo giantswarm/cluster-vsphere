@@ -19,6 +19,12 @@
 			"properties": {
 				"kubernetesVersion": {
 					"title": "Kubernetes version",
+					"description": "Kubernetes version to deploy. Must match the version available in the image defined at template.",
+					"type": "string"
+				},
+				"enableEncryptionProvider": {
+					"title": "API server encryption at REST",
+					"description": "Enable encryption at REST feature of API server.",
 					"type": "string"
 				}
 			},
@@ -106,22 +112,60 @@
 		},
 		"controlPlane": {
 			"properties": {
-				"etcd": {
-					"properties": {
-						"imageRepository": {
-							"title": "Image repository",
-							"type": "string"
-						},
-						"imageTag": {
-							"title": "Image tag",
-							"type": "string"
-						}
-					},
-					"title": "Etcd",
-					"type": "object"
-				},
+				"dns": {
+                    "type": "object",
+                    "title": "DNS container image",
+                    "additionalProperties": false,
+                    "properties": {
+                        "imageRepository": {
+                            "type": "string",
+                            "title": "Repository",
+                            "default": "gsoci.azurecr.io/giantswarm"
+                        },
+                        "imageTag": {
+                            "type": "string",
+                            "title": "Tag",
+                            "default": "1.9.4-giantswarm"
+                        }
+                    }
+                },
+                "etcd": {
+                    "type": "object",
+                    "title": "Etcd container image",
+                    "additionalProperties": false,
+                    "properties": {
+                        "imageRepository": {
+                            "type": "string",
+                            "title": "Repository",
+                            "default": "gsoci.azurecr.io/giantswarm"
+                        },
+                        "imageTag": {
+                            "type": "string",
+                            "title": "Tag",
+                            "default": "3.5.4-0-k8s"
+                        }
+                    }
+                },
+                "image": {
+                    "type": "object",
+                    "title": "Node container image",
+                    "additionalProperties": false,
+                    "properties": {
+                        "repository": {
+                            "type": "string",
+                            "title": "Repository",
+                            "default": "gsoci.azurecr.io/giantswarm"
+                        }
+                    }
+                },
 				"replicas": {
 					"title": "Number of nodes",
+					"type": "integer"
+				},
+				"resourceRatio": {
+					"title": "Resource ratio",
+					"description": "Ratio between node resources and apiserver resource requests.",
+					"default": 8,
 					"type": "integer"
 				}
 			},
@@ -188,7 +232,7 @@
 							"properties": {
 								"host": {
 									"title": "Host",
-									"description": "IP for access to the Kubernetes API.",
+									"description": "IP for access to the Kubernetes API. Manually select an IP for kube API. Empty string for auto selection from the ipPoolName pool.",
 									"type": "string"
 								},
 								"port": {
@@ -385,6 +429,7 @@
 		},
 		"organization": {
 			"title": "Organization",
+			"description": "The organization which owns this cluster",
 			"type": "string"
 		},
 		"template": {

@@ -2,23 +2,43 @@ apiServer:
   enableAdmissionPlugins: "NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,PersistentVolumeClaimResize,DefaultStorageClass,Priority,DefaultTolerationSeconds,MutatingAdmissionWebhook,ValidatingAdmissionWebhook"
   featureGates: ""
   certSANs: []
+
+cluster:
+  kubernetesVersion: "v1.25.16"
+  enableEncryptionProvider: true
+
+clusterDescription: ""
+
+clusterLabels: {}
+
+connectivity:
+  network:
+    controlPlaneEndpoint:
+      host: ""
+      port: 6443
+      ipPoolName: "wc-cp-ips"
+    loadBalancers:
+      cidrBlocks: []
+      ipPoolName: "svc-lb-ips"
+    pods:
+      cidrBlocks:
+      - "10.244.0.0/16"
+    services:
+      cidrBlocks:
+      - "172.31.0.0/16"
+  containerRegistries: {}
+
 controllerManager:
   featureGates: ""
 
-clusterDescription: ""  # Cluster description used in metadata.
-organization: ""  # The organization which owns this cluster.
-
-metadata:
-  preventDeletion: false
-
-servicePriority: "highest"
-clusterLabels: {}
-
-controlPlane:  # Must match nodeClasses' fields except "name" and must contain "replicas".
-  replicas: 1  # Number of control plane instances to create (odd number).
-  machineTemplate:  # check .nodeClasses.default for docs
-    template: "flatcar-stable-3602.2.1-kube-v1.25.16-gs"  # template used to create (or) upgrade control plane nodes.
-    resourcePool: ""  # ResourcePool is the name or inventory path of the resource pool in which the virtual machine is created/located.
+controlPlane:
+  replicas: 1
+  machineTemplate:
+    cloneMode: "linkedClone"
+    diskGiB: 50
+    numCPUs: 4
+    template: "flatcar-stable-3602.2.1-kube-v1.25.16-gs"
+    resourcePool: "*/Resources"
     memoryMiB: 8192
     network:
       devices:
@@ -28,107 +48,15 @@ controlPlane:  # Must match nodeClasses' fields except "name" and must contain "
     imageRepository: "gsoci.azurecr.io/giantswarm"
     imageTag: 3.5.4-0-k8s
   dns:
-    imageRepository: projects.registry.vmware.com/tkg
-    imageTag: v1.7.0_vmware.12
+    imageRepository: "gsoci.azurecr.io/giantswarm"
+    imageTag: 1.9.4-giantswarm
   image:
-    repository: gsoci.azureci.io  # For older k8s image templates (v1.22.5+vmware.1) use projects.registry.vmware.com/tkg here.
-  resourceRatio: 8  # Ratio between node resources and apiserver resource requests.
+    repository: gsoci.azurecr.io/giantswarm
+  resourceRatio: 8
 
 global:
   podSecurityStandards:
     enforced: true
-
-nodePools:
-  worker:
-    class: default
-    replicas: 2
-
-sshTrustedUserCAKeys:
-  # Taken from https://vault.operations.giantswarm.io/v1/ssh/public_key
-  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM4cvZ01fLmO9cJbWUj7sfF+NhECgy+Cl0bazSrZX7sU vault-ca@vault.operations.giantswarm.io
-
-osUsers:
-- name: "giantswarm"
-  sudo: "ALL=(ALL) NOPASSWD:ALL"
-
-# Configuration for vSphere API access.
-vcenter:
-  # Name of the default datacenter to deploy nodes into.
-  datacenter: ""
-
-  # Username for vSphere API
-  username: ""
-
-  # Password for vSphere API
-  password: ""
-
-  # Name of the default datastore for node disk storage.
-  datastore: ""
-
-  # URL of the VSphere API.
-  server: ""
-
-  # TLS thumbprint of the VSphere API.
-  # openssl s_client -connect https://foo.example.com < /dev/null 2>/dev/null | openssl x509 -fingerprint -noout -in /dev/stdin
-  thumbprint: ""
-
-  # Category name in VSphere for topology.kubernetes.io/region label
-  region: ""
-
-  # Category name in VSphere for topology.kubernetes.io/zone label
-  zone: ""
-
-proxy:  # (Optional) Defines HTTP proxy environment variables.
-  secretName: ""
-  enabled: false
-
-oidc:
-  issuerUrl: ""
-  caFile: ""
-  clientId: ""
-  usernameClaim: ""
-  groupsClaim: ""
-  usernamePrefix: ""
-
-# Cluster-specific configuration
-cluster:
-  # Kubernetes version to deploy. Must match the version available in the image defined at template
-  kubernetesVersion: "v1.25.16"
-
-  # enable encryption at REST feature of API server
-  enableEncryptionProvider: true
-
-kubectlImage:
-  registry: gsoci.azurecr.io
-  name: giantswarm/kubectl
-  tag: 1.23.5
-
-connectivity:
-  network:
-    controlPlaneEndpoint:
-      host: ""   # [string] Manually select an IP for kube API. "" for auto selection from the ipPoolName pool.
-      port: 6443
-      ipPoolName: "wc-cp-ips"  # IP address for control plane will be drawn from this GlobalInClusterIPPool.
-    loadBalancers:
-      cidrBlocks: []
-      ipPoolName: "svc-lb-ips"  # If this field is not empty, we will allocate one IP from this GlobalInClusterIPPool and add it to loadBalancers.cidrBlocks with '/32' at the end
-    pods:
-      cidrBlocks:
-      - "10.244.0.0/16"
-    services:
-      cidrBlocks:
-      - "172.31.0.0/16"
-
-  containerRegistries: {}
-#   docker.io:
-#   - endpoint: "registry-1.docker.io"
-#     credentials:
-#       username: ""
-#       password: ""
-#   - endpoint: "my-mirror-registry.mydomain.io"
-#     credentials:
-#       auth: ""
-#       identitytoken: ""
 
 internal:
   ciliumNetworkPolicy:
@@ -142,152 +70,61 @@ internal:
     registry: gsoci.azurecr.io
     tag: "3.9"
 
-# Class definitions for worker node pools or controle planes. The "name" of the class is the key of the object. Example:
+kubectlImage:
+  registry: gsoci.azurecr.io
+  name: giantswarm/kubectl
+  tag: 1.23.5
+
+metadata:
+  preventDeletion: false
+
 nodeClasses:
-  # Provisioning options for node templates.
-  # kubectl explain VSphereMachineTemplate.spec.template.spec
   default:
-
-    # CloneMode specifies the type of clone operation. The LinkedClone mode is
-    # only support for templates that have at least one snapshot. If the template
-    # has no snapshots, then CloneMode defaults to FullClone. When LinkedClone
-    # mode is enabled the DiskGiB field is ignored as it is not possible to
-    # expand disks of linked clones. Defaults to LinkedClone, but fails
-    # gracefully to FullClone if the source of the clone operation has no
-    # snapshots.
-    # <string>
-    # cloneMode: linkedClone
-
-    # AdditionalDisksGiB holds the sizes of additional disks of the virtual
-    # machine, in GiB Defaults to the eponymous property value in the template
-    # from which the virtual machine is cloned.
-    # <[]integer>
-    # additionalDisksGiB: []
-
-    # CustomVMXKeys is a dictionary of advanced VMX options that can be set on VM
-    # Defaults to empty map
-    # <map[string]string>
-    # customVMXKeys: {}
-
-    # DiskGiB is the size of a virtual machine's disk, in GiB. Defaults to the
-    # eponymous property value in the template from which the virtual machine is
-    # cloned.
-    # <integer>
-    # diskGiB: 0
-
-    # FailureDomain is the failure domain unique identifier this Machine should
-    # be attached to, as defined in Cluster API. For this infrastructure
-    # provider, the name is equivalent to the name of the VSphereDeploymentZone.
-    # <string>
-    # failureDomain: ""
-
-    # Folder is the name or inventory path of the folder in which the virtual
-    # machine is created/located.
-    # <string>
-    # folder: ""
-
-    # HardwareVersion is the hardware version of the virtual machine. Defaults to
-    # the eponymous property value in the template from which the virtual machine
-    # is cloned. Check the compatibility with the ESXi version before setting the
-    # value.
-    # <string>
-    # hardwareVersion: ""
-
-    # MemoryMiB is the size of a virtual machine's memory, in MiB. Defaults to
-    # the eponymous property value in the template from which the virtual machine
-    # is cloned.
-    # <integer>
-    # memoryMiB: 0
-
-    # Network is the network configuration for this machine's VM.
-    # <Object> -required-
-    network:
-      # Devices is the list of network devices used by the virtual machine.
-      # TODO(akutz) Make sure at least one network matches the ClusterSpec.CloudProviderConfiguration.Network.Name
-      # can contain also: searchDomains, mtu, macAddr, gateway4, routes, nameservers, etc
-      # check kubectl explain VSphereMachineTemplate.spec.template.spec.network.devices for docs
-      # <[]Object> -required-
-      devices:
-        # DHCP4 is a flag that indicates whether or not to use DHCP for IPv4 on this
-        # device. If true then IPAddrs should not contain any IPv4 addresses.
-      - dhcp4: true
-        # NetworkName is the name of the vSphere network to which the device will be connected.
-        # <string> -required-
-        networkName: 'grasshopper-capv'
-
-      # PreferredAPIServeCIDR is the preferred CIDR for the Kubernetes API server
-      # endpoint on this machine
-      # preferredAPIServerCidr: ""
-
-      # Routes is a list of optional, static routes applied to the virtual machine.
-      # <[]Object>
-      # routes: []
-      #   # Metric is the weight/priority of the route.
-      #   # <integer> -required-
-      # - metric: 50
-      #   # To is an IPv4 or IPv6 address.
-      #   # <string> -required-
-      #   to: ""
-      #   # Via is an IPv4 or IPv6 address.
-      #   # <string> -required-
-      #   via: ""
-
-
-    # NumCPUs is the number of virtual processors in a virtual machine. Defaults
-    # to the eponymous property value in the template from which the virtual
-    # machine is cloned.
-    # <integer>
-    # numCPUs: 0
-
-    # NumCPUs is the number of cores among which to distribute CPUs in this
-    # virtual machine. Defaults to the eponymous property value in the template
-    # from which the virtual machine is cloned.
-    # <integer>
-    # numCoresPerSocket: 0
-
-    # OS is the Operating System of the virtual machine Defaults to Linux
-    # <string>
-    # os: "Linux"
-
-    # PciDevices is the list of pci devices used by the virtual machine.
-    # pciDevices: []
-      # # DeviceID is the device ID of a virtual machine's PCI, in integer. Defaults
-      # # to the eponymous property value in the template from which the virtual
-      # # machine is cloned.
-      # # <integer>
-      # deviceId: 0
-      # # VendorId is the vendor ID of a virtual machine's PCI, in integer. Defaults
-      # # to the eponymous property value in the template from which the virtual
-      # # machine is cloned.
-      # # <integer>
-      # vendorId: 0
-
-    # ProviderID is the virtual machine's BIOS UUID formated as
-    # vsphere://12345678-1234-1234-1234-123456789abc
-    # <string>
-    # providerID: ""
-
-    # ResourcePool is the name or inventory path of the resource pool in which
-    # the virtual machine is created/located.
-    # <string>
-    # resourcePool: ""
-
-    # Snapshot is the name of the snapshot from which to create a linked clone.
-    # This field is ignored if LinkedClone is not enabled. Defaults to the
-    # source's current snapshot.
-    # <string>
-    # snapshot: ""
-
-    # StoragePolicyName of the storage policy to use with this Virtual Machine
-    # <string>
-    # storagePolicyName: ""
-
-    # TagIDs is an optional set of tags to add to an instance. Specified tagIDs
-    # must use URN-notation instead of display names.
-    # <[]string>
-    # tagIDs: []
-
-    # Template is the name or inventory path of the template used to clone the
-    # virtual machine.
-    # <string> -required-
+    cloneMode: "linkedClone"
+    diskGiB: 50
+    numCPUs: 6
+    memoryMiB: 16896
+    resourcePool: "*/Resources"
     template: "flatcar-stable-3602.2.1-kube-v1.25.16-gs"
+    network:
+      devices:
+      - networkName: 'grasshopper-capv'
+        dhcp4: true
+
+nodePools:
+  worker:
+    class: default
+    replicas: 2
+
+oidc:
+  issuerUrl: ""
+  caFile: ""
+  clientId: ""
+  usernameClaim: ""
+  groupsClaim: ""
+  usernamePrefix: ""
+
+organization: ""
+
+osUsers:
+- name: "giantswarm"
+  sudo: "ALL=(ALL) NOPASSWD:ALL"
+
+proxy:
+  secretName: ""
+  enabled: false
+
+servicePriority: "highest"
+
+sshTrustedUserCAKeys:
+  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM4cvZ01fLmO9cJbWUj7sfF+NhECgy+Cl0bazSrZX7sU vault-ca@vault.operations.giantswarm.io
+
+vcenter:
+  datacenter: ""
+  username: ""
+  password: ""
+  datastore: ""
+  server: ""
+  thumbprint: ""
+  region: ""
+  zone: ""
