@@ -25,7 +25,7 @@
 				"enableEncryptionProvider": {
 					"title": "API server encryption at REST",
 					"description": "Enable encryption at REST feature of API server.",
-					"type": "string"
+					"type": "boolean"
 				}
 			},
 			"title": "Cluster",
