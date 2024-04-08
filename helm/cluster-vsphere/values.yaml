@@ -43,7 +43,7 @@ controlPlane:
     network:
       devices:
       - dhcp4: true
-        networkName: 'grasshopper-capv'
+        networkName: ""
   etcd:
     imageRepository: "gsoci.azurecr.io/giantswarm"
     imageTag: 3.5.4-0-k8s
@@ -88,7 +88,7 @@ nodeClasses:
     template: "flatcar-stable-3602.2.1-kube-v1.25.16-gs"
     network:
       devices:
-      - networkName: 'grasshopper-capv'
+      - networkName: ""
         dhcp4: true
 
 nodePools:
