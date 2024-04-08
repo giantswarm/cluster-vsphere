@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Move extraPolicies from cilium-app to network-policies-app.
+- Add `svc-lb-ips` as default IP Pool for service of type load balancer in workload clusters.
 
 ## [0.10.2] - 2024-04-02
 
