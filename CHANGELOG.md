@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.3] - 2024-04-08
+
 ### Changed
 
 - Move extraPolicies from cilium-app to network-policies-app.
@@ -249,7 +251,8 @@ at least 1 public IP is always needed for the ingress controller to be able to e
 
 - Initial chart implementation.
 
-[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v0.10.2...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v0.10.3...HEAD
+[0.10.3]: https://github.com/giantswarm/cluster-vsphere/compare/v0.10.2...v0.10.3
 [0.10.2]: https://github.com/giantswarm/cluster-vsphere/compare/v0.10.1...v0.10.2
 [0.10.1]: https://github.com/giantswarm/cluster-vsphere/compare/v0.10.0...v0.10.1
 [0.10.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.9.9...v0.10.0
