@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- No major change in `v0.50.0`, except that we are moving to a [release based upgrade cycle](https://github.com/giantswarm/roadmap/issues/3392) with Kubernetes version, VM template and other defaults are set in the chart values. They shouldn't be overridden as they are managed by Giant Swarm.
 - Bump `kube-vip` to `v0.8.0`.
 
 ## [0.10.3] - 2024-04-08
