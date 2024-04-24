@@ -39,6 +39,7 @@ controlPlane:
 
 global:
   connectivity:
+    baseDomain: k8s.test
     network:
       controlPlaneEndpoint:
         host: ""
