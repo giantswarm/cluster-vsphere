@@ -33,14 +33,17 @@ spec:
           {{- end }}
           feature-gates: {{ .Values.apiServer.featureGates | quote }}
           kubelet-preferred-address-types: "InternalIP"
-          {{- if .Values.oidc.issuerUrl }}
-          {{- with .Values.oidc }}
+          {{- if .Values.global.controlPlane.oidc.issuerUrl }}
+          {{- with .Values.global.controlPlane.oidc }}
           oidc-issuer-url: {{ .issuerUrl }}
           oidc-client-id: {{ .clientId }}
           oidc-username-claim: {{ .usernameClaim }}
           oidc-groups-claim: {{ .groupsClaim }}
           {{- if .usernamePrefix }}
           oidc-username-prefix: {{ .usernamePrefix | quote }}
+          {{- end }}
+          {{- if .groupsPrefix }}
+          oidc-groups-prefix: {{ .groupsPrefix | quote }}
           {{- end }}
           {{- if .caFile }}
           oidc-ca-file: {{ .caFile }}
@@ -77,15 +80,15 @@ spec:
           feature-gates: {{ .Values.controllerManager.featureGates | quote }}
           profiling: "false"
       dns:
-        imageRepository: {{ .Values.controlPlane.dns.imageRepository }}
-        imageTag: {{ .Values.controlPlane.dns.imageTag }}
+        imageRepository: {{ .Values.global.controlPlane.dns.imageRepository }}
+        imageTag: {{ .Values.global.controlPlane.dns.imageTag }}
       etcd:
         local:
           extraArgs:
             listen-metrics-urls: "http://0.0.0.0:2381"
-          imageRepository: {{ .Values.controlPlane.etcd.imageRepository }}
-          imageTag: {{ .Values.controlPlane.etcd.imageTag }}
-      imageRepository: {{ .Values.controlPlane.image.repository }}
+          imageRepository: {{ .Values.global.controlPlane.etcd.imageRepository }}
+          imageTag: {{ .Values.global.controlPlane.etcd.imageTag }}
+      imageRepository: {{ .Values.global.controlPlane.image.repository }}
       scheduler:
         extraArgs:
           authorization-always-allow-paths: "/healthz,/readyz,/livez,/metrics"
@@ -143,7 +146,7 @@ spec:
       {{- end }}
     preKubeadmCommands:
       {{- include "sshPreKubeadmCommands" . | nindent 6 }}
-      - bash /etc/kubernetes/patches/kube-apiserver-patch.sh {{ .Values.controlPlane.resourceRatio }}
+      - bash /etc/kubernetes/patches/kube-apiserver-patch.sh {{ .Values.global.controlPlane.resourceRatio }}
       - /bin/test ! -d /var/lib/kubelet && (/bin/mkdir -p /var/lib/kubelet && /bin/chmod 0750 /var/lib/kubelet)
       {{- if $.Values.proxy.enabled }}
       - systemctl daemon-reload
@@ -158,5 +161,5 @@ spec:
       kind: VSphereMachineTemplate
       name: {{ include "resource.default.name" . }}-control-plane-{{ include "mtRevisionByControlPlane" $ }}
       namespace: {{ .Release.Namespace }}
-  replicas: {{ .Values.controlPlane.replicas }}
+  replicas: {{ .Values.global.controlPlane.replicas }}
   version: {{ .Values.cluster.kubernetesVersion }}

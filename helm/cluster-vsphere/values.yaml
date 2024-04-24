@@ -14,29 +14,6 @@ clusterLabels: {}
 controllerManager:
   featureGates: ""
 
-controlPlane:
-  replicas: 1
-  machineTemplate:
-    cloneMode: "linkedClone"
-    diskGiB: 50
-    numCPUs: 4
-    template: "flatcar-stable-3602.2.1-kube-v1.25.16-gs"
-    resourcePool: "*/Resources"
-    memoryMiB: 8192
-    network:
-      devices:
-      - dhcp4: true
-        networkName: ""
-  etcd:
-    imageRepository: "gsoci.azurecr.io/giantswarm"
-    imageTag: 3.5.4-0-k8s
-  dns:
-    imageRepository: "gsoci.azurecr.io/giantswarm"
-    imageTag: 1.9.4-giantswarm
-  image:
-    repository: gsoci.azurecr.io/giantswarm
-  resourceRatio: 8
-
 global:
   connectivity:
     baseDomain: k8s.test
@@ -55,6 +32,36 @@ global:
         cidrBlocks:
         - "172.31.0.0/16"
     containerRegistries: {}
+  controlPlane:
+    replicas: 1
+    machineTemplate:
+      cloneMode: "linkedClone"
+      diskGiB: 50
+      numCPUs: 4
+      template: "flatcar-stable-3602.2.1-kube-v1.25.16-gs"
+      resourcePool: "*/Resources"
+      memoryMiB: 8192
+      network:
+        devices:
+        - dhcp4: true
+          networkName: ""
+    etcd:
+      imageRepository: "gsoci.azurecr.io/giantswarm"
+      imageTag: 3.5.4-0-k8s
+    dns:
+      imageRepository: "gsoci.azurecr.io/giantswarm"
+      imageTag: 1.9.4-giantswarm
+    image:
+      repository: gsoci.azurecr.io/giantswarm
+    resourceRatio: 8
+    oidc:
+      issuerUrl: ""
+      caFile: ""
+      clientId: ""
+      usernameClaim: ""
+      groupsClaim: ""
+      usernamePrefix: ""
+      groupsPrefix: ""
   metadata:
     preventDeletion: false
   podSecurityStandards:
@@ -94,14 +101,6 @@ nodePools:
   worker:
     class: default
     replicas: 2
-
-oidc:
-  issuerUrl: ""
-  caFile: ""
-  clientId: ""
-  usernameClaim: ""
-  groupsClaim: ""
-  usernamePrefix: ""
 
 organization: ""
 
