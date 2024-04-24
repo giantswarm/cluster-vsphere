@@ -57,6 +57,8 @@ controlPlane:
 global:
   podSecurityStandards:
     enforced: true
+  metadata:
+    preventDeletion: false
 
 internal:
   ciliumNetworkPolicy:
@@ -74,9 +76,6 @@ kubectlImage:
   registry: gsoci.azurecr.io
   name: giantswarm/kubectl
   tag: 1.23.5
-
-metadata:
-  preventDeletion: false
 
 nodeClasses:
   default:

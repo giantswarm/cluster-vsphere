@@ -65,7 +65,7 @@ helm.sh/chart: {{ include "chart" . | quote }}
 Create label to prevent accidental cluster deletion
 */}}
 {{- define "preventDeletionLabel" -}}
-{{- if $.Values.metadata.preventDeletion -}}
+{{- if $.Values.global.metadata.preventDeletion -}}
 giantswarm.io/prevent-deletion: "true"
 {{ end -}}
 {{- end -}}
