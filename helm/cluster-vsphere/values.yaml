@@ -64,6 +64,10 @@ global:
       groupsPrefix: ""
   metadata:
     preventDeletion: false
+  nodePools:
+    worker:
+      class: default
+      replicas: 2
   podSecurityStandards:
     enforced: true
 
@@ -96,11 +100,6 @@ nodeClasses:
       devices:
       - networkName: ""
         dhcp4: true
-
-nodePools:
-  worker:
-    class: default
-    replicas: 2
 
 organization: ""
 
