@@ -78,68 +78,6 @@
 			"title": "Kubernetes Controller Manager",
 			"type": "object"
 		},
-		"controlPlane": {
-			"properties": {
-				"dns": {
-                    "type": "object",
-                    "title": "DNS container image",
-                    "additionalProperties": false,
-                    "properties": {
-                        "imageRepository": {
-                            "type": "string",
-                            "title": "Repository",
-                            "default": "gsoci.azurecr.io/giantswarm"
-                        },
-                        "imageTag": {
-                            "type": "string",
-                            "title": "Tag",
-                            "default": "1.9.4-giantswarm"
-                        }
-                    }
-                },
-                "etcd": {
-                    "type": "object",
-                    "title": "Etcd container image",
-                    "additionalProperties": false,
-                    "properties": {
-                        "imageRepository": {
-                            "type": "string",
-                            "title": "Repository",
-                            "default": "gsoci.azurecr.io/giantswarm"
-                        },
-                        "imageTag": {
-                            "type": "string",
-                            "title": "Tag",
-                            "default": "3.5.4-0-k8s"
-                        }
-                    }
-                },
-                "image": {
-                    "type": "object",
-                    "title": "Node container image",
-                    "additionalProperties": false,
-                    "properties": {
-                        "repository": {
-                            "type": "string",
-                            "title": "Repository",
-                            "default": "gsoci.azurecr.io/giantswarm"
-                        }
-                    }
-                },
-				"replicas": {
-					"title": "Number of nodes",
-					"type": "integer"
-				},
-				"resourceRatio": {
-					"title": "Resource ratio",
-					"description": "Ratio between node resources and apiserver resource requests.",
-					"default": 8,
-					"type": "integer"
-				}
-			},
-			"title": "Control plane",
-			"type": "object"
-		},
         "global": {
             "type": "object",
             "title": "Global parameters",
@@ -340,6 +278,116 @@
 						"network"
 					],
 					"title": "Connectivity",
+					"type": "object"
+				},
+				"controlPlane": {
+					"properties": {
+						"dns": {
+							"type": "object",
+							"title": "DNS container image",
+							"additionalProperties": false,
+							"properties": {
+								"imageRepository": {
+									"type": "string",
+									"title": "Repository",
+									"default": "gsoci.azurecr.io/giantswarm"
+								},
+								"imageTag": {
+									"type": "string",
+									"title": "Tag",
+									"default": "1.9.4-giantswarm"
+								}
+							}
+						},
+						"etcd": {
+							"type": "object",
+							"title": "Etcd container image",
+							"additionalProperties": false,
+							"properties": {
+								"imageRepository": {
+									"type": "string",
+									"title": "Repository",
+									"default": "gsoci.azurecr.io/giantswarm"
+								},
+								"imageTag": {
+									"type": "string",
+									"title": "Tag",
+									"default": "3.5.4-0-k8s"
+								}
+							}
+						},
+						"image": {
+							"type": "object",
+							"title": "Node container image",
+							"additionalProperties": false,
+							"properties": {
+								"repository": {
+									"type": "string",
+									"title": "Repository",
+									"default": "gsoci.azurecr.io/giantswarm"
+								}
+							}
+						},
+						"replicas": {
+							"title": "Number of nodes",
+							"type": "integer"
+						},
+						"resourceRatio": {
+							"title": "Resource ratio",
+							"description": "Ratio between node resources and apiserver resource requests.",
+							"default": 8,
+							"type": "integer"
+						},
+						"oidc": {
+							"type": "object",
+							"title": "OIDC authentication",
+							"required": [
+								"clientId",
+								"groupsClaim",
+								"issuerUrl",
+								"usernameClaim"
+							],
+							"additionalProperties": false,
+							"properties": {
+								"caFile": {
+									"type": "string",
+									"title": "Certificate authority file",
+									"description": "Path to identity provider's CA certificate in PEM format."
+								},
+								"clientId": {
+									"type": "string",
+									"title": "Client ID",
+									"description": "OIDC client identifier to identify with."
+								},
+								"groupsClaim": {
+									"type": "string",
+									"title": "Groups claim",
+									"description": "Name of the identity token claim bearing the user's group memberships."
+								},
+								"groupsPrefix": {
+									"type": "string",
+									"title": "Groups prefix",
+									"description": "Prefix prepended to groups values to prevent clashes with existing names."
+								},
+								"issuerUrl": {
+									"type": "string",
+									"title": "Issuer URL",
+									"description": "URL of the provider which allows the API server to discover public signing keys, not including any path. Discovery URL without the '/.well-known/openid-configuration' part."
+								},
+								"usernameClaim": {
+									"type": "string",
+									"title": "Username claim",
+									"description": "Name of the identity token claim bearing the unique user identifier."
+								},
+								"usernamePrefix": {
+									"type": "string",
+									"title": "Username prefix",
+									"description": "Prefix prepended to username values to prevent clashes with existing names."
+								}
+							}
+						}
+					},
+					"title": "Control plane",
 					"type": "object"
 				}
             }
