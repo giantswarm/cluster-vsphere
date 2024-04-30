@@ -78,22 +78,22 @@
 			"title": "Kubernetes Controller Manager",
 			"type": "object"
 		},
-        "global": {
-            "type": "object",
-            "title": "Global parameters",
-            "properties": {
-                "podSecurityStandards": {
-                    "type": "object",
-                    "title": "Pod Security Standards",
-                    "properties": {
-                        "enforced": {
-                            "type": "boolean",
-                            "title": "Enforced Pod Security Standards",
-                            "description": "Use PSSs instead of PSPs.",
-                            "default": true
-                        }
-                    }
-                },
+		"global": {
+			"type": "object",
+			"title": "Global parameters",
+			"properties": {
+				"podSecurityStandards": {
+					"type": "object",
+					"title": "Pod Security Standards",
+					"properties": {
+						"enforced": {
+							"type": "boolean",
+							"title": "Enforced Pod Security Standards",
+							"description": "Use PSSs instead of PSPs.",
+							"default": true
+						}
+					}
+				},
 				"metadata": {
 					"type": "object",
 					"title": "Metadata",
@@ -272,6 +272,31 @@
 							],
 							"title": "Network",
 							"type": "object"
+						},
+						"shell": {
+							"type": "object",
+							"properties": {
+								"osUsers": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"name": {
+												"type": "string"
+											},
+											"sudo": {
+												"type": "string"
+											}
+										}
+									}
+								},
+								"sshTrustedUserCAKeys": {
+									"type": "array",
+									"items": {
+										"type": "string"
+									}
+								}
+							}
 						}
 					},
 					"required": [
@@ -437,8 +462,8 @@
 						}
 					}
 				}
-            }
-        },
+			}
+		},
 		"internal": {
 			"type": "object",
 			"additionalProperties": false,
