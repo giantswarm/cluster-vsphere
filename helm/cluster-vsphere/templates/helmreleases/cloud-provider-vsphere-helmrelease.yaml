@@ -55,7 +55,7 @@ spec:
       podSecurityStandards:
         enforced: {{ .Values.global.podSecurityStandards.enforced }}
     kube-vip-cloud-provider:
-      cidrGlobal: '{{ join "," .Values.connectivity.network.loadBalancers.cidrBlocks }}'
+      cidrGlobal: '{{ join "," .Values.global.connectivity.network.loadBalancers.cidrBlocks }}'
       image:
         repository: docker.io/giantswarm/kube-vip-cloud-provider
         tag: v0.0.4

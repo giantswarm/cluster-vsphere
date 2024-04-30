@@ -27,7 +27,7 @@ stringData:
         - name: vip_leaderelection
           value: "true"
         - name: vip_address
-          value: {{ .Values.connectivity.network.controlPlaneEndpoint.host }}
+          value: {{ .Values.global.connectivity.network.controlPlaneEndpoint.host }}
         - name: vip_interface
           value: ens192
         - name: vip_leaseduration

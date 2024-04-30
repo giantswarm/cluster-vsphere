@@ -8,10 +8,10 @@
     replaced with .10.
 */}}
 {{- define "clusterDNS" -}}
-    {{- $serviceCidrBlock := index .Values.connectivity.network.services.cidrBlocks 0 -}}
+    {{- $serviceCidrBlock := index .Values.global.connectivity.network.services.cidrBlocks 0 -}}
     {{- $mask := int (mustRegexReplaceAll `^.*/(\d+)$` $serviceCidrBlock "${1}") -}}
     {{- if gt $mask 24 -}}
-        {{- fail (printf ".Values.connectivity.network.services.cidrBlocks[0]=%q mask must be <= 24" $serviceCidrBlock) -}}
+        {{- fail (printf ".Values.global.connectivity.network.services.cidrBlocks[0]=%q mask must be <= 24" $serviceCidrBlock) -}}
     {{- end -}}
     {{- mustRegexReplaceAll `^(\d+\.\d+\.\d+).*$` $serviceCidrBlock "${1}.10" -}}
 {{- end -}}

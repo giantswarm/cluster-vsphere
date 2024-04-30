@@ -65,7 +65,7 @@ helm.sh/chart: {{ include "chart" . | quote }}
 Create label to prevent accidental cluster deletion
 */}}
 {{- define "preventDeletionLabel" -}}
-{{- if $.Values.metadata.preventDeletion -}}
+{{- if $.Values.global.metadata.preventDeletion -}}
 giantswarm.io/prevent-deletion: "true"
 {{ end -}}
 {{- end -}}
@@ -163,7 +163,7 @@ postKubeadmCommands:
 
 {{- define "mtRevisionByControlPlane" -}}
 {{- $outerScope := . }}
-{{- include "mtRevision" (merge (dict "currentClass" .Values.controlPlane.machineTemplate) $outerScope.Values) }}
+{{- include "mtRevision" (merge (dict "currentClass" .Values.global.controlPlane.machineTemplate) $outerScope.Values) }}
 {{- end -}}
 
 {{/*

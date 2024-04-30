@@ -1,5 +1,4 @@
 apiServer:
-  enableAdmissionPlugins: "NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,PersistentVolumeClaimResize,DefaultStorageClass,Priority,DefaultTolerationSeconds,MutatingAdmissionWebhook,ValidatingAdmissionWebhook"
   featureGates: ""
   certSANs: []
 
@@ -11,54 +10,85 @@ clusterDescription: ""
 
 clusterLabels: {}
 
-connectivity:
-  network:
-    controlPlaneEndpoint:
-      host: ""
-      port: 6443
-      ipPoolName: "wc-cp-ips"
-    loadBalancers:
-      cidrBlocks: []
-      ipPoolName: "svc-lb-ips"
-    pods:
-      cidrBlocks:
-      - "10.244.0.0/16"
-    services:
-      cidrBlocks:
-      - "172.31.0.0/16"
-  containerRegistries: {}
-
 controllerManager:
   featureGates: ""
 
-controlPlane:
-  replicas: 1
-  machineTemplate:
-    cloneMode: "linkedClone"
-    diskGiB: 50
-    numCPUs: 4
-    template: "flatcar-stable-3602.2.1-kube-v1.25.16-gs"
-    resourcePool: "*/Resources"
-    memoryMiB: 8192
-    network:
-      devices:
-      - dhcp4: true
-        networkName: ""
-  etcd:
-    imageRepository: "gsoci.azurecr.io/giantswarm"
-    imageTag: 3.5.4-0-k8s
-  dns:
-    imageRepository: "gsoci.azurecr.io/giantswarm"
-    imageTag: 1.9.4-giantswarm
-  image:
-    repository: gsoci.azurecr.io/giantswarm
-  resourceRatio: 8
-
 global:
+  connectivity:
+    baseDomain: k8s.test
+    network:
+      controlPlaneEndpoint:
+        host: ""
+        port: 6443
+        ipPoolName: "wc-cp-ips"
+      loadBalancers:
+        cidrBlocks: []
+        ipPoolName: "svc-lb-ips"
+      pods:
+        cidrBlocks:
+        - "10.244.0.0/16"
+      services:
+        cidrBlocks:
+        - "172.31.0.0/16"
+    containerRegistries: {}
+    shell:
+      osUsers:
+        - name: "giantswarm"
+          sudo: "ALL=(ALL) NOPASSWD:ALL"
+      sshTrustedUserCAKeys:
+        - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM4cvZ01fLmO9cJbWUj7sfF+NhECgy+Cl0bazSrZX7sU vault-ca@vault.operations.giantswarm.io
+  controlPlane:
+    replicas: 1
+    machineTemplate:
+      cloneMode: "linkedClone"
+      diskGiB: 50
+      numCPUs: 4
+      template: "flatcar-stable-3602.2.1-kube-v1.25.16-gs"
+      resourcePool: "*/Resources"
+      memoryMiB: 8192
+      network:
+        devices:
+        - dhcp4: true
+          networkName: ""
+    etcd:
+      imageRepository: "gsoci.azurecr.io/giantswarm"
+      imageTag: 3.5.4-0-k8s
+    dns:
+      imageRepository: "gsoci.azurecr.io/giantswarm"
+      imageTag: 1.9.4-giantswarm
+    image:
+      repository: gsoci.azurecr.io/giantswarm
+    resourceRatio: 8
+    oidc:
+      issuerUrl: ""
+      caFile: ""
+      clientId: ""
+      usernameClaim: ""
+      groupsClaim: ""
+      usernamePrefix: ""
+      groupsPrefix: ""
+  metadata:
+    preventDeletion: false
+  nodePools:
+    worker:
+      class: default
+      replicas: 2
   podSecurityStandards:
     enforced: true
 
 internal:
+  apiServer:
+    enableAdmissionPlugins:
+      - DefaultStorageClass
+      - DefaultTolerationSeconds
+      - LimitRanger
+      - MutatingAdmissionWebhook
+      - NamespaceLifecycle
+      - PersistentVolumeClaimResize
+      - Priority
+      - ResourceQuota
+      - ServiceAccount
+      - ValidatingAdmissionWebhook
   ciliumNetworkPolicy:
     enabled: true
   teleport:
@@ -75,9 +105,6 @@ kubectlImage:
   name: giantswarm/kubectl
   tag: 1.23.5
 
-metadata:
-  preventDeletion: false
-
 nodeClasses:
   default:
     cloneMode: "linkedClone"
@@ -91,24 +118,7 @@ nodeClasses:
       - networkName: ""
         dhcp4: true
 
-nodePools:
-  worker:
-    class: default
-    replicas: 2
-
-oidc:
-  issuerUrl: ""
-  caFile: ""
-  clientId: ""
-  usernameClaim: ""
-  groupsClaim: ""
-  usernamePrefix: ""
-
 organization: ""
-
-osUsers:
-- name: "giantswarm"
-  sudo: "ALL=(ALL) NOPASSWD:ALL"
 
 proxy:
   secretName: ""
@@ -116,8 +126,6 @@ proxy:
 
 servicePriority: "highest"
 
-sshTrustedUserCAKeys:
-  - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM4cvZ01fLmO9cJbWUj7sfF+NhECgy+Cl0bazSrZX7sU vault-ca@vault.operations.giantswarm.io
 
 vcenter:
   datacenter: ""
