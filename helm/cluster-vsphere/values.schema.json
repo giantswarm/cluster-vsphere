@@ -468,6 +468,32 @@
 			"type": "object",
 			"additionalProperties": false,
 			"properties": {
+				"enableAdmissionPlugins": {
+					"type": "array",
+					"title": "Admission plugins",
+					"description": "List of admission plugins to be passed to the API server via the --enable-admission-plugins flag.",
+					"items": {
+						"type": "string",
+						"title": "Plugin",
+						"examples": [
+							"DefaultStorageClass",
+							"Priority"
+						],
+						"pattern": "^[A-Za-z0-9]+$"
+					},
+					"default": [
+						"DefaultStorageClass",
+						"DefaultTolerationSeconds",
+						"LimitRanger",
+						"MutatingAdmissionWebhook",
+						"NamespaceLifecycle",
+						"PersistentVolumeClaimResize",
+						"Priority",
+						"ResourceQuota",
+						"ServiceAccount",
+						"ValidatingAdmissionWebhook"
+					]
+				},
 				"ciliumNetworkPolicy": {
 					"type": "object",
 					"title": "CiliumNetworkPolicies",
