@@ -15,7 +15,7 @@ spec:
         - localhost
         - 127.0.0.1
         - "api.{{ include "resource.default.name" $ }}.{{ .Values.global.connectivity.baseDomain }}"
-        {{- with .Values.apiServer.certSANs }}
+        {{- with .Values.internal.apiServer.certSANs }}
         {{- range . }}
         - {{ . }}
         {{- end }}

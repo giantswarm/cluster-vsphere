@@ -513,6 +513,16 @@
 						"ValidatingAdmissionWebhook"
 					]
 				},
+				"certSANs": {
+					"default": [],
+					"description": "Alternative names to encode in the API server's certificate.",
+					"items": {
+						"title": "SAN",
+						"type": "string"
+					},
+					"title": "Subject alternative names (SAN)",
+					"type": "array"
+				},
 				"featureGates": {
 					"type": "array",
 					"title": "Feature gates",
