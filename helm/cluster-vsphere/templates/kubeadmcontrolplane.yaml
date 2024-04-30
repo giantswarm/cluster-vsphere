@@ -82,7 +82,9 @@ spec:
           cloud-provider: external
           enable-hostpath-provisioner: "true"
           terminated-pod-gc-threshold: "125"
-          feature-gates: {{ .Values.controllerManager.featureGates | quote }}
+          feature-gates: {{ range $index, $element := .Values.internal.controllerManager.featureGates -}}
+            {{ if $index }},{{ end }}{{ $element.name }}={{ $element.enabled }}
+          {{- end }}
           profiling: "false"
       dns:
         imageRepository: {{ .Values.global.controlPlane.dns.imageRepository }}

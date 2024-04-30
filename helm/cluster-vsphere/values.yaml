@@ -9,8 +9,6 @@ clusterDescription: ""
 
 clusterLabels: {}
 
-controllerManager:
-  featureGates: ""
 
 global:
   connectivity:
@@ -91,6 +89,8 @@ internal:
   featureGates: []
   ciliumNetworkPolicy:
     enabled: true
+  controllerManager:
+    featureGates: []
   teleport:
     proxyAddr: teleport.giantswarm.io:443
     version: 14.1.3

@@ -534,6 +534,22 @@
 						}
 					}
 				},
+				"controllerManager": {
+					"type": "object",
+					"title": "Controller manager",
+					"additionalProperties": false,
+					"properties": {
+						"featureGates": {
+							"type": "array",
+							"title": "Feature gates",
+							"description": "Controller manager feature gate activation/deactivation.",
+							"items": {
+								"$ref": "#/$defs/featureGate"
+							},
+							"default": []
+						}
+					}
+				},
 				"teleport": {
 					"type": "object",
 					"title": "Teleport",
