@@ -12,6 +12,25 @@
 			},
 			"type": "array",
 			"minItems": 1
+		},
+		"featureGate": {
+			"type": "object",
+			"title": "Feature gate",
+			"additionalProperties": false,
+			"properties": {
+				"enabled": {
+					"type": "boolean",
+					"title": "Enabled"
+				},
+				"name": {
+					"type": "string",
+					"title": "Name",
+					"examples": [
+						"UserNamespacesStatelessPodsSupport"
+					],
+					"pattern": "^[A-Za-z0-9]+$"
+				}
+			}
 		}
 	},
 	"properties": {
@@ -494,6 +513,15 @@
 						"ValidatingAdmissionWebhook"
 					]
 				},
+				"featureGates": {
+					"type": "array",
+					"title": "Feature gates",
+					"description": "API server feature gate activation/deactivation.",
+					"items": {
+						"$ref": "#/$defs/featureGate"
+					},
+					"default": []
+				}
 				"ciliumNetworkPolicy": {
 					"type": "object",
 					"title": "CiliumNetworkPolicies",
