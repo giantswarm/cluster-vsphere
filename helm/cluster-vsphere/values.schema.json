@@ -91,10 +91,26 @@
 								}
 							}
 						},
+						"organization": {
+							 "type": "string",
+							  "title": "Organization"
+						},
 						"preventDeletion": {
 							"type": "boolean",
 							"title": "Prevent cluster deletion",
 							"default": false
+						},
+						"servicePriority": {
+							"type": "string",
+							"title": "Service priority",
+							"description": "The relative importance of this cluster.",
+							"$comment": "Defined in https://github.com/giantswarm/rfc/tree/main/classify-cluster-priority",
+							"enum": [
+								"highest",
+								"medium",
+								"lowest"
+							],
+							"default": "highest"
 						}
 					}
 				},
@@ -484,7 +500,7 @@
 						"$ref": "#/$defs/featureGate"
 					},
 					"default": []
-				}
+				},
 				"ciliumNetworkPolicy": {
 					"type": "object",
 					"title": "CiliumNetworkPolicies",
@@ -602,11 +618,6 @@
 			},
 			"title": "Kubectl image",
 			"type": "object"
-		},
-		"organization": {
-			"title": "Organization",
-			"description": "The organization which owns this cluster",
-			"type": "string"
 		},
 		"template": {
 			"description": "Provisioning options for node templates.",

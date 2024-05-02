@@ -4,10 +4,10 @@ metadata:
   name: {{ include "resource.default.name" $ }}-cilium
   namespace: {{ $.Release.Namespace }}
   annotations:
-    cluster.giantswarm.io/description: "{{ .Values.clusterDescription }}"
+    cluster.giantswarm.io/description: "{{ .Values.global.metadata.description }}"
   labels:
     cluster-apps-operator.giantswarm.io/watching: ""
-    giantswarm.io/service-priority: "{{ .Values.servicePriority }}"
+    giantswarm.io/service-priority: "{{ .Values.global.metadata.servicePriority }}"
     {{- include "labels.common" . | nindent 4 }}
 spec:
   releaseName: cilium

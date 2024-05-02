@@ -2,11 +2,6 @@ cluster:
   kubernetesVersion: "v1.25.16"
   enableEncryptionProvider: true
 
-clusterDescription: ""
-
-clusterLabels: {}
-
-
 global:
   connectivity:
     baseDomain: k8s.test
@@ -62,7 +57,11 @@ global:
       usernamePrefix: ""
       groupsPrefix: ""
   metadata:
+    description: ""
+    labels: {}
+    organization: ""
     preventDeletion: false
+    servicePriority: "highest"
   nodePools:
     worker:
       class: default
@@ -116,14 +115,10 @@ nodeClasses:
       - networkName: ""
         dhcp4: true
 
-organization: ""
 
 proxy:
   secretName: ""
   enabled: false
-
-servicePriority: "highest"
-
 
 vcenter:
   datacenter: ""
