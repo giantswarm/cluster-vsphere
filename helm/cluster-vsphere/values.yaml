@@ -65,6 +65,16 @@ global:
       replicas: 2
   podSecurityStandards:
     enforced: true
+  providerSpecific:
+    vcenter:
+      datacenter: ""
+      username: ""
+      password: ""
+      datastore: ""
+      server: ""
+      thumbprint: ""
+      region: ""
+      zone: ""
 
 internal:
   apiServer:
@@ -115,12 +125,3 @@ nodeClasses:
         dhcp4: true
 
 
-vcenter:
-  datacenter: ""
-  username: ""
-  password: ""
-  datastore: ""
-  server: ""
-  thumbprint: ""
-  region: ""
-  zone: ""
