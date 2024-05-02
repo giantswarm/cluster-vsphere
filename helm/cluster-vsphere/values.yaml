@@ -16,6 +16,7 @@ global:
         cidrBlocks:
         - "172.31.0.0/16"
     containerRegistries: {}
+    proxy: {}
     shell:
       osUsers:
         - name: "giantswarm"
@@ -113,10 +114,6 @@ nodeClasses:
       - networkName: ""
         dhcp4: true
 
-
-proxy:
-  secretName: ""
-  enabled: false
 
 vcenter:
   datacenter: ""

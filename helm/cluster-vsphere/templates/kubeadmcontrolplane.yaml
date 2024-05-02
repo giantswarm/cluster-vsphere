@@ -133,7 +133,7 @@ spec:
       {{- include "sshFiles" . | nindent 6}}
       {{- include "teleportFiles" . | nindent 6 }}
       {{- include "auditLogFiles" . | nindent 6 }}
-      {{- if $.Values.proxy.enabled }}
+      {{- if $.Values.global.connectivity.proxy.enabled }}
       {{- include "containerdProxyConfig" . | nindent 6}}
       {{- include "teleportProxyConfig" . | nindent 6 }}
       {{- end }}
@@ -156,7 +156,7 @@ spec:
       {{- include "sshPreKubeadmCommands" . | nindent 6 }}
       - bash /etc/kubernetes/patches/kube-apiserver-patch.sh {{ .Values.global.controlPlane.resourceRatio }}
       - /bin/test ! -d /var/lib/kubelet && (/bin/mkdir -p /var/lib/kubelet && /bin/chmod 0750 /var/lib/kubelet)
-      {{- if $.Values.proxy.enabled }}
+      {{- if $.Values.global.connectivity.proxy.enabled }}
       - systemctl daemon-reload
       - systemctl restart containerd
       {{- if $.Values.internal.teleport.enabled }}

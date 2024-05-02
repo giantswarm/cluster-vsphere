@@ -127,14 +127,14 @@ files:
   {{- include "sshFiles" . | nindent 2}}
   {{- include "teleportFiles" . | nindent 2 }}
   {{- include "containerdConfig" . | nindent 2 }}
-  {{- if $.Values.proxy.enabled }}
+  {{- if $.Values.global.connectivity.proxy.enabled }}
     {{- include "containerdProxyConfig" . | nindent 2}}
     {{- include "teleportProxyConfig" . | nindent 2 }}
   {{- end }}
 preKubeadmCommands:
 {{ include "sshPreKubeadmCommands" . }}
 - /bin/test ! -d /var/lib/kubelet && (/bin/mkdir -p /var/lib/kubelet && /bin/chmod 0750 /var/lib/kubelet)
-  {{- if $.Values.proxy.enabled }}
+  {{- if $.Values.global.connectivity.proxy.enabled }}
 - systemctl daemon-reload
 - systemctl restart containerd
   {{- if $.Values.internal.teleport.enabled }}
