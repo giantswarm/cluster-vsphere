@@ -591,36 +591,6 @@
 				}
 			}
 		},
-		"kubeadm": {
-			"properties": {
-				"users": {
-					"items": {
-						"properties": {
-							"authorizedKeys": {
-								"items": {
-									"title": "Key",
-									"type": "string"
-								},
-								"title": "Authorized keys",
-								"type": "array"
-							},
-							"name": {
-								"title": "Name",
-								"type": "string"
-							}
-						},
-						"type": "object"
-					},
-					"title": "Users",
-					"type": "array"
-				}
-			},
-			"title": "Kubeadm",
-			"type": [
-				"null",
-				"object"
-			]
-		},
 		"kubectlImage": {
 			"description": "Used by cluster-shared library chart to configure coredns in-cluster.",
 			"properties": {
@@ -635,58 +605,6 @@
 				}
 			},
 			"title": "Kubectl image",
-			"type": "object"
-		},
-		"template": {
-			"description": "Provisioning options for node templates.",
-			"properties": {
-				"cloneMode": {
-					"description": "Method used to clone template image.",
-					"title": "Clone mode",
-					"type": "string"
-				},
-				"diskGiB": {
-					"description": "Node disk size in GB. Must be at least as large as the source image.",
-					"title": "Disk size (GB)",
-					"type": "integer"
-				},
-				"folder": {
-					"description": "VSphere folder to deploy instances in. Must already exist.",
-					"title": "Folder",
-					"type": "string"
-				},
-				"memoryMiB": {
-					"description": "Node memory allocation in MB.",
-					"title": "Memory (MB)",
-					"type": "integer"
-				},
-				"networkName": {
-					"description": "Segment name to attach nodes to. Must already exist.",
-					"title": "Segment name",
-					"type": "string"
-				},
-				"numCPUs": {
-					"description": "Number of CPUs to assign per node.",
-					"title": "CPU cores",
-					"type": "integer"
-				},
-				"resourcePool": {
-					"description": "Resource pool to allocate nodes from. Must already exist.",
-					"title": "Resource pool",
-					"type": "string"
-				},
-				"storagePolicyName": {
-					"description": "Storage policy to use. If specified, it must already exist.",
-					"title": "Storage policy",
-					"type": "string"
-				},
-				"templateName": {
-					"description": "Image template name to use for nodes.",
-					"title": "Name",
-					"type": "string"
-				}
-			},
-			"title": "Node template",
 			"type": "object"
 		},
 		"vcenter": {
@@ -734,16 +652,6 @@
 				}
 			},
 			"title": "VCenter",
-			"type": "object"
-		},
-		"worker": {
-			"properties": {
-				"replicas": {
-					"title": "Number of nodes",
-					"type": "integer"
-				}
-			},
-			"title": "Worker",
 			"type": "object"
 		}
 	},
