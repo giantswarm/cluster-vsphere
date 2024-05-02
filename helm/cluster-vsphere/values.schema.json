@@ -36,11 +36,6 @@
 	"properties": {
 		"cluster": {
 			"properties": {
-				"kubernetesVersion": {
-					"title": "Kubernetes version",
-					"description": "Kubernetes version to deploy. Must match the version available in the image defined at template.",
-					"type": "string"
-				},
 				"enableEncryptionProvider": {
 					"title": "API server encryption at REST",
 					"description": "Enable encryption at REST feature of API server.",
@@ -533,6 +528,12 @@
 							"default": []
 						}
 					}
+				},
+				"kubernetesVersion": {
+					"type": "string",
+					"title": "Kubernetes version",
+					"description": "Kubernetes version to deploy. Must match the version available in the image defined at template.",
+					"default": "v1.25.16"
 				},
 				"teleport": {
 					"type": "object",

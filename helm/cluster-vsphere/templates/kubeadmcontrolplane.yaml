@@ -170,4 +170,4 @@ spec:
       name: {{ include "resource.default.name" . }}-control-plane-{{ include "mtRevisionByControlPlane" $ }}
       namespace: {{ .Release.Namespace }}
   replicas: {{ .Values.global.controlPlane.replicas }}
-  version: {{ .Values.cluster.kubernetesVersion }}
+  version: {{ .Values.internal.kubernetesVersion }}
