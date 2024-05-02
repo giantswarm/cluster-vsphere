@@ -37,6 +37,7 @@ spec:
           feature-gates: {{ range $index, $element := .Values.internal.apiServer.featureGates -}}
             {{ if $index }},{{ end }}{{ $element.name }}={{ $element.enabled }}
           {{- end }}
+          {{- end }}
           kubelet-preferred-address-types: "InternalIP"
           {{- if .Values.global.controlPlane.oidc.issuerUrl }}
           {{- with .Values.global.controlPlane.oidc }}

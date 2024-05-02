@@ -456,51 +456,56 @@
 			"type": "object",
 			"additionalProperties": false,
 			"properties": {
-				"enableAdmissionPlugins": {
-					"type": "array",
-					"title": "Admission plugins",
-					"description": "List of admission plugins to be passed to the API server via the --enable-admission-plugins flag.",
-					"items": {
-						"type": "string",
-						"title": "Plugin",
-						"examples": [
-							"DefaultStorageClass",
-							"Priority"
-						],
-						"pattern": "^[A-Za-z0-9]+$"
-					},
-					"default": [
-						"DefaultStorageClass",
-						"DefaultTolerationSeconds",
-						"LimitRanger",
-						"MutatingAdmissionWebhook",
-						"NamespaceLifecycle",
-						"PersistentVolumeClaimResize",
-						"Priority",
-						"ResourceQuota",
-						"ServiceAccount",
-						"ValidatingAdmissionWebhook"
-					]
-				},
-				"certSANs": {
-					"default": [],
-					"description": "Alternative names to encode in the API server's certificate.",
-					"items": {
-						"title": "SAN",
-						"type": "string"
-					},
-					"title": "Subject alternative names (SAN)",
-					"type": "array"
-				},
-				"featureGates": {
-					"type": "array",
-					"title": "Feature gates",
-					"description": "API server feature gate activation/deactivation.",
-					"items": {
-						"$ref": "#/$defs/featureGate"
-					},
-					"default": []
-				},
+				"apiServer": {
+                    "type": "object",
+                    "properties": {
+                        "enableAdmissionPlugins": {
+							"type": "array",
+							"title": "Admission plugins",
+							"description": "List of admission plugins to be passed to the API server via the --enable-admission-plugins flag.",
+							"items": {
+								"type": "string",
+								"title": "Plugin",
+								"examples": [
+									"DefaultStorageClass",
+									"Priority"
+								],
+								"pattern": "^[A-Za-z0-9]+$"
+							},
+							"default": [
+								"DefaultStorageClass",
+								"DefaultTolerationSeconds",
+								"LimitRanger",
+								"MutatingAdmissionWebhook",
+								"NamespaceLifecycle",
+								"PersistentVolumeClaimResize",
+								"Priority",
+								"ResourceQuota",
+								"ServiceAccount",
+								"ValidatingAdmissionWebhook"
+							]
+						},
+						"certSANs": {
+							"default": [],
+							"description": "Alternative names to encode in the API server's certificate.",
+							"items": {
+								"title": "SAN",
+								"type": "string"
+							},
+							"title": "Subject alternative names (SAN)",
+							"type": "array"
+						},
+						"featureGates": {
+							"type": "array",
+							"title": "Feature gates",
+							"description": "API server feature gate activation/deactivation.",
+							"items": {
+								"$ref": "#/$defs/featureGate"
+							},
+							"default": []
+						}
+					}
+                },		
 				"ciliumNetworkPolicy": {
 					"type": "object",
 					"title": "CiliumNetworkPolicies",

@@ -82,8 +82,8 @@ internal:
       - ResourceQuota
       - ServiceAccount
       - ValidatingAdmissionWebhook
-  certSANs: []
-  featureGates: []
+    certSANs: []
+    featureGates: []
   ciliumNetworkPolicy:
     enabled: true
   controllerManager:
