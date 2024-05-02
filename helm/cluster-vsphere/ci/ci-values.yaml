@@ -1,12 +1,8 @@
 baseDomain: k8s.test
-clusterDescription: "test cluster"
-organization: "giantswarm"
-
 cluster:
   name: test
   kubernetesVersion: "v1.24.11"
   enableEncryptionProvider: false
-
 vcenter:
   server: "https://foo.example.com"
   username: "vcenter-admin"
@@ -28,9 +24,8 @@ controlPlane:
     resourcePool: "grasshopper"
     network:
       devices:
-      - networkName: 'grasshopper-capv'
-        dhcp4: true
-
+        - networkName: 'grasshopper-capv'
+          dhcp4: true
 connectivity:
   network:
     controlPlaneEndpoint:
@@ -38,9 +33,7 @@ connectivity:
       port: 6443
     loadBalancers:
       cidrBlocks:
-      - "10.10.222.224/30"
-
-
+        - "10.10.222.224/30"
 nodeClasses:
   default:
     template: "ubuntu-2004-kube-v1.24.11"
@@ -51,10 +44,13 @@ nodeClasses:
     resourcePool: "grasshopper"
     network:
       devices:
-      - networkName: 'grasshopper-capv'
-        dhcp4: true
-
+        - networkName: 'grasshopper-capv'
+          dhcp4: true
 nodePools:
   worker:
     class: "default"
     replicas: 2
+global:
+  metadata:
+    description: "test cluster"
+    organization: "giantswarm"

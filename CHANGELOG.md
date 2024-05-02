@@ -7,6 +7,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### **Breaking change**.
+
+<details>
+<summary>How to migrate values</summary>
+
+Using `yq`, migrate to the new values layout with the following command:
+
+```bash
+#!/bin/bash
+yq eval --inplace 'with(select(.metadata != null);  .global.metadata = .metadata) |
+    with(select(.clusterDescription != null);       .global.metadata.description = .clusterDescription) |
+    with(select(.organization != null);             .global.metadata.organization = .organization) |
+    with(select(.clusterLabels != null);            .global.metadata.labels = .clusterLabels) |
+    with(select(.servicePriority != null);          .global.metadata.servicePriority = .servicePriority) |
+
+    del(.metadata) |
+    del(.clusterDescription) |
+    del(.organization) |
+    del(.clusterLabels) |
+    del(.servicePriority)' values.yaml
+```
+
+</details>
+
+### Changed
+
+- Move Helm values property `.Values.metadata` to `.Values.global.metadata`.
+- Move Helm values property `.Values.clusterDescription` to `.Values.global.metadata.description`.
+- Move Helm values property `.Values.organization` to `.Values.global.metadata.organization`.
+- Move Helm values property `.Values.clusterLabels` to `.Values.global.metadata.labels`.
+- Move Helm values property `.Values.servicePriority` to `.Values.global.metadata.servicePriority`.
+
 ## [0.50.0] - 2024-04-23
 
 ### Changed
