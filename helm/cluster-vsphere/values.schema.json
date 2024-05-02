@@ -34,17 +34,6 @@
 		}
 	},
 	"properties": {
-		"cluster": {
-			"properties": {
-				"enableEncryptionProvider": {
-					"title": "API server encryption at REST",
-					"description": "Enable encryption at REST feature of API server.",
-					"type": "boolean"
-				}
-			},
-			"title": "Cluster",
-			"type": "object"
-		},
 		"global": {
 			"type": "object",
 			"title": "Global parameters",
@@ -528,6 +517,11 @@
 							"default": []
 						}
 					}
+				},
+				"enableEncryptionProvider": {
+					"title": "API server encryption at REST",
+					"description": "Enable encryption at REST feature of API server.",
+					"type": "boolean"
 				},
 				"kubernetesVersion": {
 					"type": "string",
