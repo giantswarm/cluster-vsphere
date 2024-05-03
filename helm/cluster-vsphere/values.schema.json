@@ -43,6 +43,231 @@
 					"title": "Connectivity",
 					"description": "Configurations related to cluster connectivity such as container registries.",
 					"required": [
+						"network"
+					],
+					"additionalProperties": false,
+					"properties": {
+						"baseDomain": {
+							"type": "string",
+							"title": "Base DNS domain",
+							"default": "k8s.test"
+						},
+						"containerRegistries": {
+							"type": "object",
+							"title": "Container registries",
+							"description": "Endpoints and credentials configuration for container registries.",
+							"additionalProperties": {
+								"type": "array",
+								"items": {
+									"type": "object",
+									"required": [
+										"endpoint"
+									],
+									"additionalProperties": false,
+									"properties": {
+										"credentials": {
+											"type": "object",
+											"title": "Credentials",
+											"description": "Credentials for the endpoint.",
+											"additionalProperties": false,
+											"properties": {
+												"auth": {
+													"type": "string",
+													"title": "Auth",
+													"description": "Base64-encoded string from the concatenation of the username, a colon, and the password."
+												},
+												"identitytoken": {
+													"type": "string",
+													"title": "Identity token",
+													"description": "Used to authenticate the user and obtain an access token for the registry."
+												},
+												"password": {
+													"type": "string",
+													"title": "Password",
+													"description": "Used to authenticate for the registry with username/password."
+												},
+												"username": {
+													"type": "string",
+													"title": "Username",
+													"description": "Used to authenticate for the registry with username/password."
+												}
+											}
+										},
+										"endpoint": {
+											"type": "string",
+											"title": "Endpoint",
+											"description": "Endpoint for the container registry."
+										}
+									}
+								}
+							},
+							"default": {}
+						},
+						"network": {
+							"properties": {
+								"controlPlaneEndpoint": {
+									"description": "Kubernetes API configuration.",
+									"properties": {
+										"host": {
+											"title": "Host",
+											"description": "IP for access to the Kubernetes API. Manually select an IP for kube API. Empty string for auto selection from the ipPoolName pool.",
+											"type": "string"
+										},
+										"port": {
+											"title": "Port number",
+											"description": "Port for access to the Kubernetes API.",
+											"type": "integer"
+										},
+										"ipPoolName": {
+											"title": "Ip Pool Name",
+											"description": "Ip for control plane will be drawn from this GlobalInClusterIPPool resource.",
+											"type": "string",
+											"pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$",
+											"default": "wc-cp-ips"
+										}
+									},
+									"title": "Endpoint",
+									"type": "object"
+								},
+								"pods": {
+									"properties": {
+										"cidrBlocks": {
+											"$ref": "#/$defs/cidrBlocks",
+											"default": "10.244.0.0/16",
+											"title": "Pod subnets"
+										}
+									},
+									"required": [
+										"cidrBlocks"
+									],
+									"title": "Pods",
+									"type": "object"
+								},
+								"services": {
+									"properties": {
+										"cidrBlocks": {
+											"$ref": "#/$defs/cidrBlocks",
+											"default": "172.31.0.0/16",
+											"title": "Service subnets"
+										}
+									},
+									"required": [
+										"cidrBlocks"
+									],
+									"title": "Services",
+									"type": "object"
+								},
+								"loadBalancers": {
+									"anyOf": [
+										{
+											"properties": {
+												"cidrBlocks": {
+													"$ref": "#/$defs/cidrBlocks",
+													"title": "Load Balancer subnets"
+												}
+											},
+											"required": ["cidrBlocks"]
+										},
+										{
+											"properties": {
+												"ipPoolName": {
+													"title": "Ip Pool Name",
+													"description": "Ip for Service LB running in WC will be drawn from this GlobalInClusterIPPool resource.",
+													"type": "string",
+													"pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$"
+												}
+											},
+											"required": ["ipPoolName"]
+										}
+									],
+									"title": "Load balancers",
+									"type": "object"
+								}
+							},
+							"required": [
+								"pods",
+								"services",
+								"loadBalancers"
+							],
+							"title": "Network",
+							"type": "object"
+						},
+						"proxy": {
+							"type": "object",
+							"title": "Proxy",
+							"description": "Whether/how outgoing traffic is routed through proxy servers.",
+							"additionalProperties": false,
+							"properties": {
+								"enabled": {
+									"type": "boolean",
+									"title": "Enable"
+								},
+								"secretName": {
+									"type": "string",
+									"title": "Secret name",
+									"description": "Name of a secret resource used by containerd to obtain the HTTP_PROXY, HTTPS_PROXY, and NO_PROXY environment variables. If empty the value will be defaulted to <clusterName>-cluster-values.",
+									"pattern": "^[a-z0-9-]{0,63}$"
+								}
+							}
+						},
+						"shell": {
+							"type": "object",
+							"title": "Shell access",
+							"additionalProperties": false,
+							"properties": {
+								"osUsers": {
+									"type": "array",
+									"title": "OS Users",
+									"description": "Configuration for OS users in cluster nodes.",
+									"items": {
+										"type": "object",
+										"title": "User",
+										"required": [
+											"name"
+										],
+										"additionalProperties": false,
+										"properties": {
+											"name": {
+												"type": "string",
+												"title": "Name",
+												"description": "Username of the user.",
+												"minLength": 2,
+												"pattern": "^[a-z][-a-z0-9]+$"
+											},
+											"sudo": {
+												"type": "string",
+												"title": "Sudoers configuration",
+												"description": "Permissions string to add to /etc/sudoers for this user."
+											}
+										}
+									},
+									"default": [
+										{
+											"name": "giantswarm",
+											"sudo": "ALL=(ALL) NOPASSWD:ALL"
+										}
+									]
+								},
+								"sshTrustedUserCAKeys": {
+									"type": "array",
+									"title": "Trusted SSH cert issuers",
+									"description": "CA certificates of issuers that are trusted to sign SSH user certificates.",
+									"items": {
+										"type": "string"
+									},
+									"default": [
+										"ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM4cvZ01fLmO9cJbWUj7sfF+NhECgy+Cl0bazSrZX7sU vault-ca@vault.operations.giantswarm.io"
+									]
+								}
+							}
+						}
+					}
+				},		
+				"metadata": {
+					"type": "object",
+					"title": "Connectivity",
+					"description": "Configurations related to cluster connectivity such as container registries.",
+					"required": [
 						"baseDomain",
 						"network"
 					],
