@@ -21,12 +21,20 @@ yq eval --inplace 'with(select(.metadata != null);  .global.metadata = .metadata
     with(select(.organization != null);             .global.metadata.organization = .organization) |
     with(select(.clusterLabels != null);            .global.metadata.labels = .clusterLabels) |
     with(select(.servicePriority != null);          .global.metadata.servicePriority = .servicePriority) |
+    with(select(.connectivity != null);             .global.connectivity = .connectivity) |
+    with(select(.osUsers != null);                  .global.connectivity.shell.osUsers = .osUsers) |
+    with(select(.sshTrustedUserCAKeys != null);     .global.connectivity.shell.sshTrustedUserCAKeys = .sshTrustedUserCAKeys) |
+    with(select(.proxy != null);                    .global.connectivity.proxy = .proxy) |
 
     del(.metadata) |
     del(.clusterDescription) |
     del(.organization) |
     del(.clusterLabels) |
-    del(.servicePriority)' values.yaml
+    del(.servicePriority)
+    del(.connectivity) |
+    del(.osUsers) |
+    del(.sshTrustedUserCAKeys) |
+    del(.proxy)' values.yaml
 ```
 
 </details>
@@ -38,6 +46,10 @@ yq eval --inplace 'with(select(.metadata != null);  .global.metadata = .metadata
 - Move Helm values property `.Values.organization` to `.Values.global.metadata.organization`.
 - Move Helm values property `.Values.clusterLabels` to `.Values.global.metadata.labels`.
 - Move Helm values property `.Values.servicePriority` to `.Values.global.metadata.servicePriority`.
+- Move Helm values property `.Values.connectivity` to `.Values.global.connectivity`.
+- Move Helm values property `.Values.proxy` to `.Values.global.connectivity.proxy`.
+- Move Helm values property `.Values.osUsers` to `.Values.global.connectivity.shell.osUsers`.
+- Move Helm values property `.Values.sshTrustedUserCAKeys` to `.Values.global.connectivity.shell.sshTrustedUserCAKeys`.
 
 ## [0.50.0] - 2024-04-23
 
