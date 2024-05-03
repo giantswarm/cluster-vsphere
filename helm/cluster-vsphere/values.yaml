@@ -104,8 +104,6 @@ oidc:
   groupsClaim: ""
   usernamePrefix: ""
 
-
-
 vcenter:
   datacenter: ""
   username: ""
