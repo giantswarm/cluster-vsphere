@@ -12,6 +12,7 @@ controllerManager:
 
 global:
   connectivity:
+    containerRegistries: {}
     network:
       controlPlaneEndpoint:
         host: ""
