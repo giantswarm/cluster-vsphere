@@ -7,23 +7,6 @@ cluster:
   kubernetesVersion: "v1.25.16"
   enableEncryptionProvider: true
 
-connectivity:
-  network:
-    controlPlaneEndpoint:
-      host: ""
-      port: 6443
-      ipPoolName: "wc-cp-ips"
-    loadBalancers:
-      cidrBlocks: []
-      ipPoolName: "svc-lb-ips"
-    pods:
-      cidrBlocks:
-      - "10.244.0.0/16"
-    services:
-      cidrBlocks:
-      - "172.31.0.0/16"
-  containerRegistries: {}
-
 controllerManager:
   featureGates: ""
 
@@ -45,6 +28,22 @@ controlPlane:
   resourceRatio: 8
 
 global:
+  connectivity:
+    network:
+      controlPlaneEndpoint:
+        host: ""
+        port: 6443
+        ipPoolName: "wc-cp-ips"
+      loadBalancers:
+        cidrBlocks: []
+        ipPoolName: "svc-lb-ips"
+      pods:
+        cidrBlocks:
+        - "10.244.0.0/16"
+      services:
+        cidrBlocks:
+        - "172.31.0.0/16"
+    containerRegistries: {}
   podSecurityStandards:
     enforced: true
   metadata:
