@@ -43,6 +43,7 @@
 					"title": "Connectivity",
 					"description": "Configurations related to cluster connectivity such as container registries.",
 					"required": [
+						"baseDomain",
 						"network"
 					],
 					"additionalProperties": false,
