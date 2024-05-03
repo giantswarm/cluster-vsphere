@@ -26,14 +26,6 @@ controlPlane:
       devices:
         - networkName: 'grasshopper-capv'
           dhcp4: true
-connectivity:
-  network:
-    controlPlaneEndpoint:
-      host: "10.10.222.241"
-      port: 6443
-    loadBalancers:
-      cidrBlocks:
-        - "10.10.222.224/30"
 nodeClasses:
   default:
     template: "ubuntu-2004-kube-v1.24.11"
@@ -54,3 +46,11 @@ global:
   metadata:
     description: "test cluster"
     organization: "giantswarm"
+  connectivity:
+    network:
+      controlPlaneEndpoint:
+        host: "10.10.222.241"
+        port: 6443
+      loadBalancers:
+        cidrBlocks:
+          - "10.10.222.224/30"
