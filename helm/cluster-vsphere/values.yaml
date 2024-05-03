@@ -12,6 +12,7 @@ controllerManager:
 
 global:
   connectivity:
+    baseDomain: k8s.test
     containerRegistries: {}
     network:
       controlPlaneEndpoint:
