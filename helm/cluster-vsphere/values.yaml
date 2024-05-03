@@ -7,10 +7,6 @@ cluster:
   kubernetesVersion: "v1.25.16"
   enableEncryptionProvider: true
 
-clusterDescription: ""
-
-clusterLabels: {}
-
 connectivity:
   network:
     controlPlaneEndpoint:
@@ -51,6 +47,12 @@ controlPlane:
 global:
   podSecurityStandards:
     enforced: true
+  metadata:
+    description: ""
+    labels: {}
+    organization: ""
+    preventDeletion: false
+    servicePriority: "highest"
 
 internal:
   ciliumNetworkPolicy:
@@ -68,9 +70,6 @@ kubectlImage:
   registry: gsoci.azurecr.io
   name: giantswarm/kubectl
   tag: 1.23.5
-
-metadata:
-  preventDeletion: false
 
 nodeClasses:
   default:
@@ -98,8 +97,6 @@ oidc:
   groupsClaim: ""
   usernamePrefix: ""
 
-organization: ""
-
 osUsers:
 - name: "giantswarm"
   sudo: "ALL=(ALL) NOPASSWD:ALL"
@@ -107,8 +104,6 @@ osUsers:
 proxy:
   secretName: ""
   enabled: false
-
-servicePriority: "highest"
 
 sshTrustedUserCAKeys:
   - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM4cvZ01fLmO9cJbWUj7sfF+NhECgy+Cl0bazSrZX7sU vault-ca@vault.operations.giantswarm.io
