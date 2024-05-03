@@ -1,4 +1,3 @@
-baseDomain: k8s.test
 cluster:
   name: test
   kubernetesVersion: "v1.24.11"
@@ -54,3 +53,4 @@ global:
       loadBalancers:
         cidrBlocks:
           - "10.10.222.224/30"
+    baseDomain: k8s.test

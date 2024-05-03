@@ -25,6 +25,7 @@ yq eval --inplace 'with(select(.metadata != null);  .global.metadata = .metadata
     with(select(.osUsers != null);                  .global.connectivity.shell.osUsers = .osUsers) |
     with(select(.sshTrustedUserCAKeys != null);     .global.connectivity.shell.sshTrustedUserCAKeys = .sshTrustedUserCAKeys) |
     with(select(.proxy != null);                    .global.connectivity.proxy = .proxy) |
+    with(select(.baseDomain != null);               .global.connectivity.baseDomain = .baseDomain) |
 
     del(.metadata) |
     del(.clusterDescription) |
@@ -34,7 +35,8 @@ yq eval --inplace 'with(select(.metadata != null);  .global.metadata = .metadata
     del(.connectivity) |
     del(.osUsers) |
     del(.sshTrustedUserCAKeys) |
-    del(.proxy)' values.yaml
+    del(.proxy) |
+    del(.baseDomain)' values.yaml
 ```
 
 </details>
@@ -50,6 +52,7 @@ yq eval --inplace 'with(select(.metadata != null);  .global.metadata = .metadata
 - Move Helm values property `.Values.proxy` to `.Values.global.connectivity.proxy`.
 - Move Helm values property `.Values.osUsers` to `.Values.global.connectivity.shell.osUsers`.
 - Move Helm values property `.Values.sshTrustedUserCAKeys` to `.Values.global.connectivity.shell.sshTrustedUserCAKeys`.
+- Move Helm values property `.Values.baseDomain` to `.Values.global.connectivity.baseDomain`.
 
 ## [0.50.0] - 2024-04-23
 
