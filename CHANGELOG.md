@@ -31,7 +31,7 @@ yq eval --inplace 'with(select(.metadata != null);  .global.metadata = .metadata
     del(.clusterDescription) |
     del(.organization) |
     del(.clusterLabels) |
-    del(.servicePriority)
+    del(.servicePriority) |
     del(.connectivity) |
     del(.osUsers) |
     del(.sshTrustedUserCAKeys) |
