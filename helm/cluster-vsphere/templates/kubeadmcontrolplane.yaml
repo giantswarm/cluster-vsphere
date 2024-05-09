@@ -33,7 +33,7 @@ spec:
           {{- end }}
           feature-gates: {{ .Values.apiServer.featureGates | quote }}
           kubelet-preferred-address-types: "InternalIP"
-          {{- if .Values.global.controlPlane.oidc }}
+          {{- if .Values.global.controlPlane.oidc.issuerUrl }}
           {{- with .Values.global.controlPlane.oidc }}
           oidc-issuer-url: {{ .issuerUrl }}
           oidc-client-id: {{ .clientId }}
