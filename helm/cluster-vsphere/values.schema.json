@@ -12,6 +12,25 @@
 			},
 			"type": "array",
 			"minItems": 1
+		},
+		"featureGate": {
+			"type": "object",
+			"title": "Feature gate",
+			"additionalProperties": false,
+			"properties": {
+				"enabled": {
+					"type": "boolean",
+					"title": "Enabled"
+				},
+				"name": {
+					"type": "string",
+					"title": "Name",
+					"examples": [
+						"UserNamespacesStatelessPodsSupport"
+					],
+					"pattern": "^[A-Za-z0-9]+$"
+				}
+			}
 		}
 	},
 	"properties": {
@@ -629,21 +648,6 @@
 			"title": "Kubernetes API server",
 			"type": "object"
 		},
-		"controllerManager": {
-			"properties": {
-				"featureGates": {
-					"default": "",
-					"description": "Enabled feature gates, as a comma-separated list.",
-					"title": "Feature gates",
-					"type": "string"
-				}
-			},
-			"required": [
-				"featureGates"
-			],
-			"title": "Kubernetes Controller Manager",
-			"type": "object"
-		},
 		"internal": {
 			"type": "object",
 			"additionalProperties": false,
@@ -657,6 +661,22 @@
 							"title": "Enable CiliumNetworkPolicies",
 							"description": "Installs the network-policies-app (deny all by default) if set to true",
 							"default": true
+						}
+					}
+				},
+				"controllerManager": {
+					"type": "object",
+					"title": "Controller manager",
+					"additionalProperties": false,
+					"properties": {
+						"featureGates": {
+							"type": "array",
+							"title": "Feature gates",
+							"description": "Controller manager feature gate activation/deactivation.",
+							"items": {
+								"$ref": "#/$defs/featureGate"
+							},
+							"default": []
 						}
 					}
 				},

@@ -3,9 +3,6 @@ apiServer:
   featureGates: ""
   certSANs: []
 
-controllerManager:
-  featureGates: ""
-
 global:
   connectivity:
     containerRegistries: {}
@@ -70,6 +67,8 @@ global:
 internal:
   ciliumNetworkPolicy:
     enabled: true
+  controllerManager:
+    featureGates: []
   enableEncryptionProvider: true
   kubernetesVersion: "v1.25.16"
   teleport:

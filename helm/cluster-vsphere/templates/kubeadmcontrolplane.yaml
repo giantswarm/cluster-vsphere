@@ -74,7 +74,11 @@ spec:
           cloud-provider: external
           enable-hostpath-provisioner: "true"
           terminated-pod-gc-threshold: "125"
-          feature-gates: {{ .Values.controllerManager.featureGates | quote }}
+          {{- if .Values.internal.controllerManager.featureGates }}
+          feature-gates: {{ range $index, $element := .Values.internal.controllerManager.featureGates -}}
+            {{ if $index }},{{ end }}{{ $element.name }}={{ $element.enabled }}
+          {{- end }}
+          {{- end }}
           profiling: "false"
       etcd:
         local:
