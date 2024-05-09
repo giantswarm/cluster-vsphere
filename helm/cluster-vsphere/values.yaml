@@ -10,23 +10,6 @@ cluster:
 controllerManager:
   featureGates: ""
 
-controlPlane:
-  replicas: 1
-  machineTemplate:
-    cloneMode: "linkedClone"
-    diskGiB: 50
-    numCPUs: 4
-    template: "flatcar-stable-3602.2.1-kube-v1.25.16-gs"
-    resourcePool: "*/Resources"
-    memoryMiB: 8192
-    network:
-      devices:
-      - dhcp4: true
-        networkName: ""
-  image:
-    repository: gsoci.azurecr.io/giantswarm
-  resourceRatio: 8
-
 global:
   connectivity:
     containerRegistries: {}
@@ -51,6 +34,24 @@ global:
           sudo: "ALL=(ALL) NOPASSWD:ALL"
       sshTrustedUserCAKeys:
         - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM4cvZ01fLmO9cJbWUj7sfF+NhECgy+Cl0bazSrZX7sU vault-ca@vault.operations.giantswarm.io
+  controlPlane:
+    dns:
+      imageRepository: gsoci.azurecr.io/giantswarm
+      imageTag: 1.9.4-giantswarm
+    etcd:
+      imageRepository: gsoci.azurecr.io/giantswarm
+      imageTag: 3.5.4-0-k8s
+    image:
+      repository: gsoci.azurecr.io/giantswarm
+    machineTemplate:
+      cloneMode: linkedClone
+      diskGiB: 50
+      memoryMiB: 8192
+      network: {}
+      numCPUs: 4
+      template: flatcar-stable-3602.2.1-kube-v1.25.16-gs
+    oidc: {}
+    resourceRatio: 8
   podSecurityStandards:
     enforced: true
   metadata:
@@ -94,14 +95,6 @@ nodePools:
   worker:
     class: default
     replicas: 2
-
-oidc:
-  issuerUrl: ""
-  caFile: ""
-  clientId: ""
-  usernameClaim: ""
-  groupsClaim: ""
-  usernamePrefix: ""
 
 vcenter:
   datacenter: ""

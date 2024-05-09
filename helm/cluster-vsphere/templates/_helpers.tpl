@@ -163,7 +163,7 @@ postKubeadmCommands:
 
 {{- define "mtRevisionByControlPlane" -}}
 {{- $outerScope := . }}
-{{- include "mtRevision" (merge (dict "currentClass" .Values.controlPlane.machineTemplate) $outerScope.Values) }}
+{{- include "mtRevision" (merge (dict "currentClass" .Values.global.controlPlane.machineTemplate) $outerScope.Values) }}
 {{- end -}}
 
 {{/*
