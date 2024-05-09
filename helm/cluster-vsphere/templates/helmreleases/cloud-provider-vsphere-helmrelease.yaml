@@ -47,11 +47,11 @@ spec:
       config:
         enabled: true
         clusterId: {{ include "resource.default.name" $ }}
-        vcenter: "{{ .Values.vcenter.server }}"
-        datacenter: "{{ .Values.vcenter.datacenter }}"
-        region: "{{ .Values.vcenter.region }}"
-        zone: "{{ .Values.vcenter.zone }}"
-        thumbprint: "{{ .Values.vcenter.thumbprint }}"
+        vcenter: "{{ .Values.global.providerSpecific.vcenter.server }}"
+        datacenter: "{{ .Values.global.providerSpecific.vcenter.datacenter }}"
+        region: "{{ .Values.global.providerSpecific.vcenter.region }}"
+        zone: "{{ .Values.global.providerSpecific.vcenter.zone }}"
+        thumbprint: "{{ .Values.global.providerSpecific.vcenter.thumbprint }}"
       podSecurityStandards:
         enforced: {{ .Values.global.podSecurityStandards.enforced }}
     kube-vip-cloud-provider:
