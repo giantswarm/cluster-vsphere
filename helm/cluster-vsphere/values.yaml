@@ -52,6 +52,10 @@ global:
       template: flatcar-stable-3602.2.1-kube-v1.25.16-gs
     oidc: {}
     resourceRatio: 8
+  nodePools:
+    worker:
+      class: default
+      replicas: 2
   podSecurityStandards:
     enforced: true
   metadata:
