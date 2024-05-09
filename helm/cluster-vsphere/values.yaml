@@ -45,11 +45,13 @@ global:
       repository: gsoci.azurecr.io/giantswarm
     machineTemplate:
       cloneMode: linkedClone
-      diskGiB: "50"
-      memoryMiB: "8192"
+      diskGiB: 50
+      memoryMiB: 8192
       network: {}
-      numCPUs: "4"
+      numCPUs: 4
       template: flatcar-stable-3602.2.1-kube-v1.25.16-gs
+    oidc: {}
+    resourceRatio: 8
   podSecurityStandards:
     enforced: true
   metadata:
