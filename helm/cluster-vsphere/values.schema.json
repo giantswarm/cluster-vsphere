@@ -333,7 +333,7 @@
 									"title": "Disk size",
 									"description": "Control plane node root volume size, in GB.",
 									"default": 50,
-									"minimum": 50
+									"minimum": 25
 								},
 								"memoryMiB": {
 									"type": "integer",
@@ -381,7 +381,7 @@
 									"title": "Number of CPUs",
 									"description": "Control plane CPU count.",
 									"default": 4,
-									"minimum": 4
+									"minimum": 2
 								},
 								"resourcePool": {
 									"type": "string",
