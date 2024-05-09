@@ -1243,53 +1243,6 @@
 			"title": "Node template",
 			"type": "object"
 		},
-		"vcenter": {
-			"description": "Configuration for vSphere API access.",
-			"properties": {
-				"datacenter": {
-					"description": "Name of the datacenter to deploy nodes into.",
-					"title": "Datacenter",
-					"type": "string"
-				},
-				"datastore": {
-					"description": "Name of the datastore for node disk storage.",
-					"title": "Datastore",
-					"type": "string"
-				},
-				"server": {
-					"description": "URL of the VSphere API.",
-					"title": "Server",
-					"type": "string"
-				},
-				"username": {
-					"description": "Username for the VSphere API.",
-					"title": "Username",
-					"type": "string"
-				},
-				"password": {
-					"description": "Password for the VSphere API.",
-					"title": "Password",
-					"type": "string"
-				},
-				"thumbprint": {
-					"description": "TLS certificate signature of the VSphere API.",
-					"title": "Thumbprint",
-					"type": "string"
-				},
-				"region": {
-					"description": "Category name in VSphere for topology.kubernetes.io/region labels.",
-					"title": "Region",
-					"type": "string"
-				},
-				"zone": {
-					"description": "Category name in VSphere for topology.kubernetes.io/zone labels.",
-					"title": "Zone",
-					"type": "string"
-				}
-			},
-			"title": "VCenter",
-			"type": "object"
-		},
 		"worker": {
 			"properties": {
 				"replicas": {
