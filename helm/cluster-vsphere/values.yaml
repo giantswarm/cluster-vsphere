@@ -1,8 +1,3 @@
-apiServer:
-  enableAdmissionPlugins: "NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,PersistentVolumeClaimResize,DefaultStorageClass,Priority,DefaultTolerationSeconds,MutatingAdmissionWebhook,ValidatingAdmissionWebhook"
-  featureGates: ""
-  certSANs: []
-
 global:
   connectivity:
     containerRegistries: {}
@@ -65,6 +60,20 @@ global:
     servicePriority: "highest"
 
 internal:
+  apiServer:
+    certSANs: []
+    enableAdmissionPlugins:
+      - DefaultStorageClass
+      - DefaultTolerationSeconds
+      - LimitRanger
+      - MutatingAdmissionWebhook
+      - NamespaceLifecycle
+      - PersistentVolumeClaimResize
+      - Priority
+      - ResourceQuota
+      - ServiceAccount
+      - ValidatingAdmissionWebhook
+    featureGates: []
   ciliumNetworkPolicy:
     enabled: true
   controllerManager:

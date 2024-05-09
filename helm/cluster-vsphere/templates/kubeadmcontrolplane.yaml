@@ -15,7 +15,7 @@ spec:
         - localhost
         - 127.0.0.1
         - "api.{{ include "resource.default.name" $ }}.{{ .Values.global.connectivity.baseDomain }}"
-        {{- with .Values.apiServer.certSANs }}
+        {{- with .Values.internal.apiServer.certSANs }}
         {{- range . }}
         - {{ . }}
         {{- end }}
@@ -27,11 +27,17 @@ spec:
           audit-log-path: /var/log/apiserver/audit.log
           audit-policy-file: /etc/kubernetes/policies/audit-policy.yaml
           cloud-provider: external
-          enable-admission-plugins: {{ .Values.apiServer.enableAdmissionPlugins }}
+          {{- if .Values.internal.apiServer.enableAdmissionPlugins }}
+          enable-admission-plugins: {{ .Values.internal.apiServer.enableAdmissionPlugins | join "," | quote }}
+          {{- end }}
           {{- if $.Values.internal.enableEncryptionProvider }}
           encryption-provider-config: /etc/kubernetes/encryption/config.yaml
           {{- end }}
-          feature-gates: {{ .Values.apiServer.featureGates | quote }}
+          {{- if .Values.internal.apiServer.featureGates }}
+          feature-gates: {{ range $index, $element := .Values.internal.apiServer.featureGates -}}
+            {{ if $index }},{{ end }}{{ $element.name }}={{ $element.enabled }}
+          {{- end }}
+          {{- end }}
           kubelet-preferred-address-types: "InternalIP"
           {{- if .Values.global.controlPlane.oidc.issuerUrl }}
           {{- with .Values.global.controlPlane.oidc }}
