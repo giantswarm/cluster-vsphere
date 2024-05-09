@@ -264,6 +264,9 @@
 					}
 				},
 				"controlPlane": {
+					"type": "object",
+					"title": "Control plane",
+					"additionalProperties": false,
 					"properties": {
 						"dns": {
 							"type": "object",
@@ -313,7 +316,7 @@
 						},
 						"machineTemplate": {
 							"type": "object",
-							"title": "Machine template for control plane nodes.",
+							"title": "Template to define control plane nodes",
 							"additionalProperties": false,
 							"required": [
 								"network"
@@ -326,16 +329,18 @@
 									"default": "linkedClone"
 								},
 								"diskGiB": {
-									"type": "number",
+									"type": "integer",
 									"title": "Disk size",
 									"description": "Control plane node root volume size, in GB.",
-									"default": "50"
+									"default": 50,
+									"minimum": 50
 								},
 								"memoryMiB": {
-									"type": "number",
+									"type": "integer",
 									"title": "Memory size",
 									"description": "Control plane memory size, in MB.",
-									"default": "8192"
+									"default": 8192,
+									"minimum": 8192
 								},
 								"network": {
 									"type": "object",
@@ -372,15 +377,16 @@
 									}
 								},
 								"numCPUs": {
-									"type": "number",
+									"type": "integer",
 									"title": "Number of CPUs",
 									"description": "Control plane CPU count.",
-									"default": "4"
+									"default": 4,
+									"minimum": 4
 								},
 								"resourcePool": {
 									"type": "string",
 									"title": "Resource pool name",
-									"description": "vSphere resource pool name."
+									"description": "Name of the resource pool to use."
 								},
 								"template": {
 									"type": "string",
@@ -392,13 +398,15 @@
 						},
 						"replicas": {
 							"title": "Number of nodes",
-							"type": "integer"
+							"type": "integer",
+							"minimum": 1
 						},
 						"resourceRatio": {
+							"type": "integer",
 							"title": "Resource ratio",
 							"description": "Ratio between node resources and apiserver resource requests.",
 							"default": 8,
-							"type": "integer"
+							"minimum": 8
 						},
 						"oidc": {
 							"type": "object",
@@ -448,9 +456,7 @@
 								}
 							}
 						}
-					},
-					"title": "Control plane",
-					"type": "object"
+					}
 				},
 				"metadata": {
 					"type": "object",
