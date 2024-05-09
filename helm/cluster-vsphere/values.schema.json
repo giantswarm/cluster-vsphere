@@ -15,22 +15,6 @@
 		}
 	},
 	"properties": {
-		"cluster": {
-			"properties": {
-				"kubernetesVersion": {
-					"title": "Kubernetes version",
-					"description": "Kubernetes version to deploy. Must match the version available in the image defined at template.",
-					"type": "string"
-				},
-				"enableEncryptionProvider": {
-					"title": "API server encryption at REST",
-					"description": "Enable encryption at REST feature of API server.",
-					"type": "boolean"
-				}
-			},
-			"title": "Cluster",
-			"type": "object"
-		},
 		"global": {
 			"type": "object",
 			"title": "Properties that are available to all charts and subcharts.",
@@ -675,6 +659,16 @@
 							"default": true
 						}
 					}
+				},
+				"kubernetesVersion": {
+					"title": "Kubernetes version",
+					"description": "Kubernetes version to deploy. Must match the version available in the image defined at template.",
+					"type": "string"
+				},
+				"enableEncryptionProvider": {
+					"title": "API server encryption at REST",
+					"description": "Enable encryption at REST feature of API server.",
+					"type": "boolean"
 				},
 				"teleport": {
 					"type": "object",

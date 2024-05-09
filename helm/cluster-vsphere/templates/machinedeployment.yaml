@@ -31,5 +31,5 @@ spec:
         kind: VSphereMachineTemplate
         name: {{ include "resource.default.name" $ }}-{{ $value.class }}-{{ include "mtRevisionByClass" (merge (dict "currentValues" $.Values) $value) }}
         namespace: {{ $.Release.Namespace }}
-      version: {{ $.Values.cluster.kubernetesVersion }}
+      version: {{ $.Values.internal.kubernetesVersion }}
 {{- end }}

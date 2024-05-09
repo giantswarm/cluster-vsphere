@@ -3,10 +3,6 @@ apiServer:
   featureGates: ""
   certSANs: []
 
-cluster:
-  kubernetesVersion: "v1.25.16"
-  enableEncryptionProvider: true
-
 controllerManager:
   featureGates: ""
 
@@ -74,6 +70,8 @@ global:
 internal:
   ciliumNetworkPolicy:
     enabled: true
+  enableEncryptionProvider: true
+  kubernetesVersion: "v1.25.16"
   teleport:
     proxyAddr: teleport.giantswarm.io:443
     version: 14.1.3
