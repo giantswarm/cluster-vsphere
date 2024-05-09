@@ -2,16 +2,6 @@ cluster:
   name: test
   kubernetesVersion: "v1.24.11"
   enableEncryptionProvider: false
-vcenter:
-  server: "https://foo.example.com"
-  username: "vcenter-admin"
-  password: "vcenter-admin-password"
-  datacenter: "Datacenter"
-  datastore: "vsanDatastore"
-  # openssl s_client -connect https://foo.example.com < /dev/null 2>/dev/null | openssl x509 -fingerprint -noout -in /dev/stdin
-  thumbprint: "F7:CF:F9:E5:99:39:FF:C1:D7:14:F1:3F:8A:42:21:95:3B:A1:6E:16"
-  region: "k8s-region"
-  zone: "k8s-zone"
 nodeClasses:
   default:
     template: "ubuntu-2004-kube-v1.24.11"
@@ -54,3 +44,14 @@ global:
     worker:
       class: "default"
       replicas: 2
+  providerSpecific:
+    vcenter:
+      server: "https://foo.example.com"
+      username: "vcenter-admin"
+      password: "vcenter-admin-password"
+      datacenter: "Datacenter"
+      datastore: "vsanDatastore"
+      # openssl s_client -connect https://foo.example.com < /dev/null 2>/dev/null | openssl x509 -fingerprint -noout -in /dev/stdin
+      thumbprint: "F7:CF:F9:E5:99:39:FF:C1:D7:14:F1:3F:8A:42:21:95:3B:A1:6E:16"
+      region: "k8s-region"
+      zone: "k8s-zone"
