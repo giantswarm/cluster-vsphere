@@ -24,10 +24,10 @@ Here we are generating a hash suffix to trigger upgrade when only it is necessar
 using only the parameters used in vspheredmachinetemplate.yaml.
 */}}
 {{- define "mtSpec" -}}
-datacenter: {{ $.vcenter.datacenter }}
-datastore: {{ $.vcenter.datastore }}
-server: {{ $.vcenter.server }}
-thumbprint: {{ $.vcenter.thumbprint }}
+datacenter: {{ $.global.providerSpecific.vcenter.datacenter }}
+datastore: {{ $.global.providerSpecific.vcenter.datastore }}
+server: {{ $.global.providerSpecific.vcenter.server }}
+thumbprint: {{ $.global.providerSpecific.vcenter.thumbprint }}
 {{ toYaml .currentClass }}
 {{- end -}}
 
