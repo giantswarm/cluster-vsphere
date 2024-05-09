@@ -91,10 +91,6 @@ nodeClasses:
       - networkName: ""
         dhcp4: true
 
-nodePools:
-  worker:
-    class: default
-    replicas: 2
 
 vcenter:
   datacenter: ""
