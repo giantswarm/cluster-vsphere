@@ -24,10 +24,6 @@ nodeClasses:
       devices:
         - networkName: 'grasshopper-capv'
           dhcp4: true
-nodePools:
-  worker:
-    class: "default"
-    replicas: 2
 global:
   metadata:
     description: "test cluster"
@@ -54,3 +50,7 @@ global:
         devices:
           - networkName: 'grasshopper-capv'
             dhcp4: true
+  nodePools:
+    worker:
+      class: "default"
+      replicas: 2

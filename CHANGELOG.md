@@ -28,6 +28,7 @@ yq eval --inplace 'with(select(.metadata != null);  .global.metadata = .metadata
     with(select(.baseDomain != null);               .global.connectivity.baseDomain = .baseDomain) |
     with(select(.controlPlane != null);             .global.controlPlane = .controlPlane) |
     with(select(.oidc != null);                     .global.controlPlane.oidc = .oidc) |
+    with(select(.nodePools != null);                .global.nodePools = .nodePools) |
 
     del(.metadata) |
     del(.clusterDescription) |
@@ -40,7 +41,8 @@ yq eval --inplace 'with(select(.metadata != null);  .global.metadata = .metadata
     del(.proxy) |
     del(.baseDomain) |
     del(.controlPlane) |
-    del(.oidc)' values.yaml
+    del(.oidc) |
+    del(.nodePools)' values.yaml
 ```
 
 </details>
@@ -59,6 +61,7 @@ yq eval --inplace 'with(select(.metadata != null);  .global.metadata = .metadata
 - Move Helm values property `.Values.baseDomain` to `.Values.global.connectivity.baseDomain`.
 - Move Helm values property `.Values.controlPlane` to `.Values.global.controlPlane`.
 - Move Helm values property `.Values.oidc` to `.Values.global.controlPlane.oidc`.
+- Move Helm values property `.Values.nodePools` to `.Values.global.nodePools`.
 
 ## [0.50.0] - 2024-04-23
 
