@@ -79,6 +79,10 @@ internal:
   controllerManager:
     featureGates: []
   enableEncryptionProvider: true
+  kubectlImage:
+    registry: gsoci.azurecr.io
+    name: giantswarm/kubectl
+    tag: 1.23.5
   kubernetesVersion: "v1.25.16"
   teleport:
     proxyAddr: teleport.giantswarm.io:443
@@ -88,11 +92,6 @@ internal:
     name: giantswarm/pause
     registry: gsoci.azurecr.io
     tag: "3.9"
-
-kubectlImage:
-  registry: gsoci.azurecr.io
-  name: giantswarm/kubectl
-  tag: 1.23.5
 
 nodeClasses:
   default:
