@@ -40,6 +40,18 @@ global:
       template: flatcar-stable-3602.2.1-kube-v1.25.16-gs
     oidc: {}
     resourceRatio: 8
+  nodeClasses:
+    default:
+      cloneMode: "linkedClone"
+      diskGiB: 50
+      numCPUs: 6
+      memoryMiB: 16896
+      resourcePool: "*/Resources"
+      template: "flatcar-stable-3602.2.1-kube-v1.25.16-gs"
+      network:
+        devices:
+        - networkName: ""
+          dhcp4: true
   podSecurityStandards:
     enforced: true
   providerSpecific:
@@ -93,15 +105,3 @@ internal:
     registry: gsoci.azurecr.io
     tag: "3.9"
 
-nodeClasses:
-  default:
-    cloneMode: "linkedClone"
-    diskGiB: 50
-    numCPUs: 6
-    memoryMiB: 16896
-    resourcePool: "*/Resources"
-    template: "flatcar-stable-3602.2.1-kube-v1.25.16-gs"
-    network:
-      devices:
-      - networkName: ""
-        dhcp4: true
