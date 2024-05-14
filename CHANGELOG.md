@@ -29,6 +29,7 @@ yq eval --inplace 'with(select(.metadata != null);  .global.metadata = .metadata
     with(select(.controlPlane != null);             .global.controlPlane = .controlPlane) |
     with(select(.oidc != null);                     .global.controlPlane.oidc = .oidc) |
     with(select(.nodePools != null);                .global.nodePools = .nodePools) |
+    with(select(.vcenter != null);                  .global.providerSpecific.vcenter = .vcenter) |
 
     del(.metadata) |
     del(.clusterDescription) |
@@ -42,7 +43,8 @@ yq eval --inplace 'with(select(.metadata != null);  .global.metadata = .metadata
     del(.baseDomain) |
     del(.controlPlane) |
     del(.oidc) |
-    del(.nodePools)' values.yaml
+    del(.nodePools) |
+    del(.vcenter)' values.yaml
 ```
 
 </details>
@@ -62,6 +64,7 @@ yq eval --inplace 'with(select(.metadata != null);  .global.metadata = .metadata
 - Move Helm values property `.Values.controlPlane` to `.Values.global.controlPlane`.
 - Move Helm values property `.Values.oidc` to `.Values.global.controlPlane.oidc`.
 - Move Helm values property `.Values.nodePools` to `.Values.global.nodePools`.
+- Move Helm values property `.Values.vcenter` to `.Values.global.providerSpecific.vcenter`.
 
 ## [0.50.0] - 2024-04-23
 
