@@ -36,6 +36,8 @@ yq eval --inplace 'with(select(.metadata != null);          .global.metadata = .
     with(select(.apiServer.enableAdmissionPlugins != null); .internal.apiServer.enableAdmissionPlugins = (.apiServer.enableAdmissionPlugins | split(","))) |
     with(select(.apiServer.featureGates != null);           .internal.apiServer.featureGates = (.apiServer.featureGates | split(","))) |
     with(select(.apiServer.certSANs != null);               .internal.certSANs = .apiServer.certSANs) |
+    with(select(.kubectlImage != null);                     .internal.kubectlImage = .kubectlImage) |
+    with(select(.nodeClasses != null);                      .global.nodeClasses = .nodeClasses) |
 
     del(.metadata) |
     del(.clusterDescription) |
@@ -53,7 +55,9 @@ yq eval --inplace 'with(select(.metadata != null);          .global.metadata = .
     del(.vcenter) |
     del(.cluster) |
     del(.controllerManager) |
-    del(.apiServer)' values.yaml
+    del(.apiServer) |
+    del(.kubectlImage) |
+    del(.nodeClasses)' values.yaml
 ```
 
 </details>
@@ -78,6 +82,8 @@ yq eval --inplace 'with(select(.metadata != null);          .global.metadata = .
 - Move Helm values property `.Values.apiServer.enableAdmissionPlugins` to `.Values.internal.apiServer.enableAdmissionPlugins` and convert from string to array.
 - Move Helm values property `.Values.apiServer.featureGates` to `.Values.internal.apiServer.featureGates` and convert from string to array.
 - Move Helm values property `.Values.apiServer.certSANs` to `.Values.internal.apiServer.certSANs`.
+- Move Helm values property `.Values.kubectlImage` to `.Values.internal.kubectlImage`.
+- Move Helm values property `.Values.nodeClasses` to `.Values.global.nodeClasses`.
 
 ## [0.50.0] - 2024-04-23
 
