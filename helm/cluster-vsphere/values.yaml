@@ -104,4 +104,3 @@ internal:
     name: giantswarm/pause
     registry: gsoci.azurecr.io
     tag: "3.9"
-
