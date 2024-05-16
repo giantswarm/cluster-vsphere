@@ -335,7 +335,6 @@
 									"type": "integer",
 									"title": "Disk size",
 									"description": "Control plane node root volume size, in GB.",
-									"default": 50,
 									"minimum": 25
 								},
 								"memoryMiB": {
@@ -522,7 +521,6 @@
 									"type": "integer",
 									"title": "Disk size",
 									"description": "Control plane node root volume size, in GB.",
-									"default": 50,
 									"minimum": 25
 								},
 								"memoryMiB": {

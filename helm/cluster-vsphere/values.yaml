@@ -33,7 +33,6 @@ global:
       repository: gsoci.azurecr.io/giantswarm
     machineTemplate:
       cloneMode: linkedClone
-      diskGiB: 50
       memoryMiB: 8192
       network: {}
       numCPUs: 4
@@ -43,7 +42,6 @@ global:
   nodeClasses:
     default:
       cloneMode: "linkedClone"
-      diskGiB: 50
       numCPUs: 6
       memoryMiB: 16896
       resourcePool: "*/Resources"
