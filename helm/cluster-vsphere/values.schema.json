@@ -810,6 +810,7 @@
 				},
 				"kubernetesVersion": {
 					"title": "Kubernetes version",
+					"default": "v1.25.16",
 					"description": "Kubernetes version to deploy. Must match the version available in the image defined at template.",
 					"type": "string"
 				},
