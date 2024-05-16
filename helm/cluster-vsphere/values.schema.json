@@ -366,7 +366,8 @@
 													"dhcp4": {
 														"type": "boolean",
 														"title": "IPv4 DHCP",
-														"description": "Is DHCP enabled on this segment."
+														"description": "Is DHCP enabled on this segment.",
+                                                        "default": true
 													},
 													"networkName": {
 														"type": "string",
@@ -552,7 +553,8 @@
 													"dhcp4": {
 														"type": "boolean",
 														"title": "IPv4 DHCP",
-														"description": "Is DHCP enabled on this segment."
+														"description": "Is DHCP enabled on this segment.",
+                                                        "default": true
 													},
 													"networkName": {
 														"type": "string",
