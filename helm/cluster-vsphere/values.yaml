@@ -50,6 +50,10 @@ global:
         devices:
         - networkName: ""
           dhcp4: true
+  nodePools:
+    worker:
+      class: default
+      replicas: 2
   podSecurityStandards:
     enforced: true
   providerSpecific:
