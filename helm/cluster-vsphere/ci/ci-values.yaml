@@ -14,7 +14,6 @@ global:
   controlPlane:
     replicas: 1
     machineTemplate:
-      template: "ubuntu-2004-kube-v1.24.11"
       cloneMode: "linkedClone"
       diskGiB: 25
       numCPUs: 2
@@ -41,7 +40,6 @@ global:
       zone: "k8s-zone"
   nodeClasses:
     default:
-      template: "ubuntu-2004-kube-v1.24.11"
       cloneMode: "linkedClone"
       diskGiB: 25
       numCPUs: 2
@@ -52,5 +50,4 @@ global:
           - networkName: 'grasshopper-capv'
             dhcp4: true
 internal:
-  kubernetesVersion: "v1.24.11"
   enableEncryptionProvider: false
