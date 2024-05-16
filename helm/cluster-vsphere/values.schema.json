@@ -355,7 +355,8 @@
 								"resourcePool": {
 									"type": "string",
 									"title": "Resource pool name",
-									"description": "Name of the resource pool to use."
+									"description": "Name of the resource pool to use.",
+									"default": "*/Resources"
 								},
 								"template": {
 									"type": "string",

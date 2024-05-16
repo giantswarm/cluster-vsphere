@@ -30,6 +30,7 @@ global:
       memoryMiB: 8192
       network: {}
       numCPUs: 4
+      resourcePool: "*/Resources"
       template: flatcar-stable-3602.2.1-kube-v1.25.16-gs
     oidc: {}
     resourceRatio: 8
