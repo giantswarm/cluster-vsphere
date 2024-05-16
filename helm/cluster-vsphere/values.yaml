@@ -1,15 +1,3 @@
-apiServer:
-  enableAdmissionPlugins: "NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,PersistentVolumeClaimResize,DefaultStorageClass,Priority,DefaultTolerationSeconds,MutatingAdmissionWebhook,ValidatingAdmissionWebhook"
-  featureGates: ""
-  certSANs: []
-
-cluster:
-  kubernetesVersion: "v1.25.16"
-  enableEncryptionProvider: true
-
-controllerManager:
-  featureGates: ""
-
 global:
   connectivity:
     containerRegistries: {}
@@ -35,23 +23,32 @@ global:
       sshTrustedUserCAKeys:
         - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM4cvZ01fLmO9cJbWUj7sfF+NhECgy+Cl0bazSrZX7sU vault-ca@vault.operations.giantswarm.io
   controlPlane:
-    dns:
-      imageRepository: gsoci.azurecr.io/giantswarm
-      imageTag: 1.9.4-giantswarm
-    etcd:
-      imageRepository: gsoci.azurecr.io/giantswarm
-      imageTag: 3.5.4-0-k8s
     image:
       repository: gsoci.azurecr.io/giantswarm
     machineTemplate:
       cloneMode: linkedClone
-      diskGiB: 50
       memoryMiB: 8192
       network: {}
       numCPUs: 4
+      resourcePool: "*/Resources"
       template: flatcar-stable-3602.2.1-kube-v1.25.16-gs
     oidc: {}
     resourceRatio: 8
+  nodeClasses:
+    default:
+      cloneMode: "linkedClone"
+      numCPUs: 6
+      memoryMiB: 16896
+      resourcePool: "*/Resources"
+      template: "flatcar-stable-3602.2.1-kube-v1.25.16-gs"
+      network:
+        devices:
+        - networkName: ""
+          dhcp4: true
+  nodePools:
+    worker:
+      class: default
+      replicas: 2
   podSecurityStandards:
     enforced: true
   providerSpecific:
@@ -72,8 +69,30 @@ global:
     servicePriority: "highest"
 
 internal:
+  apiServer:
+    certSANs: []
+    enableAdmissionPlugins:
+      - DefaultStorageClass
+      - DefaultTolerationSeconds
+      - LimitRanger
+      - MutatingAdmissionWebhook
+      - NamespaceLifecycle
+      - PersistentVolumeClaimResize
+      - Priority
+      - ResourceQuota
+      - ServiceAccount
+      - ValidatingAdmissionWebhook
+    featureGates: []
   ciliumNetworkPolicy:
     enabled: true
+  controllerManager:
+    featureGates: []
+  enableEncryptionProvider: true
+  kubectlImage:
+    registry: gsoci.azurecr.io
+    name: giantswarm/kubectl
+    tag: 1.23.5
+  kubernetesVersion: "v1.25.16"
   teleport:
     proxyAddr: teleport.giantswarm.io:443
     version: 14.1.3
@@ -82,21 +101,3 @@ internal:
     name: giantswarm/pause
     registry: gsoci.azurecr.io
     tag: "3.9"
-
-kubectlImage:
-  registry: gsoci.azurecr.io
-  name: giantswarm/kubectl
-  tag: 1.23.5
-
-nodeClasses:
-  default:
-    cloneMode: "linkedClone"
-    diskGiB: 50
-    numCPUs: 6
-    memoryMiB: 16896
-    resourcePool: "*/Resources"
-    template: "flatcar-stable-3602.2.1-kube-v1.25.16-gs"
-    network:
-      devices:
-      - networkName: ""
-        dhcp4: true

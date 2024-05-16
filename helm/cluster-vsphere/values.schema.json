@@ -12,25 +12,28 @@
 			},
 			"type": "array",
 			"minItems": 1
+		},
+		"featureGate": {
+			"type": "object",
+			"title": "Feature gate",
+			"additionalProperties": false,
+			"properties": {
+				"enabled": {
+					"type": "boolean",
+					"title": "Enabled"
+				},
+				"name": {
+					"type": "string",
+					"title": "Name",
+					"examples": [
+						"UserNamespacesStatelessPodsSupport"
+					],
+					"pattern": "^[A-Za-z0-9]+$"
+				}
+			}
 		}
 	},
 	"properties": {
-		"cluster": {
-			"properties": {
-				"kubernetesVersion": {
-					"title": "Kubernetes version",
-					"description": "Kubernetes version to deploy. Must match the version available in the image defined at template.",
-					"type": "string"
-				},
-				"enableEncryptionProvider": {
-					"title": "API server encryption at REST",
-					"description": "Enable encryption at REST feature of API server.",
-					"type": "boolean"
-				}
-			},
-			"title": "Cluster",
-			"type": "object"
-		},
 		"global": {
 			"type": "object",
 			"title": "Properties that are available to all charts and subcharts.",
@@ -268,40 +271,6 @@
 					"title": "Control plane",
 					"additionalProperties": false,
 					"properties": {
-						"dns": {
-							"type": "object",
-							"title": "DNS container image",
-							"additionalProperties": false,
-							"properties": {
-								"imageRepository": {
-									"type": "string",
-									"title": "Repository",
-									"default": "gsoci.azurecr.io/giantswarm"
-								},
-								"imageTag": {
-									"type": "string",
-									"title": "Tag",
-									"default": "1.9.4-giantswarm"
-								}
-							}
-						},
-						"etcd": {
-							"type": "object",
-							"title": "Etcd container image",
-							"additionalProperties": false,
-							"properties": {
-								"imageRepository": {
-									"type": "string",
-									"title": "Repository",
-									"default": "gsoci.azurecr.io/giantswarm"
-								},
-								"imageTag": {
-									"type": "string",
-									"title": "Tag",
-									"default": "3.5.4-0-k8s"
-								}
-							}
-						},
 						"image": {
 							"type": "object",
 							"title": "Node container image",
@@ -332,7 +301,6 @@
 									"type": "integer",
 									"title": "Disk size",
 									"description": "Control plane node root volume size, in GB.",
-									"default": 50,
 									"minimum": 25
 								},
 								"memoryMiB": {
@@ -364,7 +332,8 @@
 													"dhcp4": {
 														"type": "boolean",
 														"title": "IPv4 DHCP",
-														"description": "Is DHCP enabled on this segment."
+														"description": "Is DHCP enabled on this segment.",
+														"default": true
 													},
 													"networkName": {
 														"type": "string",
@@ -386,7 +355,8 @@
 								"resourcePool": {
 									"type": "string",
 									"title": "Resource pool name",
-									"description": "Name of the resource pool to use."
+									"description": "Name of the resource pool to use.",
+									"default": "*/Resources"
 								},
 								"template": {
 									"type": "string",
@@ -497,6 +467,93 @@
 								"lowest"
 							],
 							"default": "highest"
+						}
+					}
+				},
+				"nodeClasses": {
+					"type": "object",
+					"title": "Template to define control plane nodes",
+					"properties": {
+						"default": {
+							"type": "object",
+							"title": "Default node class configuration.",
+							"additionalProperties": false,
+							"properties": {
+								"cloneMode": {
+									"type": "string",
+									"title": "Template clone mode",
+									"description": "VM template cloning method.",
+									"default": "linkedClone"
+								},
+								"diskGiB": {
+									"type": "integer",
+									"title": "Disk size",
+									"description": "Control plane node root volume size, in GB.",
+									"minimum": 25
+								},
+								"memoryMiB": {
+									"type": "integer",
+									"title": "Memory size",
+									"description": "Control plane memory size, in MB.",
+									"default": 16896,
+									"minimum": 8192
+								},
+								"network": {
+									"type": "object",
+									"title": "Network configuration",
+									"description": "Control plane node network configuration.",
+									"additionalProperties": false,
+									"properties": {
+										"devices": {
+											"type": "array",
+											"title": "Network devices",
+											"description": "Control plane node network devices.",
+											"additionalProperties": false,
+											"items": {
+												"type": "object",
+												"title": "Devices",
+												"required": [
+													"networkName"
+												],
+												"additionalProperties": false,
+												"properties": {
+													"dhcp4": {
+														"type": "boolean",
+														"title": "IPv4 DHCP",
+														"description": "Is DHCP enabled on this segment.",
+														"default": true
+													},
+													"networkName": {
+														"type": "string",
+														"title": "Segment name",
+														"description": "Segment name to attach nodes to. Must already exist."
+													}
+												}
+											}
+										}
+									}
+								},
+								"numCPUs": {
+									"type": "integer",
+									"title": "Number of CPUs",
+									"description": "Control plane CPU count.",
+									"default": 6,
+									"minimum": 2
+								},
+								"resourcePool": {
+									"type": "string",
+									"title": "Resource pool name",
+									"description": "Name of the resource pool to use.",
+									"default": "*/Resources"
+								},
+								"template": {
+									"type": "string",
+									"title": "VM template",
+									"description": "Full name of the VM template.",
+									"default": "flatcar-stable-3602.2.1-kube-v1.25.16-gs"
+								}
+
+							}
 						}
 					}
 				},
@@ -613,57 +670,60 @@
 				}
 			}
 		},
-		"apiServer": {
-			"properties": {
-				"certSANs": {
-					"default": [],
-					"description": "Alternative names to encode in the API server's certificate.",
-					"items": {
-						"title": "SAN",
-						"type": "string"
-					},
-					"title": "Subject alternative names (SAN)",
-					"type": "array"
-				},
-				"enableAdmissionPlugins": {
-					"default": "NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,PersistentVolumeClaimResize,DefaultStorageClass,Priority,DefaultTolerationSeconds,MutatingAdmissionWebhook,ValidatingAdmissionWebhook",
-					"description": "Comma-separated list of admission plugins to enable.",
-					"title": "Admission plugins",
-					"type": "string"
-				},
-				"featureGates": {
-					"default": "",
-					"description": "Enabled feature gates, as a comma-separated list.",
-					"title": "Feature gates",
-					"type": "string"
-				}
-			},
-			"required": [
-				"enableAdmissionPlugins",
-				"featureGates"
-			],
-			"title": "Kubernetes API server",
-			"type": "object"
-		},
-		"controllerManager": {
-			"properties": {
-				"featureGates": {
-					"default": "",
-					"description": "Enabled feature gates, as a comma-separated list.",
-					"title": "Feature gates",
-					"type": "string"
-				}
-			},
-			"required": [
-				"featureGates"
-			],
-			"title": "Kubernetes Controller Manager",
-			"type": "object"
-		},
 		"internal": {
 			"type": "object",
 			"additionalProperties": false,
 			"properties": {
+				"apiServer": {
+					"type": "object",
+					"properties": {
+						"enableAdmissionPlugins": {
+							"type": "array",
+							"title": "Admission plugins",
+							"description": "List of admission plugins to be passed to the API server via the --enable-admission-plugins flag.",
+							"items": {
+								"type": "string",
+								"title": "Plugin",
+								"examples": [
+									"DefaultStorageClass",
+									"Priority"
+								],
+								"pattern": "^[A-Za-z0-9]+$"
+							},
+							"default": [
+								"DefaultStorageClass",
+								"DefaultTolerationSeconds",
+								"LimitRanger",
+								"MutatingAdmissionWebhook",
+								"NamespaceLifecycle",
+								"PersistentVolumeClaimResize",
+								"Priority",
+								"ResourceQuota",
+								"ServiceAccount",
+								"ValidatingAdmissionWebhook"
+							]
+						},
+						"certSANs": {
+							"type": "array",
+							"title": "Subject alternative names (SAN)",
+							"description": "Alternative names to encode in the API server's certificate.",
+							"items": {
+								"title": "SAN",
+								"type": "string"
+							},
+							"default": []
+						},
+						"featureGates": {
+							"type": "array",
+							"title": "Feature gates",
+							"description": "API server feature gate activation/deactivation.",
+							"items": {
+								"$ref": "#/$defs/featureGate"
+							},
+							"default": []
+						}
+					}
+				},
 				"ciliumNetworkPolicy": {
 					"type": "object",
 					"title": "CiliumNetworkPolicies",
@@ -675,6 +735,56 @@
 							"default": true
 						}
 					}
+				},
+				"controllerManager": {
+					"type": "object",
+					"title": "Controller manager",
+					"additionalProperties": false,
+					"properties": {
+						"featureGates": {
+							"type": "array",
+							"title": "Feature gates",
+							"description": "Controller manager feature gate activation/deactivation.",
+							"items": {
+								"$ref": "#/$defs/featureGate"
+							},
+							"default": []
+						}
+					}
+				},
+				"kubectlImage": {
+					"type": "object",
+					"title": "Kubectl image",
+					"description": "Used by cluster-shared library chart to configure coredns in-cluster.",
+					"additionalProperties": false,
+					"properties": {
+						"name": {
+							"type": "string",
+							"title": "Repository",
+							"default": "giantswarm/kubectl"
+						},
+						"registry": {
+							"type": "string",
+							"title": "Registry",
+							"default": "gsoci.azurecr.io"
+						},
+						"tag": {
+							"type": "string",
+							"title": "Tag",
+							"default": "1.25.15"
+						}
+					}
+				},
+				"kubernetesVersion": {
+					"title": "Kubernetes version",
+					"default": "v1.25.16",
+					"description": "Kubernetes version to deploy. Must match the version available in the image defined at template.",
+					"type": "string"
+				},
+				"enableEncryptionProvider": {
+					"title": "API server encryption at REST",
+					"description": "Enable encryption at REST feature of API server.",
+					"type": "boolean"
 				},
 				"teleport": {
 					"type": "object",

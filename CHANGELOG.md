@@ -16,20 +16,28 @@ Using `yq`, migrate to the new values layout with the following command:
 
 ```bash
 #!/bin/bash
-yq eval --inplace 'with(select(.metadata != null);  .global.metadata = .metadata) |
-    with(select(.clusterDescription != null);       .global.metadata.description = .clusterDescription) |
-    with(select(.organization != null);             .global.metadata.organization = .organization) |
-    with(select(.clusterLabels != null);            .global.metadata.labels = .clusterLabels) |
-    with(select(.servicePriority != null);          .global.metadata.servicePriority = .servicePriority) |
-    with(select(.connectivity != null);             .global.connectivity = .connectivity) |
-    with(select(.osUsers != null);                  .global.connectivity.shell.osUsers = .osUsers) |
-    with(select(.sshTrustedUserCAKeys != null);     .global.connectivity.shell.sshTrustedUserCAKeys = .sshTrustedUserCAKeys) |
-    with(select(.proxy != null);                    .global.connectivity.proxy = .proxy) |
-    with(select(.baseDomain != null);               .global.connectivity.baseDomain = .baseDomain) |
-    with(select(.controlPlane != null);             .global.controlPlane = .controlPlane) |
-    with(select(.oidc != null);                     .global.controlPlane.oidc = .oidc) |
-    with(select(.nodePools != null);                .global.nodePools = .nodePools) |
-    with(select(.vcenter != null);                  .global.providerSpecific.vcenter = .vcenter) |
+yq eval --inplace 'with(select(.metadata != null);          .global.metadata = .metadata) |
+    with(select(.clusterDescription != null);               .global.metadata.description = .clusterDescription) |
+    with(select(.organization != null);                     .global.metadata.organization = .organization) |
+    with(select(.clusterLabels != null);                    .global.metadata.labels = .clusterLabels) |
+    with(select(.servicePriority != null);                  .global.metadata.servicePriority = .servicePriority) |
+    with(select(.connectivity != null);                     .global.connectivity = .connectivity) |
+    with(select(.osUsers != null);                          .global.connectivity.shell.osUsers = .osUsers) |
+    with(select(.sshTrustedUserCAKeys != null);             .global.connectivity.shell.sshTrustedUserCAKeys = .sshTrustedUserCAKeys) |
+    with(select(.proxy != null);                            .global.connectivity.proxy = .proxy) |
+    with(select(.baseDomain != null);                       .global.connectivity.baseDomain = .baseDomain) |
+    with(select(.controlPlane != null);                     .global.controlPlane = .controlPlane) |
+    with(select(.oidc != null);                             .global.controlPlane.oidc = .oidc) |
+    with(select(.nodePools != null);                        .global.nodePools = .nodePools) |
+    with(select(.vcenter != null);                          .global.providerSpecific.vcenter = .vcenter) |
+    with(select(.cluster.kubernetesVersion != null);        .internal.kubernetesVersion = .cluster.kubernetesVersion) |
+    with(select(.cluster.enableEncryptionProvider != null); .internal.enableEncryptionProvider = .cluster.enableEncryptionProvider) |
+    with(select(.controllerManager.featureGates != null);   .internal.controllerManager.featureGates = (.controllerManager.featureGates | split(","))) |
+    with(select(.apiServer.enableAdmissionPlugins != null); .internal.apiServer.enableAdmissionPlugins = (.apiServer.enableAdmissionPlugins | split(","))) |
+    with(select(.apiServer.featureGates != null);           .internal.apiServer.featureGates = (.apiServer.featureGates | split(","))) |
+    with(select(.apiServer.certSANs != null);               .internal.certSANs = .apiServer.certSANs) |
+    with(select(.kubectlImage != null);                     .internal.kubectlImage = .kubectlImage) |
+    with(select(.nodeClasses != null);                      .global.nodeClasses = .nodeClasses) |
 
     del(.metadata) |
     del(.clusterDescription) |
@@ -44,7 +52,12 @@ yq eval --inplace 'with(select(.metadata != null);  .global.metadata = .metadata
     del(.controlPlane) |
     del(.oidc) |
     del(.nodePools) |
-    del(.vcenter)' values.yaml
+    del(.vcenter) |
+    del(.cluster) |
+    del(.controllerManager) |
+    del(.apiServer) |
+    del(.kubectlImage) |
+    del(.nodeClasses)' values.yaml
 ```
 
 </details>
@@ -65,6 +78,12 @@ yq eval --inplace 'with(select(.metadata != null);  .global.metadata = .metadata
 - Move Helm values property `.Values.oidc` to `.Values.global.controlPlane.oidc`.
 - Move Helm values property `.Values.nodePools` to `.Values.global.nodePools`.
 - Move Helm values property `.Values.vcenter` to `.Values.global.providerSpecific.vcenter`.
+- Move Helm values property `.Values.controllerManager.featureGates` to `.Values.internal.controllerManager.featureGates` and convert from string to array.
+- Move Helm values property `.Values.apiServer.enableAdmissionPlugins` to `.Values.internal.apiServer.enableAdmissionPlugins` and convert from string to array.
+- Move Helm values property `.Values.apiServer.featureGates` to `.Values.internal.apiServer.featureGates` and convert from string to array.
+- Move Helm values property `.Values.apiServer.certSANs` to `.Values.internal.apiServer.certSANs`.
+- Move Helm values property `.Values.kubectlImage` to `.Values.internal.kubectlImage`.
+- Move Helm values property `.Values.nodeClasses` to `.Values.global.nodeClasses`.
 
 ## [0.50.0] - 2024-04-23
 

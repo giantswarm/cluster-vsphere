@@ -15,7 +15,7 @@ spec:
         - localhost
         - 127.0.0.1
         - "api.{{ include "resource.default.name" $ }}.{{ .Values.global.connectivity.baseDomain }}"
-        {{- with .Values.apiServer.certSANs }}
+        {{- with .Values.internal.apiServer.certSANs }}
         {{- range . }}
         - {{ . }}
         {{- end }}
@@ -27,11 +27,17 @@ spec:
           audit-log-path: /var/log/apiserver/audit.log
           audit-policy-file: /etc/kubernetes/policies/audit-policy.yaml
           cloud-provider: external
-          enable-admission-plugins: {{ .Values.apiServer.enableAdmissionPlugins }}
-          {{- if $.Values.cluster.enableEncryptionProvider }}
+          {{- if .Values.internal.apiServer.enableAdmissionPlugins }}
+          enable-admission-plugins: {{ .Values.internal.apiServer.enableAdmissionPlugins | join "," | quote }}
+          {{- end }}
+          {{- if $.Values.internal.enableEncryptionProvider }}
           encryption-provider-config: /etc/kubernetes/encryption/config.yaml
           {{- end }}
-          feature-gates: {{ .Values.apiServer.featureGates | quote }}
+          {{- if .Values.internal.apiServer.featureGates }}
+          feature-gates: {{ range $index, $element := .Values.internal.apiServer.featureGates -}}
+            {{ if $index }},{{ end }}{{ $element.name }}={{ $element.enabled }}
+          {{- end }}
+          {{- end }}
           kubelet-preferred-address-types: "InternalIP"
           {{- if .Values.global.controlPlane.oidc.issuerUrl }}
           {{- with .Values.global.controlPlane.oidc }}
@@ -60,7 +66,7 @@ spec:
             hostPath: /etc/kubernetes/policies
             mountPath: /etc/kubernetes/policies
             pathType: DirectoryOrCreate
-          {{- if $.Values.cluster.enableEncryptionProvider }}
+          {{- if $.Values.internal.enableEncryptionProvider }}
           - name: encryption
             hostPath: /etc/kubernetes/encryption
             mountPath: /etc/kubernetes/encryption
@@ -74,7 +80,11 @@ spec:
           cloud-provider: external
           enable-hostpath-provisioner: "true"
           terminated-pod-gc-threshold: "125"
-          feature-gates: {{ .Values.controllerManager.featureGates | quote }}
+          {{- if .Values.internal.controllerManager.featureGates }}
+          feature-gates: {{ range $index, $element := .Values.internal.controllerManager.featureGates -}}
+            {{ if $index }},{{ end }}{{ $element.name }}={{ $element.enabled }}
+          {{- end }}
+          {{- end }}
           profiling: "false"
       etcd:
         local:
@@ -128,7 +138,7 @@ spec:
         content: |-
           {{- $.Files.Get $kubeadmPatch | nindent 10 }}
       {{- end }}
-      {{- if $.Values.cluster.enableEncryptionProvider }}
+      {{- if $.Values.internal.enableEncryptionProvider }}
       - path: /etc/kubernetes/encryption/config.yaml
         permissions: "0600"
         contentFrom:
@@ -154,4 +164,4 @@ spec:
       name: {{ include "resource.default.name" . }}-control-plane-{{ include "mtRevisionByControlPlane" $ }}
       namespace: {{ .Release.Namespace }}
   replicas: {{ .Values.global.controlPlane.replicas }}
-  version: {{ .Values.cluster.kubernetesVersion }}
+  version: {{ .Values.internal.kubernetesVersion }}

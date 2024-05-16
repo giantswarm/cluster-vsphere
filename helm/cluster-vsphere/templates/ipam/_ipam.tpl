@@ -41,7 +41,7 @@
 
 
 {{- define "ipamJobContainerCommon" -}}
-image: "{{ .Values.kubectlImage.registry }}/{{ .Values.kubectlImage.name }}:{{ .Values.kubectlImage.tag }}"
+image: "{{ .Values.internal.kubectlImage.registry }}/{{ .Values.internal.kubectlImage.name }}:{{ .Values.internal.kubectlImage.tag }}"
 securityContext:
   readOnlyRootFilesystem: true
   allowPrivilegeEscalation: false
