@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Normalise JSON schema.
+- Remove unused values from schema.
 
 ## [0.51.0] - 2024-05-16
 
