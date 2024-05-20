@@ -46,7 +46,7 @@
             "examples": [
                 8192
             ],
-            "exclusiveMinimum": 0
+            "minimum": 8192
         },
         "numCPUs": {
             "type": "integer",
@@ -328,15 +328,12 @@
                                 },
                                 "diskGiB": {
                                     "$ref": "#/$defs/diskGiB",
-                                    "title": "Disk size",
                                     "description": "Control plane node root volume size, in GB."
                                 },
                                 "memoryMiB": {
                                     "$ref": "#/$defs/memoryGiB",
-                                    "title": "Memory size",
                                     "description": "Control plane memory size, in MB.",
-                                    "default": 8192,
-                                    "minimum": 8192
+                                    "default": 8192
                                 },
                                 "network": {
                                     "type": "object",
@@ -513,15 +510,12 @@
                                 },
                                 "diskGiB": {
                                     "$ref": "#/$defs/diskGiB",
-                                    "title": "Disk size",
                                     "description": "Worker node root volume size, in GB."
                                 },
                                 "memoryMiB": {
                                     "$ref": "#/$defs/memoryGiB",
-                                    "title": "Memory size",
                                     "description": "Worker memory size, in MB.",
-                                    "default": 16896,
-                                    "minimum": 8192
+                                    "default": 16896
                                 },
                                 "network": {
                                     "type": "object",
