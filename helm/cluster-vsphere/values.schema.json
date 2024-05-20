@@ -13,6 +13,14 @@
             },
             "minItems": 1
         },
+        "diskGiB": {
+            "type": "integer",
+            "title": "Disk size",
+            "examples": [
+                30
+            ],
+            "exclusiveMinimum": 0
+        },
         "featureGate": {
             "type": "object",
             "title": "Feature gate",
@@ -303,10 +311,9 @@
                                     "default": "linkedClone"
                                 },
                                 "diskGiB": {
-                                    "type": "integer",
+                                    "$ref": "#/$defs/diskGiB",
                                     "title": "Disk size",
-                                    "description": "Control plane node root volume size, in GB.",
-                                    "minimum": 25
+                                    "description": "Control plane node root volume size, in GB."
                                 },
                                 "memoryMiB": {
                                     "type": "integer",
@@ -491,10 +498,9 @@
                                     "default": "linkedClone"
                                 },
                                 "diskGiB": {
-                                    "type": "integer",
+                                    "$ref": "#/$defs/diskGiB",
                                     "title": "Disk size",
-                                    "description": "Control plane node root volume size, in GB.",
-                                    "minimum": 25
+                                    "description": "Control plane node root volume size, in GB."
                                 },
                                 "memoryMiB": {
                                     "type": "integer",
