@@ -7,63 +7,63 @@ metadata:
 apiVersion: v1
 data:
   values: |
-    baseDomain: test.gigantic.io
-    clusterDescription: "test cluster"
-    organization: "multi-project"
-    cluster:
+    global:
+      metadata:
+        description: "test cluster"
+        organization: "multi-project"
+      connectivity:
+        network:
+          allowAllEgress: true
+          controlPlaneEndpoint:
+            host: ""
+            ipPoolName: wc-cp-ips # auto allocated from this pool (GlobalInClusterIpPool crd). When left empty, no allocation is happening.
+            port: 6443
+          loadBalancers:
+            cidrBlocks: [] # explicit cidr ranges 
+            ipPoolName: svc-lb-ips # auto allocated from this pool (only 1 ip) When left empty, no allocation is happening.
+        baseDomain: test.gigantic.io
+      controlPlane:
+        replicas: 3
+        catalog: "giantswarm"
+        machineTemplate:
+          network:
+            devices:
+              - networkName: 'LS-GS-CAPV'
+                dhcp4: true
+          cloneMode: "linkedClone"
+          diskGiB: 40
+          numCPUs: 4
+          memoryMiB: 8096
+          resourcePool: "giantswarm"
+          folder: "Giantswarm"
+          template: ubuntu-2004-kube-v1.24.11
+        oidc:
+          issuerUrl: https://dex.testing.test.gigantic.io
+          caFile: ""
+          clientId: "dex-k8s-authenticator"
+          usernameClaim: "email"
+          groupsClaim: "groups"
+          usernamePrefix: ""
+      nodePools:
+        worker:
+          class: "default"
+          replicas: 2
+      nodeClasses:
+        default:
+          template: ubuntu-2004-kube-v1.24.11
+          cloneMode: "linkedClone"
+          diskGiB: 40
+          numCPUs: 6
+          memoryMiB: 10240
+          folder: "Giantswarm"
+          resourcePool: "giantswarm"
+          network:
+            devices:
+              - networkName: 'LS-GS-CAPV'
+                dhcp4: true
+    internal:
       kubernetesVersion: v1.24.11
       enableEncryptionProvider: true
-    connectivity:
-      network:
-        allowAllEgress: true
-        controlPlaneEndpoint:
-          host: ""
-          ipPoolName: wc-cp-ips  # auto allocated from this pool (GlobalInClusterIpPool crd). When left empty, no allocation is happening.
-          port: 6443
-        loadBalancers:
-          cidrBlocks: []  # explicit cidr ranges 
-          ipPoolName: svc-lb-ips  # auto allocated from this pool (only 1 ip) When left empty, no allocation is happening.
-    controlPlane:
-      replicas: 3
-      catalog: "giantswarm"
-      machineTemplate:
-        network:
-          devices:
-          - networkName: 'LS-GS-CAPV'
-            dhcp4: true
-        cloneMode: "linkedClone"
-        diskGiB: 40
-        numCPUs: 4
-        memoryMiB: 8096
-        resourcePool: "giantswarm"
-        folder: "Giantswarm"
-        template: ubuntu-2004-kube-v1.24.11
-
-    nodeClasses:
-      default:
-        template: ubuntu-2004-kube-v1.24.11
-        cloneMode: "linkedClone"
-        diskGiB: 40
-        numCPUs: 6
-        memoryMiB: 10240
-        folder: "Giantswarm"
-        resourcePool: "giantswarm"
-        network:
-          devices:
-          - networkName: 'LS-GS-CAPV'
-            dhcp4: true
-    nodePools:
-      worker:
-        class: "default"
-        replicas: 2
-
-    oidc:
-      issuerUrl: https://dex.testing.test.gigantic.io
-      caFile: ""
-      clientId: "dex-k8s-authenticator"
-      usernameClaim: "email"
-      groupsClaim: "groups"
-      usernamePrefix: ""
 ---
 apiVersion: application.giantswarm.io/v1alpha1
 kind: App
