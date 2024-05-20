@@ -39,6 +39,14 @@
                     "pattern": "^[A-Za-z0-9]+$"
                 }
             }
+        },
+        "memoryGiB": {
+            "type": "integer",
+            "title": "Memory size",
+            "examples": [
+                8192
+            ],
+            "exclusiveMinimum": 0
         }
     },
     "type": "object",
@@ -316,7 +324,7 @@
                                     "description": "Control plane node root volume size, in GB."
                                 },
                                 "memoryMiB": {
-                                    "type": "integer",
+                                    "$ref": "#/$defs/memoryGiB",
                                     "title": "Memory size",
                                     "description": "Control plane memory size, in MB.",
                                     "default": 8192,
@@ -503,7 +511,7 @@
                                     "description": "Control plane node root volume size, in GB."
                                 },
                                 "memoryMiB": {
-                                    "type": "integer",
+                                    "$ref": "#/$defs/memoryGiB",
                                     "title": "Memory size",
                                     "description": "Control plane memory size, in MB.",
                                     "default": 16896,
