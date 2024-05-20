@@ -55,6 +55,11 @@
                 6
             ],
             "minimum": 2
+        },
+        "resourcePool": {
+            "type": "string",
+            "title": "vSphere resource pool name",
+            "default": "*/Resources"
         }
     },
     "type": "object",
@@ -376,10 +381,8 @@
                                     "default": 4
                                 },
                                 "resourcePool": {
-                                    "type": "string",
-                                    "title": "Resource pool name",
-                                    "description": "Name of the resource pool to use.",
-                                    "default": "*/Resources"
+                                    "$ref": "#/$defs/resourcePool",
+                                    "description": "Name of the resource pool to use."
                                 },
                                 "template": {
                                     "type": "string",
@@ -558,10 +561,8 @@
                                     "default": 6
                                 },
                                 "resourcePool": {
-                                    "type": "string",
-                                    "title": "Resource pool name",
-                                    "description": "Name of the resource pool to use.",
-                                    "default": "*/Resources"
+                                    "$ref": "#/$defs/resourcePool",
+                                    "description": "Name of the resource pool to use."
                                 },
                                 "template": {
                                     "type": "string",
