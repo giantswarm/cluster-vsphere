@@ -33,10 +33,10 @@ data:
           cloneMode: "linkedClone"
           diskGiB: 40
           numCPUs: 4
-          memoryMiB: 8096
+          memoryMiB: 8196
           resourcePool: "giantswarm"
           folder: "Giantswarm"
-          template: ubuntu-2004-kube-v1.24.11
+          template: flatcar-stable-3602.2.1-kube-v1.25.16-gs
         oidc:
           issuerUrl: https://dex.testing.test.gigantic.io
           caFile: ""
@@ -44,13 +44,9 @@ data:
           usernameClaim: "email"
           groupsClaim: "groups"
           usernamePrefix: ""
-      nodePools:
-        worker:
-          class: "default"
-          replicas: 2
       nodeClasses:
         default:
-          template: ubuntu-2004-kube-v1.24.11
+          template: flatcar-stable-3602.2.1-kube-v1.25.16-gs
           cloneMode: "linkedClone"
           diskGiB: 40
           numCPUs: 6
@@ -62,7 +58,6 @@ data:
               - networkName: 'LS-GS-CAPV'
                 dhcp4: true
     internal:
-      kubernetesVersion: v1.24.11
       enableEncryptionProvider: true
 ---
 apiVersion: application.giantswarm.io/v1alpha1
