@@ -47,6 +47,14 @@
                 8192
             ],
             "exclusiveMinimum": 0
+        },
+        "numCPUs": {
+            "type": "integer",
+            "title": "Number of CPUs",
+            "examples": [
+                6
+            ],
+            "minimum": 2
         }
     },
     "type": "object",
@@ -366,11 +374,9 @@
                                     }
                                 },
                                 "numCPUs": {
-                                    "type": "integer",
-                                    "title": "Number of CPUs",
+                                    "$ref": "#/$defs/numCPUs",
                                     "description": "Control plane CPU count.",
-                                    "default": 4,
-                                    "minimum": 2
+                                    "default": 4
                                 },
                                 "resourcePool": {
                                     "type": "string",
@@ -553,11 +559,9 @@
                                     }
                                 },
                                 "numCPUs": {
-                                    "type": "integer",
-                                    "title": "Number of CPUs",
+                                    "$ref": "#/$defs/numCPUs",
                                     "description": "Worker node CPU count.",
-                                    "default": 6,
-                                    "minimum": 2
+                                    "default": 6
                                 },
                                 "resourcePool": {
                                     "type": "string",
