@@ -492,7 +492,7 @@
                 },
                 "nodeClasses": {
                     "type": "object",
-                    "title": "Template to define control plane nodes",
+                    "title": "Template to define worker nodes",
                     "properties": {
                         "default": {
                             "type": "object",
@@ -508,25 +508,25 @@
                                 "diskGiB": {
                                     "$ref": "#/$defs/diskGiB",
                                     "title": "Disk size",
-                                    "description": "Control plane node root volume size, in GB."
+                                    "description": "Worker node root volume size, in GB."
                                 },
                                 "memoryMiB": {
                                     "$ref": "#/$defs/memoryGiB",
                                     "title": "Memory size",
-                                    "description": "Control plane memory size, in MB.",
+                                    "description": "Worker memory size, in MB.",
                                     "default": 16896,
                                     "minimum": 8192
                                 },
                                 "network": {
                                     "type": "object",
                                     "title": "Network configuration",
-                                    "description": "Control plane node network configuration.",
+                                    "description": "Worker node network configuration.",
                                     "additionalProperties": false,
                                     "properties": {
                                         "devices": {
                                             "type": "array",
                                             "title": "Network devices",
-                                            "description": "Control plane node network devices.",
+                                            "description": "Worker node network devices.",
                                             "additionalProperties": false,
                                             "items": {
                                                 "type": "object",
@@ -555,7 +555,7 @@
                                 "numCPUs": {
                                     "type": "integer",
                                     "title": "Number of CPUs",
-                                    "description": "Control plane CPU count.",
+                                    "description": "Worker node CPU count.",
                                     "default": 6,
                                     "minimum": 2
                                 },
