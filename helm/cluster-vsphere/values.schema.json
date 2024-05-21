@@ -212,33 +212,21 @@
                                 "loadBalancers": {
                                     "type": "object",
                                     "title": "Load balancers",
-                                    "anyOf": [
-                                        {
-                                            "required": [
-                                                "cidrBlocks"
-                                            ],
-                                            "properties": {
-                                                "cidrBlocks": {
-                                                    "$ref": "#/$defs/cidrBlocks",
-                                                    "title": "Load Balancer subnets"
-                                                }
-                                            }
+                                    "description": "Loadbalancer IP source.",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "cidrBlocks": {
+                                            "$ref": "#/$defs/cidrBlocks",
+                                            "title": "Load Balancer subnets"
                                         },
-                                        {
-                                            "required": [
-                                                "ipPoolName"
-                                            ],
-                                            "properties": {
-                                                "ipPoolName": {
-                                                    "type": "string",
-                                                    "title": "Ip Pool Name",
-                                                    "description": "Ip for Service LB running in WC will be drawn from this GlobalInClusterIPPool resource.",
-                                                    "default": "svc-lb-ips",
-                                                    "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$"
-                                                }
-                                            }
+                                        "ipPoolName": {
+                                            "type": "string",
+                                            "title": "Ip Pool Name",
+                                            "description": "Ip for Service LB running in WC will be drawn from this GlobalInClusterIPPool resource.",
+                                            "default": "svc-lb-ips",
+                                            "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$"
                                         }
-                                    ]
+                                    }
                                 },
                                 "pods": {
                                     "type": "object",
