@@ -40,21 +40,6 @@ Properties within the `.internal` top-level object
 | `internal.teleport.proxyAddr` | **Teleport proxy address**|**Type:** `string`<br/>**Default:** `"teleport.giantswarm.io:443"`|
 | `internal.teleport.version` | **Teleport version**|**Type:** `string`<br/>**Default:** `"14.1.3"`|
 
-### 
-Properties within the `.global.providerSpecific` object
-
-| **Property** | **Description** | **More Details** |
-| :----------- | :-------------- | :--------------- |
-| `global.providerSpecific.vcenter` | **VCenter** - Configuration for vSphere API access.|**Type:** `object`<br/>|
-| `global.providerSpecific.vcenter.datacenter` | **Datacenter** - Name of the datacenter to deploy nodes into.|**Type:** `string`<br/>|
-| `global.providerSpecific.vcenter.datastore` | **Datastore** - Name of the datastore for node disk storage.|**Type:** `string`<br/>|
-| `global.providerSpecific.vcenter.password` | **Password** - Password for the VSphere API.|**Type:** `string`<br/>|
-| `global.providerSpecific.vcenter.region` | **Region** - Category name in VSphere for topology.kubernetes.io/region labels.|**Type:** `string`<br/>|
-| `global.providerSpecific.vcenter.server` | **Server** - URL of the VSphere API.|**Type:** `string`<br/>|
-| `global.providerSpecific.vcenter.thumbprint` | **Thumbprint** - TLS certificate signature of the VSphere API.|**Type:** `string`<br/>|
-| `global.providerSpecific.vcenter.username` | **Username** - Username for the VSphere API.|**Type:** `string`<br/>|
-| `global.providerSpecific.vcenter.zone` | **Zone** - Category name in VSphere for topology.kubernetes.io/zone labels.|**Type:** `string`<br/>|
-
 ### Connectivity
 Properties within the `.global.connectivity` object
 Configurations related to cluster connectivity such as container registries.
@@ -76,7 +61,10 @@ Configurations related to cluster connectivity such as container registries.
 | `global.connectivity.network.controlPlaneEndpoint.host` | **Host** - IP for access to the Kubernetes API. Manually select an IP for kube API. Empty string for auto selection from the ipPoolName pool.|**Type:** `string`<br/>|
 | `global.connectivity.network.controlPlaneEndpoint.ipPoolName` | **Ip Pool Name** - Ip for control plane will be drawn from this GlobalInClusterIPPool resource.|**Type:** `string`<br/>**Value pattern:** `^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$`<br/>**Default:** `"wc-cp-ips"`|
 | `global.connectivity.network.controlPlaneEndpoint.port` | **Port number** - Port for access to the Kubernetes API.|**Type:** `integer`<br/>**Default:** `6443`|
-| `global.connectivity.network.loadBalancers` | **Load balancers**|**Type:** `object`<br/>|
+| `global.connectivity.network.loadBalancers` | **Load balancers** - Loadbalancer IP source.|**Type:** `object`<br/>|
+| `global.connectivity.network.loadBalancers.cidrBlocks` |**None**|**Type:** `array`<br/>|
+| `global.connectivity.network.loadBalancers.cidrBlocks[*]` |IPv4 address range, in CIDR notation.|**Type:** `string`<br/>**Example:** `"10.244.0.0/16"`<br/>**Value pattern:** `^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(/([0-9]|[1,2][0-9]|[3][0-2]))?$`<br/>|
+| `global.connectivity.network.loadBalancers.ipPoolName` | **Ip Pool Name** - Ip for Service LB running in WC will be drawn from this GlobalInClusterIPPool resource.|**Type:** `string`<br/>**Value pattern:** `^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$`<br/>**Default:** `"svc-lb-ips"`|
 | `global.connectivity.network.pods` | **Pods**|**Type:** `object`<br/>|
 | `global.connectivity.network.pods.cidrBlocks` |**None**|**Type:** `array`<br/>|
 | `global.connectivity.network.pods.cidrBlocks[*]` |IPv4 address range, in CIDR notation.|**Type:** `string`<br/>**Example:** `"10.244.0.0/16"`<br/>**Value pattern:** `^((25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)(/([0-9]|[1,2][0-9]|[3][0-2]))?$`<br/>|
@@ -111,7 +99,7 @@ Properties within the `.global.controlPlane` object
 | `global.controlPlane.machineTemplate.network.devices[*].dhcp4` | **IPv4 DHCP** - Is DHCP enabled on this segment.|**Type:** `boolean`<br/>**Default:** `true`|
 | `global.controlPlane.machineTemplate.network.devices[*].networkName` | **Segment name** - Segment name to attach nodes to. Must already exist.|**Type:** `string`<br/>|
 | `global.controlPlane.machineTemplate.numCPUs` | **Number of CPUs**|**Type:** `integer`<br/>**Example:** `6`<br/>|
-| `global.controlPlane.machineTemplate.resourcePool` | **vSphere resource pool name**|**Type:** `string`<br/>**Default:** `"*/Resources"`|
+| `global.controlPlane.machineTemplate.resourcePool` | **VSphere resource pool name**|**Type:** `string`<br/>**Default:** `"*/Resources"`|
 | `global.controlPlane.machineTemplate.template` | **VM template**|**Type:** `string`<br/>**Default:** `"flatcar-stable-3602.2.1-kube-v1.25.16-gs"`|
 | `global.controlPlane.oidc` | **OIDC authentication**|**Type:** `object`<br/>|
 | `global.controlPlane.oidc.caFile` | **Certificate authority file** - Path to identity provider's CA certificate in PEM format.|**Type:** `string`<br/>|
@@ -156,12 +144,27 @@ Properties within the `.global.podSecurityStandards` object
 | :----------- | :-------------- | :--------------- |
 | `global.podSecurityStandards.enforced` | **Enforced Pod Security Standards** - Use PSSs instead of PSPs.|**Type:** `boolean`<br/>**Default:** `true`|
 
+### Provider specific configuration
+Properties within the `.global.providerSpecific` object
+
+| **Property** | **Description** | **More Details** |
+| :----------- | :-------------- | :--------------- |
+| `global.providerSpecific.vcenter` | **VCenter** - Configuration for vSphere API access.|**Type:** `object`<br/>|
+| `global.providerSpecific.vcenter.datacenter` | **Datacenter** - Name of the datacenter to deploy nodes into.|**Type:** `string`<br/>|
+| `global.providerSpecific.vcenter.datastore` | **Datastore** - Name of the datastore for node disk storage.|**Type:** `string`<br/>|
+| `global.providerSpecific.vcenter.password` | **Password** - Password for the VSphere API.|**Type:** `string`<br/>|
+| `global.providerSpecific.vcenter.region` | **Region** - Category name in VSphere for topology.kubernetes.io/region labels.|**Type:** `string`<br/>|
+| `global.providerSpecific.vcenter.server` | **Server** - URL of the VSphere API.|**Type:** `string`<br/>|
+| `global.providerSpecific.vcenter.thumbprint` | **Thumbprint** - TLS certificate signature of the VSphere API.|**Type:** `string`<br/>|
+| `global.providerSpecific.vcenter.username` | **Username** - Username for the VSphere API.|**Type:** `string`<br/>|
+| `global.providerSpecific.vcenter.zone` | **Zone** - Category name in VSphere for topology.kubernetes.io/zone labels.|**Type:** `string`<br/>|
+
 ### Template to define worker nodes
 Properties within the `.global.nodeClasses` object
 
 | **Property** | **Description** | **More Details** |
 | :----------- | :-------------- | :--------------- |
-| `global.nodeClasses.default` | **Default node class configuration.**|**Type:** `object`<br/>|
+| `global.nodeClasses.default` | **Default node class configuration**|**Type:** `object`<br/>|
 | `global.nodeClasses.default.cloneMode` | **Template clone mode** - VM template cloning method.|**Type:** `string`<br/>**Default:** `"linkedClone"`|
 | `global.nodeClasses.default.diskGiB` | **Disk size**|**Type:** `integer`<br/>**Example:** `30`<br/>|
 | `global.nodeClasses.default.memoryMiB` | **Memory size**|**Type:** `integer`<br/>**Example:** `8192`<br/>|
@@ -171,7 +174,7 @@ Properties within the `.global.nodeClasses` object
 | `global.nodeClasses.default.network.devices[*].dhcp4` | **IPv4 DHCP** - Is DHCP enabled on this segment.|**Type:** `boolean`<br/>**Default:** `true`|
 | `global.nodeClasses.default.network.devices[*].networkName` | **Segment name** - Segment name to attach nodes to. Must already exist.|**Type:** `string`<br/>|
 | `global.nodeClasses.default.numCPUs` | **Number of CPUs**|**Type:** `integer`<br/>**Example:** `6`<br/>|
-| `global.nodeClasses.default.resourcePool` | **vSphere resource pool name**|**Type:** `string`<br/>**Default:** `"*/Resources"`|
+| `global.nodeClasses.default.resourcePool` | **VSphere resource pool name**|**Type:** `string`<br/>**Default:** `"*/Resources"`|
 | `global.nodeClasses.default.template` | **VM template**|**Type:** `string`<br/>**Default:** `"flatcar-stable-3602.2.1-kube-v1.25.16-gs"`|
 
 
