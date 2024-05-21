@@ -60,6 +60,11 @@
             "type": "string",
             "title": "vSphere resource pool name",
             "default": "*/Resources"
+        },
+        "template": {
+            "type": "string",
+            "title": "VM template",
+            "default": "flatcar-stable-3602.2.1-kube-v1.25.16-gs"
         }
     },
     "type": "object",
@@ -385,10 +390,8 @@
                                     "description": "Name of the resource pool to use."
                                 },
                                 "template": {
-                                    "type": "string",
-                                    "title": "VM template",
-                                    "description": "Full name of the VM template.",
-                                    "default": "flatcar-stable-3602.2.1-kube-v1.25.16-gs"
+                                    "$ref": "#/$defs/template",
+                                    "description": "Full name of the VM template."
                                 }
                             }
                         },
@@ -565,10 +568,8 @@
                                     "description": "Name of the resource pool to use."
                                 },
                                 "template": {
-                                    "type": "string",
-                                    "title": "VM template",
-                                    "description": "Full name of the VM template.",
-                                    "default": "flatcar-stable-3602.2.1-kube-v1.25.16-gs"
+                                    "$ref": "#/$defs/template",
+                                    "description": "Full name of the VM template."
                                 }
                             }
                         }
