@@ -204,7 +204,8 @@
                                         "port": {
                                             "type": "integer",
                                             "title": "Port number",
-                                            "description": "Port for access to the Kubernetes API."
+                                            "description": "Port for access to the Kubernetes API.",
+                                            "default": 6443
                                         }
                                     }
                                 },
@@ -232,6 +233,7 @@
                                                     "type": "string",
                                                     "title": "Ip Pool Name",
                                                     "description": "Ip for Service LB running in WC will be drawn from this GlobalInClusterIPPool resource.",
+                                                    "default": "svc-lb-ips",
                                                     "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$"
                                                 }
                                             }
