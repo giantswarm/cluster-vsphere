@@ -5,7 +5,10 @@ global:
     containerRegistries: {}
     network:
       controlPlaneEndpoint:
+        ipPoolName: wc-cp-ips
         port: 6443
+      loadBalancers:
+        ipPoolName: svc-lb-ips
       pods:
         cidrBlocks:
           - 10.244.0.0/16
