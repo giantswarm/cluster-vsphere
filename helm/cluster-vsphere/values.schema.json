@@ -48,6 +48,40 @@
             ],
             "minimum": 8192
         },
+        "network": {
+            "type": "object",
+            "title": "Network configuration",
+            "additionalProperties": false,
+            "properties": {
+                "devices": {
+                    "type": "array",
+                    "title": "Network devices",
+                    "description": "Network interface configuration for VMs.",
+                    "additionalProperties": false,
+                    "items": {
+                        "type": "object",
+                        "title": "Devices",
+                        "required": [
+                            "networkName"
+                        ],
+                        "additionalProperties": false,
+                        "properties": {
+                            "dhcp4": {
+                                "type": "boolean",
+                                "title": "IPv4 DHCP",
+                                "description": "Is DHCP enabled on this segment.",
+                                "default": true
+                            },
+                            "networkName": {
+                                "type": "string",
+                                "title": "Segment name",
+                                "description": "Segment name to attach nodes to. Must already exist."
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "numCPUs": {
             "type": "integer",
             "title": "Number of CPUs",
@@ -346,39 +380,8 @@
                                     "default": 8192
                                 },
                                 "network": {
-                                    "type": "object",
-                                    "title": "Network configuration",
-                                    "description": "Control plane node network configuration.",
-                                    "additionalProperties": false,
-                                    "properties": {
-                                        "devices": {
-                                            "type": "array",
-                                            "title": "Network devices",
-                                            "description": "Control plane node network devices.",
-                                            "additionalProperties": false,
-                                            "items": {
-                                                "type": "object",
-                                                "title": "Devices",
-                                                "required": [
-                                                    "networkName"
-                                                ],
-                                                "additionalProperties": false,
-                                                "properties": {
-                                                    "dhcp4": {
-                                                        "type": "boolean",
-                                                        "title": "IPv4 DHCP",
-                                                        "description": "Is DHCP enabled on this segment.",
-                                                        "default": true
-                                                    },
-                                                    "networkName": {
-                                                        "type": "string",
-                                                        "title": "Segment name",
-                                                        "description": "Segment name to attach nodes to. Must already exist."
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
+                                    "$ref": "#/$defs/network",
+                                    "description": "Control plane node network configuration."
                                 },
                                 "numCPUs": {
                                     "$ref": "#/$defs/numCPUs",
@@ -524,39 +527,8 @@
                                     "default": 16896
                                 },
                                 "network": {
-                                    "type": "object",
-                                    "title": "Network configuration",
-                                    "description": "Worker node network configuration.",
-                                    "additionalProperties": false,
-                                    "properties": {
-                                        "devices": {
-                                            "type": "array",
-                                            "title": "Network devices",
-                                            "description": "Worker node network devices.",
-                                            "additionalProperties": false,
-                                            "items": {
-                                                "type": "object",
-                                                "title": "Devices",
-                                                "required": [
-                                                    "networkName"
-                                                ],
-                                                "additionalProperties": false,
-                                                "properties": {
-                                                    "dhcp4": {
-                                                        "type": "boolean",
-                                                        "title": "IPv4 DHCP",
-                                                        "description": "Is DHCP enabled on this segment.",
-                                                        "default": true
-                                                    },
-                                                    "networkName": {
-                                                        "type": "string",
-                                                        "title": "Segment name",
-                                                        "description": "Segment name to attach nodes to. Must already exist."
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
+                                    "$ref": "#/$defs/network",
+                                    "description": "Worker node network configuration."
                                 },
                                 "numCPUs": {
                                     "$ref": "#/$defs/numCPUs",
