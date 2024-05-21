@@ -92,7 +92,7 @@
         },
         "resourcePool": {
             "type": "string",
-            "title": "vSphere resource pool name",
+            "title": "VSphere resource pool name",
             "default": "*/Resources"
         },
         "template": {
@@ -102,10 +102,11 @@
         }
     },
     "type": "object",
+    "additionalProperties": false,
     "properties": {
         "global": {
             "type": "object",
-            "title": "Properties that are available to all charts and subcharts.",
+            "title": "Properties that are available to all charts and subcharts",
             "required": [
                 "metadata"
             ],
@@ -502,7 +503,7 @@
                     "properties": {
                         "default": {
                             "type": "object",
-                            "title": "Default node class configuration.",
+                            "title": "Default node class configuration",
                             "additionalProperties": false,
                             "properties": {
                                 "cloneMode": {
@@ -602,6 +603,7 @@
                 },
                 "providerSpecific": {
                     "type": "object",
+                    "title": "Provider specific configuration",
                     "properties": {
                         "vcenter": {
                             "type": "object",
