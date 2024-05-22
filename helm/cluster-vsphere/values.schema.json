@@ -77,7 +77,13 @@
                                 "description": "Segment name to attach nodes to. Must already exist."
                             }
                         }
-                    }
+                    },
+                    "default": [
+                        {
+                            "dhcp4": true,
+                            "networkName": ""
+                        }
+                    ]
                 }
             }
         },

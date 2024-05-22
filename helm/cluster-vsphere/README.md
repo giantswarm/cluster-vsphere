@@ -94,7 +94,7 @@ Properties within the `.global.controlPlane` object
 | `global.controlPlane.machineTemplate.diskGiB` | **Disk size**|**Type:** `integer`<br/>**Example:** `30`<br/>|
 | `global.controlPlane.machineTemplate.memoryMiB` | **Memory size**|**Type:** `integer`<br/>**Example:** `8192`<br/>|
 | `global.controlPlane.machineTemplate.network` | **Network configuration**|**Type:** `object`<br/>|
-| `global.controlPlane.machineTemplate.network.devices` | **Network devices** - Network interface configuration for VMs.|**Type:** `array`<br/>|
+| `global.controlPlane.machineTemplate.network.devices` | **Network devices** - Network interface configuration for VMs.|**Type:** `array`<br/>**Default:** `[{"dhcp4":true,"networkName":""}]`|
 | `global.controlPlane.machineTemplate.network.devices[*]` | **Devices**|**Type:** `object`<br/>|
 | `global.controlPlane.machineTemplate.network.devices[*].dhcp4` | **IPv4 DHCP** - Is DHCP enabled on this segment.|**Type:** `boolean`<br/>**Default:** `true`|
 | `global.controlPlane.machineTemplate.network.devices[*].networkName` | **Segment name** - Segment name to attach nodes to. Must already exist.|**Type:** `string`<br/>|
@@ -169,7 +169,7 @@ Properties within the `.global.nodeClasses` object
 | `global.nodeClasses.default.diskGiB` | **Disk size**|**Type:** `integer`<br/>**Example:** `30`<br/>|
 | `global.nodeClasses.default.memoryMiB` | **Memory size**|**Type:** `integer`<br/>**Example:** `8192`<br/>|
 | `global.nodeClasses.default.network` | **Network configuration**|**Type:** `object`<br/>|
-| `global.nodeClasses.default.network.devices` | **Network devices** - Network interface configuration for VMs.|**Type:** `array`<br/>|
+| `global.nodeClasses.default.network.devices` | **Network devices** - Network interface configuration for VMs.|**Type:** `array`<br/>**Default:** `[{"dhcp4":true,"networkName":""}]`|
 | `global.nodeClasses.default.network.devices[*]` | **Devices**|**Type:** `object`<br/>|
 | `global.nodeClasses.default.network.devices[*].dhcp4` | **IPv4 DHCP** - Is DHCP enabled on this segment.|**Type:** `boolean`<br/>**Default:** `true`|
 | `global.nodeClasses.default.network.devices[*].networkName` | **Segment name** - Segment name to attach nodes to. Must already exist.|**Type:** `string`<br/>|
