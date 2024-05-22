@@ -103,7 +103,7 @@
         "template": {
             "type": "string",
             "title": "VM template",
-            "default": "flatcar-stable-3602.2.1-kube-v1.25.16-gs"
+            "default": "flatcar-stable-3815.2.0-kube-v1.26.15-gs"
         }
     },
     "type": "object",
@@ -784,7 +784,7 @@
                         "tag": {
                             "type": "string",
                             "title": "Tag",
-                            "default": "1.25.15"
+                            "default": "1.26.15"
                         }
                     }
                 },
@@ -792,7 +792,7 @@
                     "type": "string",
                     "title": "Kubernetes version",
                     "description": "Kubernetes version to deploy. Must match the version available in the image defined at template.",
-                    "default": "v1.25.16"
+                    "default": "v1.26.15"
                 },
                 "sandboxContainerImage": {
                     "type": "object",
