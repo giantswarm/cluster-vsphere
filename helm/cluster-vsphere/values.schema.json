@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$defs": {
         "cidrBlocks": {
             "type": "array",
@@ -78,7 +78,13 @@
                                 "description": "Segment name to attach nodes to. Must already exist."
                             }
                         }
-                    }
+                    },
+                    "default": [
+                        {
+                            "dhcp4": true,
+                            "networkName": ""
+                        }
+                    ]
                 }
             }
         },
@@ -92,7 +98,7 @@
         },
         "resourcePool": {
             "type": "string",
-            "title": "vSphere resource pool name",
+            "title": "Resource pool name",
             "default": "*/Resources"
         },
         "template": {
@@ -105,7 +111,7 @@
     "properties": {
         "global": {
             "type": "object",
-            "title": "Properties that are available to all charts and subcharts.",
+            "title": "Properties that are available to all charts and subcharts",
             "required": [
                 "metadata"
             ],
@@ -204,39 +210,27 @@
                                         "port": {
                                             "type": "integer",
                                             "title": "Port number",
-                                            "description": "Port for access to the Kubernetes API."
+                                            "description": "Port for access to the Kubernetes API.",
+                                            "default": 6443
                                         }
                                     }
                                 },
                                 "loadBalancers": {
                                     "type": "object",
                                     "title": "Load balancers",
-                                    "anyOf": [
-                                        {
-                                            "required": [
-                                                "cidrBlocks"
-                                            ],
-                                            "properties": {
-                                                "cidrBlocks": {
-                                                    "$ref": "#/$defs/cidrBlocks",
-                                                    "title": "Load Balancer subnets"
-                                                }
-                                            }
+                                    "properties": {
+                                        "cidrBlocks": {
+                                            "$ref": "#/$defs/cidrBlocks",
+                                            "title": "Load Balancer subnets"
                                         },
-                                        {
-                                            "required": [
-                                                "ipPoolName"
-                                            ],
-                                            "properties": {
-                                                "ipPoolName": {
-                                                    "type": "string",
-                                                    "title": "Ip Pool Name",
-                                                    "description": "Ip for Service LB running in WC will be drawn from this GlobalInClusterIPPool resource.",
-                                                    "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$"
-                                                }
-                                            }
+                                        "ipPoolName": {
+                                            "type": "string",
+                                            "title": "Ip Pool Name",
+                                            "description": "Ip for Service LB running in WC will be drawn from this GlobalInClusterIPPool resource.",
+                                            "default": "svc-lb-ips",
+                                            "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$"
                                         }
-                                    ]
+                                    }
                                 },
                                 "pods": {
                                     "type": "object",
@@ -248,7 +242,9 @@
                                         "cidrBlocks": {
                                             "$ref": "#/$defs/cidrBlocks",
                                             "title": "Pod subnets",
-                                            "default": "10.244.0.0/16"
+                                            "default": [
+                                                "10.244.0.0/16"
+                                            ]
                                         }
                                     }
                                 },
@@ -262,7 +258,9 @@
                                         "cidrBlocks": {
                                             "$ref": "#/$defs/cidrBlocks",
                                             "title": "Service subnets",
-                                            "default": "172.31.0.0/16"
+                                            "default": [
+                                                "172.31.0.0/16"
+                                            ]
                                         }
                                     }
                                 }
@@ -508,7 +506,7 @@
                     "properties": {
                         "default": {
                             "type": "object",
-                            "title": "Default node class configuration.",
+                            "title": "Default node class configuration",
                             "additionalProperties": false,
                             "properties": {
                                 "cloneMode": {
@@ -608,6 +606,7 @@
                 },
                 "providerSpecific": {
                     "type": "object",
+                    "title": "Provider-specific configuration",
                     "properties": {
                         "vcenter": {
                             "type": "object",
@@ -745,7 +744,8 @@
                 "enableEncryptionProvider": {
                     "type": "boolean",
                     "title": "API server encryption at REST",
-                    "description": "Enable encryption at REST feature of API server."
+                    "description": "Enable encryption at REST feature of API server.",
+                    "default": true
                 },
                 "kubectlImage": {
                     "type": "object",

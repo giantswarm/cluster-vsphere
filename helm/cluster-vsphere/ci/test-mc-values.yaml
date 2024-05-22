@@ -1,0 +1,12 @@
+# MC specific values
+global:
+  connectivity:
+    containerRegistries: {}
+    network:
+      controlPlaneEndpoint:
+        host: "10.10.222.230"
+        ipPoolName: null
+      loadBalancers:
+        ipPoolName: null
+        cidrBlocks:
+        - "10.10.222.231/32"
