@@ -177,6 +177,14 @@ Properties within the `.global.nodeClasses` object
 | `global.nodeClasses.default.resourcePool` | **VSphere resource pool name**|**Type:** `string`<br/>**Default:** `"*/Resources"`|
 | `global.nodeClasses.default.template` | **VM template**|**Type:** `string`<br/>**Default:** `"flatcar-stable-3602.2.1-kube-v1.25.16-gs"`|
 
+### Other
+
+| **Property** | **Description** | **More Details** |
+| :----------- | :-------------- | :--------------- |
+| `baseDomain` | **Base DNS domain**|**Type:** `string`<br/>|
+| `managementCluster` | **Management cluster name**|**Type:** `string`<br/>|
+| `provider` | **Provider name**|**Type:** `string`<br/>|
+
 
 
 <!-- DOCS_END -->
