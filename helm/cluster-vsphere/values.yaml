@@ -76,6 +76,7 @@ internal:
     enabled: true
   controllerManager:
     featureGates: []
+  enableEncryptionProvider: true
   kubectlImage:
     name: giantswarm/kubectl
     registry: gsoci.azurecr.io

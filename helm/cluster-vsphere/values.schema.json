@@ -762,7 +762,8 @@
                 "enableEncryptionProvider": {
                     "type": "boolean",
                     "title": "API server encryption at REST",
-                    "description": "Enable encryption at REST feature of API server."
+                    "description": "Enable encryption at REST feature of API server.",
+                    "default": true
                 },
                 "kubectlImage": {
                     "type": "object",

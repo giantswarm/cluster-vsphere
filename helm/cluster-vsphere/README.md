@@ -25,7 +25,7 @@ Properties within the `.internal` top-level object
 | `internal.controllerManager.featureGates[*]` | **Feature gate**|**Type:** `object`<br/>|
 | `internal.controllerManager.featureGates[*].enabled` | **Enabled**|**Type:** `boolean`<br/>|
 | `internal.controllerManager.featureGates[*].name` | **Name**|**Type:** `string`<br/>**Example:** `"UserNamespacesStatelessPodsSupport"`<br/>**Value pattern:** `^[A-Za-z0-9]+$`<br/>|
-| `internal.enableEncryptionProvider` | **API server encryption at REST** - Enable encryption at REST feature of API server.|**Type:** `boolean`<br/>|
+| `internal.enableEncryptionProvider` | **API server encryption at REST** - Enable encryption at REST feature of API server.|**Type:** `boolean`<br/>**Default:** `true`|
 | `internal.kubectlImage` | **Kubectl image** - Used by cluster-shared library chart to configure coredns in-cluster.|**Type:** `object`<br/>|
 | `internal.kubectlImage.name` | **Repository**|**Type:** `string`<br/>**Default:** `"giantswarm/kubectl"`|
 | `internal.kubectlImage.registry` | **Registry**|**Type:** `string`<br/>**Default:** `"gsoci.azurecr.io"`|
