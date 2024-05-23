@@ -96,7 +96,7 @@ Properties within the `.global.controlPlane` object
 | `global.controlPlane.machineTemplate.network` | **Network configuration**|**Type:** `object`<br/>|
 | `global.controlPlane.machineTemplate.network.devices` | **Network devices** - Network interface configuration for VMs.|**Type:** `array`<br/>**Default:** `[{"dhcp4":true,"networkName":""}]`|
 | `global.controlPlane.machineTemplate.network.devices[*]` | **Devices**|**Type:** `object`<br/>|
-| `global.controlPlane.machineTemplate.network.devices[*].dhcp4` | **IPv4 DHCP** - Is DHCP enabled on this segment.|**Type:** `boolean`<br/>**Default:** `true`|
+| `global.controlPlane.machineTemplate.network.devices[*].dhcp4` | **IPv4 DHCP** - Is DHCP enabled on this segment.|**Type:** `boolean`<br/>|
 | `global.controlPlane.machineTemplate.network.devices[*].networkName` | **Segment name** - Segment name to attach nodes to. Must already exist.|**Type:** `string`<br/>|
 | `global.controlPlane.machineTemplate.numCPUs` | **Number of CPUs**|**Type:** `integer`<br/>**Example:** `6`<br/>|
 | `global.controlPlane.machineTemplate.resourcePool` | **VSphere resource pool name**|**Type:** `string`<br/>**Default:** `"*/Resources"`|
@@ -171,7 +171,7 @@ Properties within the `.global.nodeClasses` object
 | `global.nodeClasses.default.network` | **Network configuration**|**Type:** `object`<br/>|
 | `global.nodeClasses.default.network.devices` | **Network devices** - Network interface configuration for VMs.|**Type:** `array`<br/>**Default:** `[{"dhcp4":true,"networkName":""}]`|
 | `global.nodeClasses.default.network.devices[*]` | **Devices**|**Type:** `object`<br/>|
-| `global.nodeClasses.default.network.devices[*].dhcp4` | **IPv4 DHCP** - Is DHCP enabled on this segment.|**Type:** `boolean`<br/>**Default:** `true`|
+| `global.nodeClasses.default.network.devices[*].dhcp4` | **IPv4 DHCP** - Is DHCP enabled on this segment.|**Type:** `boolean`<br/>|
 | `global.nodeClasses.default.network.devices[*].networkName` | **Segment name** - Segment name to attach nodes to. Must already exist.|**Type:** `string`<br/>|
 | `global.nodeClasses.default.numCPUs` | **Number of CPUs**|**Type:** `integer`<br/>**Example:** `6`<br/>|
 | `global.nodeClasses.default.resourcePool` | **VSphere resource pool name**|**Type:** `string`<br/>**Default:** `"*/Resources"`|
