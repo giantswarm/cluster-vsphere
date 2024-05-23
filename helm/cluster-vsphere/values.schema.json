@@ -1,5 +1,5 @@
 {
-    "$schema": "http://json-schema.org/schema#",
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
     "$defs": {
         "cidrBlocks": {
             "type": "array",
@@ -69,8 +69,7 @@
                             "dhcp4": {
                                 "type": "boolean",
                                 "title": "IPv4 DHCP",
-                                "description": "Is DHCP enabled on this segment.",
-                                "default": true
+                                "description": "Is DHCP enabled on this segment."
                             },
                             "networkName": {
                                 "type": "string",
@@ -78,7 +77,13 @@
                                 "description": "Segment name to attach nodes to. Must already exist."
                             }
                         }
-                    }
+                    },
+                    "default": [
+                        {
+                            "dhcp4": true,
+                            "networkName": ""
+                        }
+                    ]
                 }
             }
         },
@@ -92,7 +97,7 @@
         },
         "resourcePool": {
             "type": "string",
-            "title": "vSphere resource pool name",
+            "title": "VSphere resource pool name",
             "default": "*/Resources"
         },
         "template": {
@@ -102,10 +107,15 @@
         }
     },
     "type": "object",
+    "additionalProperties": false,
     "properties": {
+        "baseDomain": {
+            "type": "string",
+            "title": "Base DNS domain"
+        },
         "global": {
             "type": "object",
-            "title": "Properties that are available to all charts and subcharts.",
+            "title": "Properties that are available to all charts and subcharts",
             "required": [
                 "metadata"
             ],
@@ -204,39 +214,29 @@
                                         "port": {
                                             "type": "integer",
                                             "title": "Port number",
-                                            "description": "Port for access to the Kubernetes API."
+                                            "description": "Port for access to the Kubernetes API.",
+                                            "default": 6443
                                         }
                                     }
                                 },
                                 "loadBalancers": {
                                     "type": "object",
                                     "title": "Load balancers",
-                                    "anyOf": [
-                                        {
-                                            "required": [
-                                                "cidrBlocks"
-                                            ],
-                                            "properties": {
-                                                "cidrBlocks": {
-                                                    "$ref": "#/$defs/cidrBlocks",
-                                                    "title": "Load Balancer subnets"
-                                                }
-                                            }
+                                    "description": "Loadbalancer IP source.",
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "cidrBlocks": {
+                                            "$ref": "#/$defs/cidrBlocks",
+                                            "title": "Load Balancer subnets"
                                         },
-                                        {
-                                            "required": [
-                                                "ipPoolName"
-                                            ],
-                                            "properties": {
-                                                "ipPoolName": {
-                                                    "type": "string",
-                                                    "title": "Ip Pool Name",
-                                                    "description": "Ip for Service LB running in WC will be drawn from this GlobalInClusterIPPool resource.",
-                                                    "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$"
-                                                }
-                                            }
+                                        "ipPoolName": {
+                                            "type": "string",
+                                            "title": "Ip Pool Name",
+                                            "description": "Ip for Service LB running in WC will be drawn from this GlobalInClusterIPPool resource.",
+                                            "default": "svc-lb-ips",
+                                            "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$"
                                         }
-                                    ]
+                                    }
                                 },
                                 "pods": {
                                     "type": "object",
@@ -248,7 +248,9 @@
                                         "cidrBlocks": {
                                             "$ref": "#/$defs/cidrBlocks",
                                             "title": "Pod subnets",
-                                            "default": "10.244.0.0/16"
+                                            "default": [
+                                                "10.244.0.0/16"
+                                            ]
                                         }
                                     }
                                 },
@@ -262,7 +264,9 @@
                                         "cidrBlocks": {
                                             "$ref": "#/$defs/cidrBlocks",
                                             "title": "Service subnets",
-                                            "default": "172.31.0.0/16"
+                                            "default": [
+                                                "172.31.0.0/16"
+                                            ]
                                         }
                                     }
                                 }
@@ -381,7 +385,13 @@
                                 },
                                 "network": {
                                     "$ref": "#/$defs/network",
-                                    "description": "Control plane node network configuration."
+                                    "description": "Control plane node network configuration.",
+                                    "default": [
+                                        {
+                                            "dhcp4": true,
+                                            "networkName": ""
+                                        }
+                                    ]
                                 },
                                 "numCPUs": {
                                     "$ref": "#/$defs/numCPUs",
@@ -508,7 +518,7 @@
                     "properties": {
                         "default": {
                             "type": "object",
-                            "title": "Default node class configuration.",
+                            "title": "Default node class configuration",
                             "additionalProperties": false,
                             "properties": {
                                 "cloneMode": {
@@ -528,7 +538,13 @@
                                 },
                                 "network": {
                                     "$ref": "#/$defs/network",
-                                    "description": "Worker node network configuration."
+                                    "description": "Worker node network configuration.",
+                                    "default": [
+                                        {
+                                            "dhcp4": true,
+                                            "networkName": ""
+                                        }
+                                    ]
                                 },
                                 "numCPUs": {
                                     "$ref": "#/$defs/numCPUs",
@@ -608,6 +624,7 @@
                 },
                 "providerSpecific": {
                     "type": "object",
+                    "title": "Provider specific configuration",
                     "properties": {
                         "vcenter": {
                             "type": "object",
@@ -745,7 +762,8 @@
                 "enableEncryptionProvider": {
                     "type": "boolean",
                     "title": "API server encryption at REST",
-                    "description": "Enable encryption at REST feature of API server."
+                    "description": "Enable encryption at REST feature of API server.",
+                    "default": true
                 },
                 "kubectlImage": {
                     "type": "object",
@@ -783,17 +801,17 @@
                         "name": {
                             "type": "string",
                             "title": "Repository",
-                            "default": "tkg/pause"
+                            "default": "giantswarm/pause"
                         },
                         "registry": {
                             "type": "string",
                             "title": "Registry",
-                            "default": "projects.registry.vmware.com/"
+                            "default": "gsoci.azurecr.io"
                         },
                         "tag": {
                             "type": "string",
                             "title": "Tag",
-                            "default": "3.7"
+                            "default": "3.9"
                         }
                     }
                 },
@@ -819,6 +837,14 @@
                     }
                 }
             }
+        },
+        "managementCluster": {
+            "type": "string",
+            "title": "Management cluster name"
+        },
+        "provider": {
+            "type": "string",
+            "title": "Provider name"
         }
     }
 }
