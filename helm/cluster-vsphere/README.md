@@ -29,8 +29,8 @@ Properties within the `.internal` top-level object
 | `internal.kubectlImage` | **Kubectl image** - Used by cluster-shared library chart to configure coredns in-cluster.|**Type:** `object`<br/>|
 | `internal.kubectlImage.name` | **Repository**|**Type:** `string`<br/>**Default:** `"giantswarm/kubectl"`|
 | `internal.kubectlImage.registry` | **Registry**|**Type:** `string`<br/>**Default:** `"gsoci.azurecr.io"`|
-| `internal.kubectlImage.tag` | **Tag**|**Type:** `string`<br/>**Default:** `"1.26.15"`|
-| `internal.kubernetesVersion` | **Kubernetes version** - Kubernetes version to deploy. Must match the version available in the image defined at template.|**Type:** `string`<br/>**Default:** `"v1.26.15"`|
+| `internal.kubectlImage.tag` | **Tag**|**Type:** `string`<br/>**Default:** `"1.27.14"`|
+| `internal.kubernetesVersion` | **Kubernetes version** - Kubernetes version to deploy. Must match the version available in the image defined at template.|**Type:** `string`<br/>**Default:** `"v1.27.14"`|
 | `internal.sandboxContainerImage` | **Sandbox Container image**|**Type:** `object`<br/>|
 | `internal.sandboxContainerImage.name` | **Repository**|**Type:** `string`<br/>**Default:** `"giantswarm/pause"`|
 | `internal.sandboxContainerImage.registry` | **Registry**|**Type:** `string`<br/>**Default:** `"gsoci.azurecr.io"`|
@@ -100,7 +100,7 @@ Properties within the `.global.controlPlane` object
 | `global.controlPlane.machineTemplate.network.devices[*].networkName` | **Segment name** - Segment name to attach nodes to. Must already exist.|**Type:** `string`<br/>|
 | `global.controlPlane.machineTemplate.numCPUs` | **Number of CPUs**|**Type:** `integer`<br/>**Example:** `6`<br/>|
 | `global.controlPlane.machineTemplate.resourcePool` | **VSphere resource pool name**|**Type:** `string`<br/>**Default:** `"*/Resources"`|
-| `global.controlPlane.machineTemplate.template` | **VM template**|**Type:** `string`<br/>**Default:** `"flatcar-stable-3815.2.0-kube-v1.26.15-gs"`|
+| `global.controlPlane.machineTemplate.template` | **VM template**|**Type:** `string`<br/>**Default:** `"flatcar-stable-3815.2.2-kube-v1.27.14-gs"`|
 | `global.controlPlane.oidc` | **OIDC authentication**|**Type:** `object`<br/>|
 | `global.controlPlane.oidc.caFile` | **Certificate authority file** - Path to identity provider's CA certificate in PEM format.|**Type:** `string`<br/>|
 | `global.controlPlane.oidc.clientId` | **Client ID** - OIDC client identifier to identify with.|**Type:** `string`<br/>|
@@ -175,7 +175,7 @@ Properties within the `.global.nodeClasses` object
 | `global.nodeClasses.default.network.devices[*].networkName` | **Segment name** - Segment name to attach nodes to. Must already exist.|**Type:** `string`<br/>|
 | `global.nodeClasses.default.numCPUs` | **Number of CPUs**|**Type:** `integer`<br/>**Example:** `6`<br/>|
 | `global.nodeClasses.default.resourcePool` | **VSphere resource pool name**|**Type:** `string`<br/>**Default:** `"*/Resources"`|
-| `global.nodeClasses.default.template` | **VM template**|**Type:** `string`<br/>**Default:** `"flatcar-stable-3815.2.0-kube-v1.26.15-gs"`|
+| `global.nodeClasses.default.template` | **VM template**|**Type:** `string`<br/>**Default:** `"flatcar-stable-3815.2.2-kube-v1.27.14-gs"`|
 
 ### Other
 

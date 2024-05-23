@@ -36,7 +36,7 @@ data:
           memoryMiB: 8196
           resourcePool: "giantswarm"
           folder: "Giantswarm"
-          template: flatcar-stable-3602.2.1-kube-v1.25.16-gs
+          template: flatcar-stable-3815.2.2-kube-v1.27.14-gs
         oidc:
           issuerUrl: https://dex.testing.test.gigantic.io
           caFile: ""
@@ -46,7 +46,7 @@ data:
           usernamePrefix: ""
       nodeClasses:
         default:
-          template: flatcar-stable-3602.2.1-kube-v1.25.16-gs
+          template: flatcar-stable-3815.2.2-kube-v1.27.14-gs
           cloneMode: "linkedClone"
           diskGiB: 40
           numCPUs: 6
