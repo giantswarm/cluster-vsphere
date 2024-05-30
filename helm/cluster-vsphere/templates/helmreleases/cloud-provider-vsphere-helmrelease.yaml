@@ -56,12 +56,3 @@ spec:
         enforced: {{ .Values.global.podSecurityStandards.enforced }}
     kube-vip-cloud-provider:
       cidrGlobal: '{{ join "," .Values.global.connectivity.network.loadBalancers.cidrBlocks }}'
-      image:
-        repository: docker.io/giantswarm/kube-vip-cloud-provider
-        tag: v0.0.4
-    kube-vip:
-      env:
-        vip_interface: "ens192"
-      image:
-        repository: docker.io/giantswarm/kube-vip
-        tag: v0.6.3
