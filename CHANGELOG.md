@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Remove kube-vip values to rely on the defaults of `cloud-provider-vsphere-app`.
+- Update CSI and CPI for Kubernetes 1.26 compatibility.
 
 ## [0.52.0] - 2024-05-23
 
