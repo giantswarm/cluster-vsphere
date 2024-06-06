@@ -33,7 +33,7 @@ global:
           networkName: ""
       numCPUs: 4
       resourcePool: '*/Resources'
-      template: flatcar-stable-3815.2.0-kube-v1.26.15-gs
+      template: flatcar-stable-3815.2.2-kube-v1.27.14-gs
     oidc: {}
     resourceRatio: 8
   metadata:
@@ -48,7 +48,7 @@ global:
           networkName: ""
       numCPUs: 6
       resourcePool: '*/Resources'
-      template: flatcar-stable-3815.2.0-kube-v1.26.15-gs
+      template: flatcar-stable-3815.2.2-kube-v1.27.14-gs
   nodePools:
     worker:
       class: default
@@ -80,8 +80,8 @@ internal:
   kubectlImage:
     name: giantswarm/kubectl
     registry: gsoci.azurecr.io
-    tag: 1.26.15
-  kubernetesVersion: v1.26.15
+    tag: 1.27.14
+  kubernetesVersion: v1.27.14
   sandboxContainerImage:
     name: giantswarm/pause
     registry: gsoci.azurecr.io

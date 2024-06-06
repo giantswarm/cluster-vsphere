@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Remove kube-vip values to rely on the defaults of `cloud-provider-vsphere-app`.
+- Bump k8s version from `1.26.15` to `1.27.14`.
 
 ## [0.52.0] - 2024-05-23
 
