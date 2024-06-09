@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.53.1] - 2024-06-09
+
 ### Fixed
 
 - Refer the API group (`ipam.cluster.x-k8s.io`) of `cluster-api-ipam-provider-in-cluster` for `ipaddresses` CRs to not use the built-in Kubernetes group (`networking.k8s.io/v1alpha1`).
@@ -359,7 +361,8 @@ at least 1 public IP is always needed for the ingress controller to be able to e
 
 - Initial chart implementation.
 
-[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v0.53.0...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v0.53.1...HEAD
+[0.53.1]: https://github.com/giantswarm/cluster-vsphere/compare/v0.53.0...v0.53.1
 [0.53.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.52.0...v0.53.0
 [0.52.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.51.0...v0.52.0
 [0.51.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.50.0...v0.51.0
