@@ -9,8 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Remove kube-vip values to rely on the defaults of `cloud-provider-vsphere-app`.
 - Update CSI and CPI for Kubernetes 1.26 compatibility.
+
+## [0.53.0] - 2024-06-06
+
+### Changed
+
+- Remove kube-vip values to rely on the defaults of `cloud-provider-vsphere-app`.
+- Bump k8s version from `1.26.15` to `1.27.14`.
 
 ## [0.52.0] - 2024-05-23
 
@@ -353,7 +359,8 @@ at least 1 public IP is always needed for the ingress controller to be able to e
 
 - Initial chart implementation.
 
-[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v0.52.0...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v0.53.0...HEAD
+[0.53.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.52.0...v0.53.0
 [0.52.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.51.0...v0.52.0
 [0.51.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.50.0...v0.51.0
 [0.50.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.10.3...v0.50.0
