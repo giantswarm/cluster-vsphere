@@ -89,7 +89,7 @@ spec:
               new_ip=""
               while [ -z "${new_ip}" ] ; do
                 echo "waiting for a free IP address.."
-                new_ip=$(kubectl get ipaddress --ignore-not-found -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} -o 'jsonpath={.spec.address}')
+                new_ip=$(kubectl get ipaddresses.ipam.cluster.x-k8s.io --ignore-not-found -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} -o 'jsonpath={.spec.address}')
                 sleep 2
               done
               echo "Got the IP: ${new_ip}"
@@ -123,7 +123,7 @@ spec:
               new_ip=""
               while [ -z "${new_ip}" ] ; do
                 echo "waiting for a free IP address.."
-                new_ip=$(kubectl get ipaddress --ignore-not-found -n {{ $.Release.Namespace }} {{ include "lbClaimName" $ }} -o 'jsonpath={.spec.address}')
+                new_ip=$(kubectl get ipaddresses.ipam.cluster.x-k8s.io --ignore-not-found -n {{ $.Release.Namespace }} {{ include "lbClaimName" $ }} -o 'jsonpath={.spec.address}')
                 sleep 2
               done
               echo "Got the IP: ${new_ip}"
@@ -145,7 +145,7 @@ spec:
               set -o pipefail
               set -o nounset
               echo "New IPs have been assigned, upausing the Cluster '{{ include "resource.default.name" $ }}' resource.."
-              kubectl get ipaddress -n {{ $.Release.Namespace }}
+              kubectl get ipaddresses.ipam.cluster.x-k8s.io -n {{ $.Release.Namespace }}
               kubectl patch cluster -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} --type=merge -p '{"spec":{"paused":false}}'
 ---
 {{- end }}

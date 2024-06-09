@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Refer the API group (`ipam.cluster.x-k8s.io`) of `cluster-api-ipam-provider-in-cluster` for `ipaddresses` CRs to not use the built-in Kubernetes group (`networking.k8s.io/v1alpha1`).
+
 ## [0.53.0] - 2024-06-06
 
 ### Changed
