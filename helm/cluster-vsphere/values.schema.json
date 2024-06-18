@@ -610,7 +610,7 @@
                         }
                     },
                     "properties": {
-                        "worker": {
+                        "def00": {
                             "type": "object",
                             "title": "Default nodePool",
                             "additionalProperties": false,
