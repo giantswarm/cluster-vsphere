@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+
+- Remove `internal.ciliumNetworkPolicy.enabled` switch after all policies from `cilium-app` were removed. We use `network-policies-app` now.
+
 ## [0.53.1] - 2024-06-09
 
 ### Fixed

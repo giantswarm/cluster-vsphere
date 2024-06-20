@@ -72,8 +72,6 @@ internal:
       - ServiceAccount
       - ValidatingAdmissionWebhook
     featureGates: []
-  ciliumNetworkPolicy:
-    enabled: true
   controllerManager:
     featureGates: []
   enableEncryptionProvider: true
