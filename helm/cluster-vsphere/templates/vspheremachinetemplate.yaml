@@ -12,5 +12,4 @@ spec:
   template:
     spec:
       {{- include "mtSpec" $c | nindent 6 -}}
-
 {{- end }}
