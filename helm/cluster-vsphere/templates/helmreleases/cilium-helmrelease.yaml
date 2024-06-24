@@ -66,3 +66,19 @@ spec:
             effect: "NoSchedule"
             operator: "Equal"
             value: "true"
+{{- if not .Values.internal.ciliumNetworkPolicy.enabled }}
+    defaultPolicies:
+      enabled: true
+      tolerations:
+        - effect: NoSchedule
+          operator: Exists
+        - effect: NoExecute
+          operator: Exists
+        - key: CriticalAddonsOnly
+          operator: Exists
+{{- end }}
+    extraPolicies:
+      remove: true
+      allowEgressToCoreDNS:
+        enabled: false
+
