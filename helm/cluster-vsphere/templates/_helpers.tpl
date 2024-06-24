@@ -39,6 +39,21 @@ thumbprint: {{ $.global.providerSpecific.vcenter.thumbprint }}
 {{- end -}}
 
 {{/*
+First takes a map of the controlPlane's spec and adds it to a new map, then
+takes a array of maps containing nodePools and adds each nodePool's map to
+the new map. Reults in a map of node specs which can be iterated over to 
+create VSphereMachineTemplates.
+*/}}
+{{ define "createMapOfNodeSpecs" }}
+{{- $nodeMap := dict -}}
+{{- $_ := set $nodeMap "control-plane" .Values.global.controlPlane -}}
+{{- range $index, $pool := .Values.global.nodePools -}}
+  {{- $_ := set $nodeMap $pool.name $pool -}}
+{{- end -}}
+{{ toYaml $nodeMap }}
+{{- end }}
+
+{{/*
 Common labels without kubernetes version
 https://github.com/giantswarm/giantswarm/issues/22441
 */}}
