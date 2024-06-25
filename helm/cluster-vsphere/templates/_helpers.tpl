@@ -31,7 +31,7 @@ thumbprint: {{ $.global.providerSpecific.vcenter.thumbprint }}
 {{ toYaml .currentPool }}
 {{- end -}}
 
-{{*/
+{{/*
 mtRevision takes a dict which includes the node's spec and computes a hash value
 from it. This hash value is appended to the name of immutable resources to facilitate
 node replacement when the node spec is changed.
