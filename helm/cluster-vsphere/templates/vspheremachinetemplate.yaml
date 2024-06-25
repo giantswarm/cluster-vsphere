@@ -1,4 +1,4 @@
-{{- range $name, $value := include "createMapOfNodeSpecs" . | fromYaml }}
+{{- range $name, $value := include "createMapOfClusterNodeSpecs" . | fromYaml }}
 {{- $c := (merge (dict "currentPool"  $value) $.Values) }}
 ---
 apiVersion: {{ include "infrastructureApiVersion" . }}
