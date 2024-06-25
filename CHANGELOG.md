@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Bump `cloud-provider-vsphere` to `1.7.0` for **Kubernetes 1.27** compatibility.
+  - Update **vSphere CSI** to `3.2.0`.
+  - Update **vSphere CPI** to `1.27.0`.
+  - Update **kube-vip** to `0.8.0`.
+  - Update **kube-vip-cloud-provider** to `0.0.5`.
+
 ## [0.54.0] - 2024-06-25
 
 ### Added
