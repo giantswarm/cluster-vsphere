@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.55.0] - 2024-06-25
+
 ### Changed
 
 - Bump `cloud-provider-vsphere` to `1.7.0` for **Kubernetes 1.27** compatibility.
@@ -386,7 +388,8 @@ at least 1 public IP is always needed for the ingress controller to be able to e
 
 - Initial chart implementation.
 
-[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v0.54.0...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v0.55.0...HEAD
+[0.55.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.54.0...v0.55.0
 [0.54.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.53.1...v0.54.0
 [0.53.1]: https://github.com/giantswarm/cluster-vsphere/compare/v0.53.0...v0.53.1
 [0.53.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.52.0...v0.53.0
