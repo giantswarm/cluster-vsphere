@@ -1,4 +1,5 @@
-{{- range $name, $value := .Values.global.nodePools }}
+{{- range $name, $value := include "createMapOfWorkerPoolSpecs" . | fromYaml }}
+{{- $c := (merge (dict "currentPool"  $value) $.Values) }}
 ---
 apiVersion: cluster.x-k8s.io/v1beta1
 kind: MachineDeployment
@@ -29,7 +30,7 @@ spec:
       infrastructureRef:
         apiVersion: infrastructure.cluster.x-k8s.io/v1beta1
         kind: VSphereMachineTemplate
-        name: {{ include "resource.default.name" $ }}-{{ $value.class }}-{{ include "mtRevisionByClass" (merge (dict "currentValues" $.Values) $value) }}
+        name: {{ include "resource.default.name" $ }}-{{ $value.name }}-{{ include "mtRevision" $c }}
         namespace: {{ $.Release.Namespace }}
       version: {{ $.Values.internal.kubernetesVersion }}
 {{- end }}
