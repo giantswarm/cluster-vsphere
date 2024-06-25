@@ -49,7 +49,7 @@ takes a array of maps containing nodePools and adds each nodePool's map to
 the new map. Reults in a map of node specs which can be iterated over to 
 create VSphereMachineTemplates.
 */}}
-{{ define "createMapOfNodeSpecs" }}
+{{ define "createMapOfClusterNodeSpecs" }}
 {{- $nodeMap := dict -}}
 {{- $_ := set $nodeMap "control-plane" .Values.global.controlPlane -}}
 {{- range $index, $pool := .Values.global.nodePools -}}
