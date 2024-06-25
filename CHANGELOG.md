@@ -15,6 +15,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Update **kube-vip** to `0.8.0`.
   - Update **kube-vip-cloud-provider** to `0.0.5`.
 
+### Added
+
+- Add `.global.connectivity.localRegistryCache` Helm values and support for in-cluster, local registry cache mirrors in containerd configuration.
+  In such cases, the registry should be exposed via node ports and containerd connects via that port at 127.0.0.1 via HTTP (only allowed for this single use case).
+
+### Fixed
+
+- Fixed `containerd` config file generation when multiple registries are set with authentication
+
+### Removed
+
+- Stop setting `defaultPolicies.enabled=true` in `cilium-app` when `internal.ciliumNetworkPolicy.enabled=true` after all clusters are migrated.
+- Stop setting `extraPolicies.remove=true` in `cilium-app` after all clusters are migrated.
+
 ## [0.53.1] - 2024-06-09
 
 ### Fixed

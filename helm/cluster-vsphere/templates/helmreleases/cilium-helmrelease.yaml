@@ -18,7 +18,7 @@ spec:
       chart: cilium
       # used by renovate
       # repo: giantswarm/cilium-app
-      version: 0.24.0
+      version: 0.25.0
       sourceRef:
         kind: HelmRepository
         name: {{ include "resource.default.name" $ }}-default
@@ -66,19 +66,3 @@ spec:
             effect: "NoSchedule"
             operator: "Equal"
             value: "true"
-{{- if not .Values.internal.ciliumNetworkPolicy.enabled }}
-    defaultPolicies:
-      enabled: true
-      tolerations:
-        - effect: NoSchedule
-          operator: Exists
-        - effect: NoExecute
-          operator: Exists
-        - key: CriticalAddonsOnly
-          operator: Exists
-{{- end }}
-    extraPolicies:
-      remove: true
-      allowEgressToCoreDNS:
-        enabled: false
-
