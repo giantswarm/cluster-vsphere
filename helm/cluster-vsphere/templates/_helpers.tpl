@@ -59,6 +59,19 @@ create VSphereMachineTemplates.
 {{- end }}
 
 {{/*
+Takes an array of maps containing worker nodePools and adds each map to a new
+map. Results in a map of node specs which can be iterated over to create
+MachineDeployments.
+*/}}
+{{ define "createMapOfWorkerPoolSpecs" -}}
+{{- $nodeMap := dict -}}
+{{- range $index, $pool := .Values.global.nodePools -}}
+  {{- $_ := set $nodeMap $pool.name $pool -}}
+{{- end -}}
+{{ toYaml $nodeMap }}
+{{- end }}
+
+{{/*
 Common labels without kubernetes version
 https://github.com/giantswarm/giantswarm/issues/22441
 */}}
