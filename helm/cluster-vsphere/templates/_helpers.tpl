@@ -185,14 +185,6 @@ postKubeadmCommands:
 {{- mustToJson $inputs | toString | quote | sha1sum | trunc 8 }}
 {{- end -}}
 
-{{- define "mtRevisionByClass" -}}
-{{- $outerScope := . }}
-{{- range $name, $value := .currentValues.global.nodeClasses }}
-{{- if eq $name $outerScope.class }}
-{{- include "mtRevision" (merge (dict "currentClass" $value) $outerScope.currentValues) }}
-{{- end }}
-{{- end }}
-{{- end -}}
 
 {{- define "mtRevisionByControlPlane" -}}
 {{- $outerScope := . }}
