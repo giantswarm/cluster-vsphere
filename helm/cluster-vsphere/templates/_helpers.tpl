@@ -72,6 +72,24 @@ MachineDeployments.
 {{- end }}
 
 {{/*
+Takes kubeadm configuration as an input and computes a hash value from it.
+*/}}
+{{- define "kubeadmConfigTemplateRevision" -}}
+{{- $inputs := (dict
+  "data" (include "kubeadmConfigTemplateSpec" .) ) }}
+{{- mustToJson $inputs | toString | quote | sha1sum | trunc 8 }}
+{{- end -}}
+
+{{/*
+Creates a hash value for the control plane via the mtRevision function. Used
+to create a unique name for resources based on their specification.
+*/}}
+{{- define "mtRevisionByControlPlane" -}}
+{{- $outerScope := . }}
+{{- include "mtRevision" (merge (dict "currentClass" .Values.global.controlPlane.machineTemplate) $outerScope.Values) }}
+{{- end -}}
+
+{{/*
 Common labels without kubernetes version
 https://github.com/giantswarm/giantswarm/issues/22441
 */}}
@@ -176,19 +194,6 @@ preKubeadmCommands:
   {{- end }}
 postKubeadmCommands:
 - usermod -aG root nobody # required for node-exporter to access the host's filesystem
-{{- end -}}
-
-
-{{- define "kubeadmConfigTemplateRevision" -}}
-{{- $inputs := (dict
-  "data" (include "kubeadmConfigTemplateSpec" .) ) }}
-{{- mustToJson $inputs | toString | quote | sha1sum | trunc 8 }}
-{{- end -}}
-
-
-{{- define "mtRevisionByControlPlane" -}}
-{{- $outerScope := . }}
-{{- include "mtRevision" (merge (dict "currentClass" .Values.global.controlPlane.machineTemplate) $outerScope.Values) }}
 {{- end -}}
 
 {{/*
