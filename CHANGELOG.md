@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Correct default values for `network`s in values schema.
+
 ## [0.55.0] - 2024-06-25
 
 ### Changed

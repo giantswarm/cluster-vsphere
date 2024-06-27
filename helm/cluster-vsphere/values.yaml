@@ -33,8 +33,9 @@ global:
       cloneMode: linkedClone
       memoryMiB: 8192
       network:
-        - dhcp4: true
-          networkName: ""
+        devices:
+          - dhcp4: true
+            networkName: ""
       numCPUs: 4
       resourcePool: '*/Resources'
       template: flatcar-stable-3815.2.2-kube-v1.27.14-gs
@@ -48,8 +49,9 @@ global:
       cloneMode: linkedClone
       memoryMiB: 16896
       network:
-        - dhcp4: true
-          networkName: ""
+        devices:
+          - dhcp4: true
+            networkName: ""
       numCPUs: 6
       resourcePool: '*/Resources'
       template: flatcar-stable-3815.2.2-kube-v1.27.14-gs
