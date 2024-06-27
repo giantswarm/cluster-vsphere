@@ -51,7 +51,7 @@ create VSphereMachineTemplates.
 */}}
 {{ define "createMapOfClusterNodeSpecs" }}
 {{- $nodeMap := dict -}}
-{{- $_ := set $nodeMap "control-plane" .Values.global.controlPlane.spec -}}
+{{- $_ := set $nodeMap "control-plane" .Values.global.controlPlane.machineTemplate -}}
 {{- range $index, $pool := .Values.global.nodePools -}}
   {{- $_ := set $nodeMap $pool.name $pool -}}
 {{- end -}}
