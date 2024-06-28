@@ -13,15 +13,6 @@
             },
             "minItems": 1
         },
-        "cloneMode": {
-            "type": "string",
-            "title": "VM template clone mode",
-            "enum": [
-                "fullClone",
-                "linkedClone"
-            ],
-            "default": "linkedClone"
-        },
         "diskGiB": {
             "type": "integer",
             "title": "Disk size",
@@ -126,8 +117,7 @@
             "type": "object",
             "title": "Properties that are available to all charts and subcharts",
             "required": [
-                "metadata",
-                "nodePools"
+                "metadata"
             ],
             "properties": {
                 "connectivity": {
@@ -194,39 +184,6 @@
                                 }
                             },
                             "default": {}
-                        },
-                        "localRegistryCache": {
-                            "type": "object",
-                            "title": "Local registry cache",
-                            "description": "Caching container registry within the cluster.",
-                            "required": [
-                                "enabled",
-                                "port"
-                            ],
-                            "additionalProperties": false,
-                            "properties": {
-                                "enabled": {
-                                    "type": "boolean",
-                                    "title": "Enable",
-                                    "description": "Enabling this will deploy the Zot registry service in the cluster. To make use of it as a pull-through cache, you also have to specify registries to cache images for.",
-                                    "default": false
-                                },
-                                "mirroredRegistries": {
-                                    "type": "array",
-                                    "title": "Registries to cache",
-                                    "description": "Here you must specify each registry to cache container images for. Please also make sure to have an entry for each registry in Global > Components > Containerd > Container registries.",
-                                    "items": {
-                                        "type": "string"
-                                    },
-                                    "default": []
-                                },
-                                "port": {
-                                    "type": "integer",
-                                    "title": "Service port",
-                                    "description": "NodePort used by the local registry service.",
-                                    "default": 32767
-                                }
-                            }
                         },
                         "network": {
                             "type": "object",
@@ -412,8 +369,10 @@
                             "additionalProperties": false,
                             "properties": {
                                 "cloneMode": {
-                                    "$ref": "#/$defs/cloneMode",
-                                    "description": "VM template cloning method."
+                                    "type": "string",
+                                    "title": "Template clone mode",
+                                    "description": "VM template cloning method.",
+                                    "default": "linkedClone"
                                 },
                                 "diskGiB": {
                                     "$ref": "#/$defs/diskGiB",
@@ -426,7 +385,13 @@
                                 },
                                 "network": {
                                     "$ref": "#/$defs/network",
-                                    "description": "Control plane node network configuration."
+                                    "description": "Control plane node network configuration.",
+                                    "default": [
+                                        {
+                                            "dhcp4": true,
+                                            "networkName": ""
+                                        }
+                                    ]
                                 },
                                 "numCPUs": {
                                     "$ref": "#/$defs/numCPUs",
@@ -548,58 +513,64 @@
                     }
                 },
                 "nodePools": {
-                    "type": "object",
+                    "type": "array",
                     "title": "Node pools",
-                    "description": "Groups of worker nodes with identical configuration.",
-                    "additionalProperties": false,
-                    "properties": {
-                        "default": {
-                            "type": "object",
-                            "title": "Default nodePool",
-                            "required": [
-                                "network"
-                            ],
-                            "additionalProperties": false,
-                            "properties": {
-                                "cloneMode": {
-                                    "$ref": "#/$defs/cloneMode",
-                                    "description": "VM template cloning method."
-                                },
-                                "diskGiB": {
-                                    "$ref": "#/$defs/diskGiB",
-                                    "description": "Worker node root volume size, in GB."
-                                },
-                                "memoryMiB": {
-                                    "$ref": "#/$defs/memoryGiB",
-                                    "description": "Worker memory size, in MB.",
-                                    "default": 16896
-                                },
-                                "network": {
-                                    "$ref": "#/$defs/network",
-                                    "description": "Worker node network configuration."
-                                },
-                                "numCPUs": {
-                                    "$ref": "#/$defs/numCPUs",
-                                    "description": "Worker node CPU count.",
-                                    "default": 6
-                                },
-                                "replicas": {
-                                    "type": "integer",
-                                    "title": "Number of nodes",
-                                    "default": 2,
-                                    "minimum": 1
-                                },
-                                "resourcePool": {
-                                    "$ref": "#/$defs/resourcePool",
-                                    "description": "Name of the resource pool to use."
-                                },
-                                "template": {
-                                    "$ref": "#/$defs/template",
-                                    "description": "Full name of the VM template."
-                                }
+                    "items": {
+                        "type": "object",
+                        "title": "Node pool",
+                        "additionalProperties": false
+                        "properties": {
+                            "cloneMode": {
+                                "type": "string",
+                                "title": "Template clone mode",
+                                "description": "VM template cloning method."
+                            },
+                            "diskGiB": {
+                                "$ref": "#/$defs/diskGiB",
+                                "description": "Worker node root volume size, in GB."
+                            },
+                            "memoryMiB": {
+                                "$ref": "#/$defs/memoryGiB",
+                                "description": "Worker memory size, in MB."
+                            },
+                            "network": {
+                                "$ref": "#/$defs/network",
+                                "description": "Worker node network configuration."
+                            },
+                            "numCPUs": {
+                                "$ref": "#/$defs/numCPUs",
+                                "description": "Worker node CPU count."
+                            },
+                            "replicas": {
+                                "type": "integer",
+                                "title": "Number of nodes",
+                                "minimum": 1
+                            },
+                            "resourcePool": {
+                                "$ref": "#/$defs/resourcePool",
+                                "description": "Name of the resource pool to use."
+                            },
+                            "template": {
+                                "$ref": "#/$defs/template",
+                                "description": "Full name of the VM template."
                             }
                         }
-                    }
+                    },
+                    "default": [
+                        {
+                            "cloneMode": "linkedClone",
+                            "memoryMiB": 16896
+                            "name": "def00",
+                            "network": [
+                                {
+                                    "dhcp4": true,
+                                    "networkName": ""
+                                }
+                            ],
+                            "numCPUs": 6,
+                            "replicas": 2
+                        }
+                    ]
                 },
                 "podSecurityStandards": {
                     "type": "object",
