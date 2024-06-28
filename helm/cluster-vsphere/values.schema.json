@@ -540,51 +540,6 @@
                         }
                     }
                 },
-                "nodeClasses": {
-                    "type": "object",
-                    "title": "Template to define worker nodes",
-                    "properties": {
-                        "default": {
-                            "type": "object",
-                            "title": "Default node class configuration",
-                            "additionalProperties": false,
-                            "properties": {
-                                "cloneMode": {
-                                    "type": "string",
-                                    "title": "Template clone mode",
-                                    "description": "VM template cloning method.",
-                                    "default": "linkedClone"
-                                },
-                                "diskGiB": {
-                                    "$ref": "#/$defs/diskGiB",
-                                    "description": "Worker node root volume size, in GB."
-                                },
-                                "memoryMiB": {
-                                    "$ref": "#/$defs/memoryGiB",
-                                    "description": "Worker memory size, in MB.",
-                                    "default": 16896
-                                },
-                                "network": {
-                                    "$ref": "#/$defs/network",
-                                    "description": "Worker node network configuration."
-                                },
-                                "numCPUs": {
-                                    "$ref": "#/$defs/numCPUs",
-                                    "description": "Worker node CPU count.",
-                                    "default": 6
-                                },
-                                "resourcePool": {
-                                    "$ref": "#/$defs/resourcePool",
-                                    "description": "Name of the resource pool to use."
-                                },
-                                "template": {
-                                    "$ref": "#/$defs/template",
-                                    "description": "Full name of the VM template."
-                                }
-                            }
-                        }
-                    }
-                },
                 "nodePools": {
                     "type": "object",
                     "title": "Node pools",
