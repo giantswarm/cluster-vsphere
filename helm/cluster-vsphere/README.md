@@ -95,7 +95,7 @@ Properties within the `.global.controlPlane` object
 | `global.controlPlane.image` | **Node container image**|**Type:** `object`<br/>|
 | `global.controlPlane.image.repository` | **Repository**|**Type:** `string`<br/>**Default:** `"gsoci.azurecr.io/giantswarm"`|
 | `global.controlPlane.machineTemplate` | **Template to define control plane nodes**|**Type:** `object`<br/>|
-| `global.controlPlane.machineTemplate.cloneMode` | **Template clone mode** - VM template cloning method.|**Type:** `string`<br/>**Default:** `"linkedClone"`|
+| `global.controlPlane.machineTemplate.cloneMode` | **VM template clone mode**|**Type:** `string`<br/>**Default:** `"linkedClone"`|
 | `global.controlPlane.machineTemplate.diskGiB` | **Disk size**|**Type:** `integer`<br/>**Example:** `30`<br/>|
 | `global.controlPlane.machineTemplate.memoryMiB` | **Memory size**|**Type:** `integer`<br/>**Example:** `8192`<br/>|
 | `global.controlPlane.machineTemplate.network` | **Network configuration**|**Type:** `object`<br/>|
@@ -136,11 +136,19 @@ Groups of worker nodes with identical configuration.
 | **Property** | **Description** | **More Details** |
 | :----------- | :-------------- | :--------------- |
 | `global.nodePools.PATTERN` |**None**|**Type:** `object`<br/>**Key pattern:**<br/>`PATTERN`=`^[a-z0-9-]{3,10}$`<br/>|
-| `global.nodePools.PATTERN.class` | **Node class** - A valid node class name.|**Type:** `string`<br/>**Key pattern:**<br/>`PATTERN`=`^[a-z0-9-]{3,10}$`<br/>**Value pattern:** `^[a-z0-9-]+$`<br/>|
-| `global.nodePools.PATTERN.replicas` | **Number of nodes**|**Type:** `integer`<br/>**Key pattern:**<br/>`PATTERN`=`^[a-z0-9-]{3,10}$`<br/>**Default:** `1`|
-| `global.nodePools.worker` | **Default nodePool**|**Type:** `object`<br/>|
-| `global.nodePools.worker.class` | **Node class** - A valid node class name.|**Type:** `string`<br/>**Default:** `"default"`|
-| `global.nodePools.worker.replicas` | **Number of nodes**|**Type:** `integer`<br/>**Default:** `2`|
+| `global.nodePools.default` | **Default nodePool**|**Type:** `object`<br/>|
+| `global.nodePools.default.cloneMode` | **VM template clone mode**|**Type:** `string`<br/>**Default:** `"linkedClone"`|
+| `global.nodePools.default.diskGiB` | **Disk size**|**Type:** `integer`<br/>**Example:** `30`<br/>|
+| `global.nodePools.default.memoryMiB` | **Memory size**|**Type:** `integer`<br/>**Example:** `8192`<br/>|
+| `global.nodePools.default.network` | **Network configuration**|**Type:** `object`<br/>|
+| `global.nodePools.default.network.devices` | **Network devices** - Network interface configuration for VMs.|**Type:** `array`<br/>**Default:** `[{"dhcp4":true,"networkName":""}]`|
+| `global.nodePools.default.network.devices[*]` | **Devices**|**Type:** `object`<br/>|
+| `global.nodePools.default.network.devices[*].dhcp4` | **IPv4 DHCP** - Is DHCP enabled on this segment.|**Type:** `boolean`<br/>|
+| `global.nodePools.default.network.devices[*].networkName` | **Segment name** - Segment name to attach nodes to. Must already exist.|**Type:** `string`<br/>|
+| `global.nodePools.default.numCPUs` | **Number of CPUs**|**Type:** `integer`<br/>**Example:** `6`<br/>|
+| `global.nodePools.default.replicas` | **Number of nodes**|**Type:** `integer`<br/>**Default:** `2`|
+| `global.nodePools.default.resourcePool` | **VSphere resource pool name**|**Type:** `string`<br/>**Default:** `"*/Resources"`|
+| `global.nodePools.default.template` | **VM template**|**Type:** `string`<br/>**Default:** `"flatcar-stable-3815.2.2-kube-v1.27.14-gs"`|
 
 ### Pod Security Standards
 Properties within the `.global.podSecurityStandards` object
@@ -163,24 +171,6 @@ Properties within the `.global.providerSpecific` object
 | `global.providerSpecific.vcenter.thumbprint` | **Thumbprint** - TLS certificate signature of the VSphere API.|**Type:** `string`<br/>|
 | `global.providerSpecific.vcenter.username` | **Username** - Username for the VSphere API.|**Type:** `string`<br/>|
 | `global.providerSpecific.vcenter.zone` | **Zone** - Category name in VSphere for topology.kubernetes.io/zone labels.|**Type:** `string`<br/>|
-
-### Template to define worker nodes
-Properties within the `.global.nodeClasses` object
-
-| **Property** | **Description** | **More Details** |
-| :----------- | :-------------- | :--------------- |
-| `global.nodeClasses.default` | **Default node class configuration**|**Type:** `object`<br/>|
-| `global.nodeClasses.default.cloneMode` | **Template clone mode** - VM template cloning method.|**Type:** `string`<br/>**Default:** `"linkedClone"`|
-| `global.nodeClasses.default.diskGiB` | **Disk size**|**Type:** `integer`<br/>**Example:** `30`<br/>|
-| `global.nodeClasses.default.memoryMiB` | **Memory size**|**Type:** `integer`<br/>**Example:** `8192`<br/>|
-| `global.nodeClasses.default.network` | **Network configuration**|**Type:** `object`<br/>|
-| `global.nodeClasses.default.network.devices` | **Network devices** - Network interface configuration for VMs.|**Type:** `array`<br/>**Default:** `[{"dhcp4":true,"networkName":""}]`|
-| `global.nodeClasses.default.network.devices[*]` | **Devices**|**Type:** `object`<br/>|
-| `global.nodeClasses.default.network.devices[*].dhcp4` | **IPv4 DHCP** - Is DHCP enabled on this segment.|**Type:** `boolean`<br/>|
-| `global.nodeClasses.default.network.devices[*].networkName` | **Segment name** - Segment name to attach nodes to. Must already exist.|**Type:** `string`<br/>|
-| `global.nodeClasses.default.numCPUs` | **Number of CPUs**|**Type:** `integer`<br/>**Example:** `6`<br/>|
-| `global.nodeClasses.default.resourcePool` | **VSphere resource pool name**|**Type:** `string`<br/>**Default:** `"*/Resources"`|
-| `global.nodeClasses.default.template` | **VM template**|**Type:** `string`<br/>**Default:** `"flatcar-stable-3815.2.2-kube-v1.27.14-gs"`|
 
 ### Other
 
