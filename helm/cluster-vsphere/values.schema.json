@@ -552,6 +552,11 @@
                     "title": "Node pools",
                     "description": "Groups of worker nodes with identical configuration.",
                     "additionalProperties": false,
+                    "patternProperties": {
+                        "^[a-z0-9-]{3,10}$": {
+                            "type": "object"
+                        }
+                    },
                     "properties": {
                         "default": {
                             "type": "object",
