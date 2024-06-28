@@ -117,7 +117,8 @@
             "type": "object",
             "title": "Properties that are available to all charts and subcharts",
             "required": [
-                "metadata"
+                "metadata",
+                "nodePools"
             ],
             "properties": {
                 "connectivity": {
@@ -589,43 +590,56 @@
                     "title": "Node pools",
                     "description": "Groups of worker nodes with identical configuration.",
                     "additionalProperties": false,
-                    "patternProperties": {
-                        "^[a-z0-9-]{3,10}$": {
-                            "type": "object",
-                            "additionalProperties": false,
-                            "properties": {
-                                "class": {
-                                    "type": "string",
-                                    "title": "Node class",
-                                    "description": "A valid node class name.",
-                                    "pattern": "^[a-z0-9-]+$"
-                                },
-                                "replicas": {
-                                    "type": "integer",
-                                    "title": "Number of nodes",
-                                    "default": 1,
-                                    "minimum": 1
-                                }
-                            }
-                        }
-                    },
                     "properties": {
                         "def00": {
                             "type": "object",
                             "title": "Default nodePool",
+                            "required": [
+                                "diskGiB",
+                                "network"
+                            ],
                             "additionalProperties": false,
                             "properties": {
-                                "class": {
+                                "cloneMode": {
+                                    "$ref": "#/$defs/cloneMode",
+                                    "description": "VM template cloning method."
+                                },
+                                "diskGiB": {
+                                    "$ref": "#/$defs/diskGiB",
+                                    "description": "Worker node root volume size, in GB."
+                                },
+                                "memoryMiB": {
+                                    "$ref": "#/$defs/memoryGiB",
+                                    "description": "Worker memory size, in MB.",
+                                    "default": 16896
+                                },
+                                "name": {
                                     "type": "string",
-                                    "title": "Node class",
-                                    "description": "A valid node class name.",
-                                    "default": "default"
+                                    "title": "Nodepool name",
+                                    "default": "def00"
+                                },
+                                "network": {
+                                    "$ref": "#/$defs/network",
+                                    "description": "Worker node network configuration."
+                                },
+                                "numCPUs": {
+                                    "$ref": "#/$defs/numCPUs",
+                                    "description": "Worker node CPU count.",
+                                    "default": 6
                                 },
                                 "replicas": {
                                     "type": "integer",
                                     "title": "Number of nodes",
                                     "default": 2,
                                     "minimum": 1
+                                },
+                                "resourcePool": {
+                                    "$ref": "#/$defs/resourcePool",
+                                    "description": "Name of the resource pool to use."
+                                },
+                                "template": {
+                                    "$ref": "#/$defs/template",
+                                    "description": "Full name of the VM template."
                                 }
                             }
                         }
