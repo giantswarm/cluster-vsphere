@@ -13,6 +13,15 @@
             },
             "minItems": 1
         },
+        "cloneMode": {
+            "type": "string",
+            "title": "VM template clone mode",
+            "enum": [
+                "fullClone",
+                "linkedClone"
+            ],
+            "default": "linkedClone"
+        },
         "diskGiB": {
             "type": "integer",
             "title": "Disk size",
@@ -403,10 +412,8 @@
                             "additionalProperties": false,
                             "properties": {
                                 "cloneMode": {
-                                    "type": "string",
-                                    "title": "Template clone mode",
-                                    "description": "VM template cloning method.",
-                                    "default": "linkedClone"
+                                    "$ref": "#/$defs/cloneMode",
+                                    "description": "VM template cloning method."
                                 },
                                 "diskGiB": {
                                     "$ref": "#/$defs/diskGiB",
