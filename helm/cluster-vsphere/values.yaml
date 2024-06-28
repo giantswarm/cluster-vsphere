@@ -45,10 +45,9 @@ global:
     preventDeletion: false
     servicePriority: highest
   nodePools:
-    def00:
+    worker:
       cloneMode: linkedClone
       memoryMiB: 16896
-      name: def00
       network:
         devices:
           - dhcp4: true

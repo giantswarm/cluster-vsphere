@@ -553,11 +553,10 @@
                     "description": "Groups of worker nodes with identical configuration.",
                     "additionalProperties": false,
                     "properties": {
-                        "def00": {
+                        "worker": {
                             "type": "object",
                             "title": "Default nodePool",
                             "required": [
-                                "diskGiB",
                                 "network"
                             ],
                             "additionalProperties": false,
@@ -574,11 +573,6 @@
                                     "$ref": "#/$defs/memoryGiB",
                                     "description": "Worker memory size, in MB.",
                                     "default": 16896
-                                },
-                                "name": {
-                                    "type": "string",
-                                    "title": "Nodepool name",
-                                    "default": "def00"
                                 },
                                 "network": {
                                     "$ref": "#/$defs/network",
