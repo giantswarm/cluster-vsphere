@@ -86,7 +86,7 @@ to create a unique name for resources based on their specification.
 */}}
 {{- define "mtRevisionByControlPlane" -}}
 {{- $outerScope := . }}
-{{- include "mtRevision" (merge (dict "currentClass" .Values.global.controlPlane.machineTemplate) $outerScope.Values) }}
+{{- include "mtRevision" (merge (dict "currentPool" .Values.global.controlPlane.machineTemplate) $outerScope.Values) }}
 {{- end -}}
 
 {{/*
