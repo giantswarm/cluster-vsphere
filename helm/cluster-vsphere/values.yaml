@@ -44,21 +44,19 @@ global:
   metadata:
     preventDeletion: false
     servicePriority: highest
-  nodeClasses:
-    default:
+  nodePools:
+    def00:
       cloneMode: linkedClone
       memoryMiB: 16896
+      name: def00
       network:
         devices:
           - dhcp4: true
             networkName: ""
       numCPUs: 6
+      replicas: 2
       resourcePool: '*/Resources'
       template: flatcar-stable-3815.2.2-kube-v1.27.14-gs
-  nodePools:
-    worker:
-      class: default
-      replicas: 2
   podSecurityStandards:
     enforced: true
   providerSpecific:
