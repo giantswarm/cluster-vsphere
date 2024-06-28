@@ -53,7 +53,7 @@ create VSphereMachineTemplates.
 {{- $nodeMap := dict -}}
 {{- $_ := set $nodeMap "control-plane" .Values.global.controlPlane.machineTemplate -}}
 {{- range $index, $pool := .Values.global.nodePools -}}
-  {{- $_ := set $nodeMap $pool.name $pool -}}
+  {{- $_ := set $nodeMap $index $pool -}}
 {{- end -}}
 {{ toYaml $nodeMap }}
 {{- end }}
@@ -66,7 +66,7 @@ MachineDeployments.
 {{ define "createMapOfWorkerPoolSpecs" -}}
 {{- $nodeMap := dict -}}
 {{- range $index, $pool := .Values.global.nodePools -}}
-  {{- $_ := set $nodeMap $pool.name $pool -}}
+  {{- $_ := set $nodeMap $index $pool -}}
 {{- end -}}
 {{ toYaml $nodeMap }}
 {{- end }}

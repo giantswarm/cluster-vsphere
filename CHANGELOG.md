@@ -17,9 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Using `yq`, migrate to the new values layout with the following command:
 
 ```bash
-yq eval --inplace 'with(select(.global.nodePools != null);  .global.nodePools |= to_entries | .global.nodePools |= map(.value + {"name": .key})) |
-    with(select(.global.nodeClasses != null);               .global.nodeClasses as $classes | with(.global.nodePools[]; . *= $classes[.class])) |
-    
+yq eval --inplace 'with(select(.global.nodeClasses != null);    .global.nodeClasses as $classes | with(.global.nodePools[]; . *= $classes[.class])) |
+
     del(.global.nodePools[].class) |
     del(.global.nodeClasses)' values.yaml
 ```
@@ -28,7 +27,6 @@ yq eval --inplace 'with(select(.global.nodePools != null);  .global.nodePools |=
 
 ### Changed
 
-- Converted Helm values property `.Values.global.nodePools` from a map to an array, moving the map's name to the key `name`.
 - Move Helm values from each `.global.nodeClasses.$<class>` to any nodePool which references that class.
 - Deleted Helm values property `.global.nodeClasses`.
 
