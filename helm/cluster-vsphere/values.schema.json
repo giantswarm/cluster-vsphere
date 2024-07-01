@@ -418,13 +418,7 @@
                                 },
                                 "network": {
                                     "$ref": "#/$defs/network",
-                                    "description": "Control plane node network configuration.",
-                                    "default": [
-                                        {
-                                            "dhcp4": true,
-                                            "networkName": ""
-                                        }
-                                    ]
+                                    "description": "Control plane node network configuration."
                                 },
                                 "numCPUs": {
                                     "$ref": "#/$defs/numCPUs",
@@ -571,13 +565,7 @@
                                 },
                                 "network": {
                                     "$ref": "#/$defs/network",
-                                    "description": "Worker node network configuration.",
-                                    "default": [
-                                        {
-                                            "dhcp4": true,
-                                            "networkName": ""
-                                        }
-                                    ]
+                                    "description": "Worker node network configuration."
                                 },
                                 "numCPUs": {
                                     "$ref": "#/$defs/numCPUs",
