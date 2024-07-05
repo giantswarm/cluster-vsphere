@@ -1,5 +1,5 @@
 {{- range $name, $value := include "createMapOfClusterNodeSpecs" . | fromYaml }}
-{{- $c := (merge (dict "currentPool"  $value) $.Values) }}
+{{- $c := (merge (dict "currentPool"  $value) (deepCopy $.Values)) }}
 ---
 apiVersion: {{ include "infrastructureApiVersion" . }}
 kind: VSphereMachineTemplate
