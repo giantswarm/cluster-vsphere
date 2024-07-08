@@ -60,10 +60,10 @@
         "network": {
             "type": "object",
             "title": "Network configuration",
-            "additionalProperties": false,
             "required": [
                 "devices"
             ],
+            "additionalProperties": false,
             "properties": {
                 "devices": {
                     "type": "array",
