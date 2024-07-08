@@ -136,19 +136,19 @@ Groups of worker nodes with identical configuration.
 | **Property** | **Description** | **More Details** |
 | :----------- | :-------------- | :--------------- |
 | `global.nodePools.PATTERN` |**None**|**Type:** `object`<br/>**Key pattern:**<br/>`PATTERN`=`^[a-z0-9-]{3,10}$`<br/>|
-| `global.nodePools.default` | **Default nodePool**|**Type:** `object`<br/>|
-| `global.nodePools.default.cloneMode` | **VM template clone mode**|**Type:** `string`<br/>**Default:** `"linkedClone"`|
-| `global.nodePools.default.diskGiB` | **Disk size**|**Type:** `integer`<br/>**Example:** `30`<br/>|
-| `global.nodePools.default.memoryMiB` | **Memory size**|**Type:** `integer`<br/>**Example:** `8192`<br/>|
-| `global.nodePools.default.network` | **Network configuration**|**Type:** `object`<br/>|
-| `global.nodePools.default.network.devices` | **Network devices** - Network interface configuration for VMs.|**Type:** `array`<br/>|
-| `global.nodePools.default.network.devices[*]` | **Devices**|**Type:** `object`<br/>|
-| `global.nodePools.default.network.devices[*].dhcp4` | **IPv4 DHCP** - Is DHCP enabled on this segment.|**Type:** `boolean`<br/>|
-| `global.nodePools.default.network.devices[*].networkName` | **Segment name** - Segment name to attach nodes to. Must already exist.|**Type:** `string`<br/>|
-| `global.nodePools.default.numCPUs` | **Number of CPUs**|**Type:** `integer`<br/>**Example:** `6`<br/>|
-| `global.nodePools.default.replicas` | **Number of nodes**|**Type:** `integer`<br/>**Default:** `2`|
-| `global.nodePools.default.resourcePool` | **VSphere resource pool name**|**Type:** `string`<br/>**Default:** `"*/Resources"`|
-| `global.nodePools.default.template` | **VM template**|**Type:** `string`<br/>**Default:** `"flatcar-stable-3815.2.2-kube-v1.27.14-gs"`|
+| `global.nodePools.worker` | **Default nodePool**|**Type:** `object`<br/>|
+| `global.nodePools.worker.cloneMode` | **VM template clone mode**|**Type:** `string`<br/>**Default:** `"linkedClone"`|
+| `global.nodePools.worker.diskGiB` | **Disk size**|**Type:** `integer`<br/>**Example:** `30`<br/>|
+| `global.nodePools.worker.memoryMiB` | **Memory size**|**Type:** `integer`<br/>**Example:** `8192`<br/>|
+| `global.nodePools.worker.network` | **Network configuration**|**Type:** `object`<br/>|
+| `global.nodePools.worker.network.devices` | **Network devices** - Network interface configuration for VMs.|**Type:** `array`<br/>|
+| `global.nodePools.worker.network.devices[*]` | **Devices**|**Type:** `object`<br/>|
+| `global.nodePools.worker.network.devices[*].dhcp4` | **IPv4 DHCP** - Is DHCP enabled on this segment.|**Type:** `boolean`<br/>|
+| `global.nodePools.worker.network.devices[*].networkName` | **Segment name** - Segment name to attach nodes to. Must already exist.|**Type:** `string`<br/>|
+| `global.nodePools.worker.numCPUs` | **Number of CPUs**|**Type:** `integer`<br/>**Example:** `6`<br/>|
+| `global.nodePools.worker.replicas` | **Number of nodes**|**Type:** `integer`<br/>**Default:** `2`|
+| `global.nodePools.worker.resourcePool` | **VSphere resource pool name**|**Type:** `string`<br/>**Default:** `"*/Resources"`|
+| `global.nodePools.worker.template` | **VM template**|**Type:** `string`<br/>**Default:** `"flatcar-stable-3815.2.2-kube-v1.27.14-gs"`|
 
 ### Pod Security Standards
 Properties within the `.global.podSecurityStandards` object

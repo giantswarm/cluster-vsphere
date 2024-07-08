@@ -42,7 +42,7 @@ global:
     preventDeletion: false
     servicePriority: highest
   nodePools:
-    default:
+    worker:
       cloneMode: linkedClone
       memoryMiB: 16896
       network: {}

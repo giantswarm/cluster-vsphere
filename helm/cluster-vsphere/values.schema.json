@@ -555,7 +555,7 @@
                         }
                     },
                     "properties": {
-                        "default": {
+                        "worker": {
                             "type": "object",
                             "title": "Default nodePool",
                             "required": [
