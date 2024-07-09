@@ -11,6 +11,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### **Breaking change**.
 
+> [!CAUTION]
+> Upgrading to this chart release will cause all worker nodes to be replaced.
+
 <details>
 <summary>How to migrate values</summary>
 
