@@ -15,7 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 > Upgrading to this chart release will cause all worker nodes to be replaced.
 
 <details>
-<summary>How to migrate values</summary>
+<summary>How to migrate values (from `v0.54.0` or later)</summary>
 
 Using `yq`, migrate to the new values layout with the following command:
 
