@@ -32,10 +32,7 @@ global:
     machineTemplate:
       cloneMode: linkedClone
       memoryMiB: 8192
-      network:
-        devices:
-          - dhcp4: true
-            networkName: ""
+      network: {}
       numCPUs: 4
       resourcePool: '*/Resources'
       template: flatcar-stable-3815.2.2-kube-v1.27.14-gs
@@ -44,21 +41,15 @@ global:
   metadata:
     preventDeletion: false
     servicePriority: highest
-  nodeClasses:
-    default:
-      cloneMode: linkedClone
-      memoryMiB: 16896
-      network:
-        devices:
-          - dhcp4: true
-            networkName: ""
-      numCPUs: 6
-      resourcePool: '*/Resources'
-      template: flatcar-stable-3815.2.2-kube-v1.27.14-gs
   nodePools:
     worker:
-      class: default
+      cloneMode: linkedClone
+      memoryMiB: 16896
+      network: {}
+      numCPUs: 6
       replicas: 2
+      resourcePool: '*/Resources'
+      template: flatcar-stable-3815.2.2-kube-v1.27.14-gs
   podSecurityStandards:
     enforced: true
   providerSpecific:

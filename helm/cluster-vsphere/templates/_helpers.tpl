@@ -28,14 +28,65 @@ datacenter: {{ $.global.providerSpecific.vcenter.datacenter }}
 datastore: {{ $.global.providerSpecific.vcenter.datastore }}
 server: {{ $.global.providerSpecific.vcenter.server }}
 thumbprint: {{ $.global.providerSpecific.vcenter.thumbprint }}
-{{ toYaml .currentClass }}
+{{ unset .currentPool "replicas" | toYaml }}
 {{- end -}}
 
+{{/*
+mtRevision takes a dict which includes the node's spec and computes a hash value
+from it. This hash value is appended to the name of immutable resources to facilitate
+node replacement when the node spec is changed.
+*/}}
 {{- define "mtRevision" -}}
 {{- $inputs := (dict
   "spec" (include "mtSpec" .)
   "infrastructureApiVersion" ( include "infrastructureApiVersion" . ) ) }}
 {{- mustToJson $inputs | toString | quote | sha1sum | trunc 8 }}
+{{- end -}}
+
+{{/*
+First takes a map of the controlPlane's spec and adds it to a new map, then
+takes a array of maps containing nodePools and adds each nodePool's map to
+the new map. Reults in a map of node specs which can be iterated over to 
+create VSphereMachineTemplates.
+*/}}
+{{ define "createMapOfClusterNodeSpecs" }}
+{{- $nodeMap := dict -}}
+{{- $_ := set $nodeMap "control-plane" .Values.global.controlPlane.machineTemplate -}}
+{{- range $index, $pool := .Values.global.nodePools -}}
+  {{- $_ := set $nodeMap $index $pool -}}
+{{- end -}}
+{{ toYaml $nodeMap }}
+{{- end }}
+
+{{/*
+Takes an array of maps containing worker nodePools and adds each map to a new
+map. Results in a map of node specs which can be iterated over to create
+MachineDeployments.
+*/}}
+{{ define "createMapOfWorkerPoolSpecs" -}}
+{{- $nodeMap := dict -}}
+{{- range $index, $pool := .Values.global.nodePools -}}
+  {{- $_ := set $nodeMap $index $pool -}}
+{{- end -}}
+{{ toYaml $nodeMap }}
+{{- end }}
+
+{{/*
+Takes kubeadm configuration as an input and computes a hash value from it.
+*/}}
+{{- define "kubeadmConfigTemplateRevision" -}}
+{{- $inputs := (dict
+  "data" (include "kubeadmConfigTemplateSpec" .) ) }}
+{{- mustToJson $inputs | toString | quote | sha1sum | trunc 8 }}
+{{- end -}}
+
+{{/*
+Creates a hash value for the control plane via the mtRevision function. Used
+to create a unique name for resources based on their specification.
+*/}}
+{{- define "mtRevisionByControlPlane" -}}
+{{- $outerScope := . }}
+{{- include "mtRevision" (merge (dict "currentPool" .Values.global.controlPlane.machineTemplate) $outerScope.Values) }}
 {{- end -}}
 
 {{/*
@@ -143,27 +194,6 @@ preKubeadmCommands:
   {{- end }}
 postKubeadmCommands:
 - usermod -aG root nobody # required for node-exporter to access the host's filesystem
-{{- end -}}
-
-
-{{- define "kubeadmConfigTemplateRevision" -}}
-{{- $inputs := (dict
-  "data" (include "kubeadmConfigTemplateSpec" .) ) }}
-{{- mustToJson $inputs | toString | quote | sha1sum | trunc 8 }}
-{{- end -}}
-
-{{- define "mtRevisionByClass" -}}
-{{- $outerScope := . }}
-{{- range $name, $value := .currentValues.global.nodeClasses }}
-{{- if eq $name $outerScope.class }}
-{{- include "mtRevision" (merge (dict "currentClass" $value) $outerScope.currentValues) }}
-{{- end }}
-{{- end }}
-{{- end -}}
-
-{{- define "mtRevisionByControlPlane" -}}
-{{- $outerScope := . }}
-{{- include "mtRevision" (merge (dict "currentClass" .Values.global.controlPlane.machineTemplate) $outerScope.Values) }}
 {{- end -}}
 
 {{/*

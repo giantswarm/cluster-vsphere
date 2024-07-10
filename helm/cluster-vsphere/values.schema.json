@@ -13,6 +13,15 @@
             },
             "minItems": 1
         },
+        "cloneMode": {
+            "type": "string",
+            "title": "VM template clone mode",
+            "enum": [
+                "fullClone",
+                "linkedClone"
+            ],
+            "default": "linkedClone"
+        },
         "diskGiB": {
             "type": "integer",
             "title": "Disk size",
@@ -77,13 +86,7 @@
                                 "description": "Segment name to attach nodes to. Must already exist."
                             }
                         }
-                    },
-                    "default": [
-                        {
-                            "dhcp4": true,
-                            "networkName": ""
-                        }
-                    ]
+                    }
                 }
             }
         },
@@ -117,7 +120,8 @@
             "type": "object",
             "title": "Properties that are available to all charts and subcharts",
             "required": [
-                "metadata"
+                "metadata",
+                "nodePools"
             ],
             "properties": {
                 "connectivity": {
@@ -402,10 +406,8 @@
                             "additionalProperties": false,
                             "properties": {
                                 "cloneMode": {
-                                    "type": "string",
-                                    "title": "Template clone mode",
-                                    "description": "VM template cloning method.",
-                                    "default": "linkedClone"
+                                    "$ref": "#/$defs/cloneMode",
+                                    "description": "VM template cloning method."
                                 },
                                 "diskGiB": {
                                     "$ref": "#/$defs/diskGiB",
@@ -539,20 +541,28 @@
                         }
                     }
                 },
-                "nodeClasses": {
+                "nodePools": {
                     "type": "object",
-                    "title": "Template to define worker nodes",
+                    "title": "Node pools",
+                    "description": "Groups of worker nodes with identical configuration.",
+                    "additionalProperties": false,
+                    "patternProperties": {
+                        "^[a-z0-9-]{3,10}$": {
+                            "type": "object"
+                        }
+                    },
                     "properties": {
-                        "default": {
+                        "worker": {
                             "type": "object",
-                            "title": "Default node class configuration",
+                            "title": "Default nodePool",
+                            "required": [
+                                "network"
+                            ],
                             "additionalProperties": false,
                             "properties": {
                                 "cloneMode": {
-                                    "type": "string",
-                                    "title": "Template clone mode",
-                                    "description": "VM template cloning method.",
-                                    "default": "linkedClone"
+                                    "$ref": "#/$defs/cloneMode",
+                                    "description": "VM template cloning method."
                                 },
                                 "diskGiB": {
                                     "$ref": "#/$defs/diskGiB",
@@ -572,6 +582,12 @@
                                     "description": "Worker node CPU count.",
                                     "default": 6
                                 },
+                                "replicas": {
+                                    "type": "integer",
+                                    "title": "Number of nodes",
+                                    "default": 2,
+                                    "minimum": 1
+                                },
                                 "resourcePool": {
                                     "$ref": "#/$defs/resourcePool",
                                     "description": "Name of the resource pool to use."
@@ -579,53 +595,6 @@
                                 "template": {
                                     "$ref": "#/$defs/template",
                                     "description": "Full name of the VM template."
-                                }
-                            }
-                        }
-                    }
-                },
-                "nodePools": {
-                    "type": "object",
-                    "title": "Node pools",
-                    "description": "Groups of worker nodes with identical configuration.",
-                    "additionalProperties": false,
-                    "patternProperties": {
-                        "^[a-z0-9-]{3,10}$": {
-                            "type": "object",
-                            "additionalProperties": false,
-                            "properties": {
-                                "class": {
-                                    "type": "string",
-                                    "title": "Node class",
-                                    "description": "A valid node class name.",
-                                    "pattern": "^[a-z0-9-]+$"
-                                },
-                                "replicas": {
-                                    "type": "integer",
-                                    "title": "Number of nodes",
-                                    "default": 1,
-                                    "minimum": 1
-                                }
-                            }
-                        }
-                    },
-                    "properties": {
-                        "worker": {
-                            "type": "object",
-                            "title": "Default nodePool",
-                            "additionalProperties": false,
-                            "properties": {
-                                "class": {
-                                    "type": "string",
-                                    "title": "Node class",
-                                    "description": "A valid node class name.",
-                                    "default": "default"
-                                },
-                                "replicas": {
-                                    "type": "integer",
-                                    "title": "Number of nodes",
-                                    "default": 2,
-                                    "minimum": 1
                                 }
                             }
                         }
