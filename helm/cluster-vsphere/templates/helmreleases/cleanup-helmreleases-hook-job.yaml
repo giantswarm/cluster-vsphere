@@ -119,6 +119,9 @@ spec:
                 echo "Deleting helmchart $chart"
                 kubectl delete -n ${NAMESPACE} helmchart "${chart}" --ignore-not-found=true
               done
+
+              echo "Unpausing cluster ${CLUSTER_NAME}" to allow deletion..."
+              kubectl patch -n ${NAMESPACE} cluster "${CLUSTER_NAME}" --type=merge -p '{"spec": {"paused": false}}'
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:

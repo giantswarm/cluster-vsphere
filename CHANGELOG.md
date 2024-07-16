@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Unpause Cluster resource as part of cleanup hook after deletion in order to prevent leftover resources.
+
 ## [0.56.0] - 2024-07-10
 
 ### Changed
