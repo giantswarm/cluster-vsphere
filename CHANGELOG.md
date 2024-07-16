@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.56.1] - 2024-07-16
+
 ### Added
 
 - Unpause Cluster resource as part of cleanup hook after deletion in order to prevent leftover resources.
@@ -424,7 +426,8 @@ at least 1 public IP is always needed for the ingress controller to be able to e
 
 - Initial chart implementation.
 
-[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v0.56.0...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v0.56.1...HEAD
+[0.56.1]: https://github.com/giantswarm/cluster-vsphere/compare/v0.56.0...v0.56.1
 [0.56.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.55.0...v0.56.0
 [0.55.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.54.0...v0.55.0
 [0.54.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.53.1...v0.54.0
