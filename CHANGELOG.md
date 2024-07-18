@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Initial integration of shared `cluster` chart to render `Cluster` resource.
+
 ## [0.56.1] - 2024-07-16
 
 ### Added
