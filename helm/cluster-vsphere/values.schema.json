@@ -176,8 +176,7 @@
             "type": "object",
             "title": "Properties that are available to all charts and subcharts",
             "required": [
-                "metadata",
-                "nodePools"
+                "metadata"
             ],
             "properties": {
                 "connectivity": {
