@@ -1,6 +1,7 @@
 global:
   metadata:
     description: "test cluster"
+    name: "test cluster"
     organization: "giantswarm"
   connectivity:
     network:
