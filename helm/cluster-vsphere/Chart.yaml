@@ -1,6 +1,6 @@
 apiVersion: v2
 name: cluster-vsphere
-version: 0.56.1
+version: 0.57.0
 home: https://github.com/giantswarm/cluster-vsphere
 icon: https://s.giantswarm.io/app-icons/vsphere/2/icon-light.png
 sources:
@@ -19,9 +19,9 @@ restrictions:
   compatibleProviders:
     - vsphere
 dependencies:
-- name: cluster
-  version: "0.35.0"
-  repository: "https://giantswarm.github.io/cluster-catalog"
-- name: cluster-shared
-  version: "0.7.1"
-  repository: "https://giantswarm.github.io/cluster-catalog"
+  - name: cluster
+    version: "0.35.0"
+    repository: "https://giantswarm.github.io/cluster-catalog"
+  - name: cluster-shared
+    version: "0.7.1"
+    repository: "https://giantswarm.github.io/cluster-catalog"
