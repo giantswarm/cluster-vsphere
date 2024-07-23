@@ -31,6 +31,7 @@ global:
 </details>
 
 - Initial integration of shared `cluster` chart to render `Cluster` resource.
+- Corrected cluster names in CI values.
 
 ## [0.56.1] - 2024-07-16
 
