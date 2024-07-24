@@ -9,6 +9,8 @@ cluster:
           kind: VSphereMachineTemplate
           version: v1beta1
         infrastructureMachineTemplateSpecTemplateName: controlplane-vspheremachinetemplate-spec
+    pauseProperties:
+      global.connectivity.network.controlPlaneEndpoint.host: ""
     provider: vsphere
     resourcesApi:
       bastionResourceEnabled: false
