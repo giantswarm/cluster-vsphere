@@ -132,6 +132,9 @@
                             "infrastructureMachineTemplateSpecTemplateName": "controlplane-vspheremachinetemplate-spec"
                         }
                     },
+                    "pauseProperties": {
+                        "global.connectivity.network.controlPlaneEndpoint.host": ""
+                    },
                     "provider": "vsphere",
                     "resourcesApi": {
                         "bastionResourceEnabled": false,
