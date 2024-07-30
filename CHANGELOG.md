@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fix syntax error with helmrelease cleanup hook.
 
+### Changed
+
+- Update `ipam` API versions to `v1beta1`.
+
 ## [0.57.1] - 2024-07-24
 
 ## [0.57.0] - 2024-07-22
