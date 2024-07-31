@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.58.1] - 2024-07-31
+
 ### Changed
 
 - Change `cluster` in kubectl patch command to `cluster.cluster.x-k8s.io` inside hooks in case more than one API group is present.
@@ -468,7 +470,8 @@ at least 1 public IP is always needed for the ingress controller to be able to e
 
 - Initial chart implementation.
 
-[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v0.58.0...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v0.58.1...HEAD
+[0.58.1]: https://github.com/giantswarm/cluster-vsphere/compare/v0.58.0...v0.58.1
 [0.58.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.57.1...v0.58.0
 [0.57.1]: https://github.com/giantswarm/cluster-vsphere/compare/v0.57.0...v0.57.1
 [0.57.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.56.1...v0.57.0
