@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Change `cluster` in kubectl patch command to `cluster.cluster.x-k8s.io` inside hooks in case more than one API group is present.
+
 ## [0.58.0] - 2024-07-30
 
 ### Fixed
