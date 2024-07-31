@@ -121,7 +121,7 @@ spec:
               done
 
               echo "Unpausing cluster ${CLUSTER_NAME} to allow deletion..."
-              kubectl patch -n ${NAMESPACE} cluster "${CLUSTER_NAME}" --type=merge -p '{"spec": {"paused": false}}'
+              kubectl patch -n ${NAMESPACE} cluster.cluster.x-k8s.io "${CLUSTER_NAME}" --type=merge -p '{"spec": {"paused": false}}'
           securityContext:
             allowPrivilegeEscalation: false
             capabilities:
