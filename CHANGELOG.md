@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Disable IPAM for service load balancers if `.global.connectivity.network.loadBalancers.cidrBlocks` is set.
+
 ## [0.58.1] - 2024-07-31
 
 ### Changed
