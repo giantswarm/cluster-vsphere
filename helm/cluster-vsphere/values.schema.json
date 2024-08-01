@@ -461,7 +461,7 @@
                             "required": [
                                 "network"
                             ],
-                            "additionalProperties": false,
+                            "additionalProperties": true,
                             "properties": {
                                 "cloneMode": {
                                     "$ref": "#/$defs/cloneMode",
@@ -620,7 +620,7 @@
                             "required": [
                                 "network"
                             ],
-                            "additionalProperties": false,
+                            "additionalProperties": true,
                             "properties": {
                                 "cloneMode": {
                                     "$ref": "#/$defs/cloneMode",

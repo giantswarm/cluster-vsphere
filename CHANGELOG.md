@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Allow additional properties on machine templates to offer wider CAPV configurations.
+
 ## [0.58.2] - 2024-08-01
 
 ### Changed
