@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.58.3] - 2024-08-04
+
 ### Changed
 
 - Allow additional properties on machine templates to offer wider CAPV configurations.
@@ -480,7 +482,8 @@ at least 1 public IP is always needed for the ingress controller to be able to e
 
 - Initial chart implementation.
 
-[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v0.58.2...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v0.58.3...HEAD
+[0.58.3]: https://github.com/giantswarm/cluster-vsphere/compare/v0.58.2...v0.58.3
 [0.58.2]: https://github.com/giantswarm/cluster-vsphere/compare/v0.58.1...v0.58.2
 [0.58.1]: https://github.com/giantswarm/cluster-vsphere/compare/v0.58.0...v0.58.1
 [0.58.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.57.1...v0.58.0
