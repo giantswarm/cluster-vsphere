@@ -155,6 +155,9 @@
                         },
                         "observabilityBundle": {
                             "enable": true
+                        },
+                        "observabilityPolicies": {
+                            "enable": true
                         }
                     },
                     "controlPlane": {
