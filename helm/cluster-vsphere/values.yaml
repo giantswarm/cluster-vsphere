@@ -23,6 +23,8 @@ cluster:
         enable: true
       nodeExporter:
         enable: true
+      observabilityBundle:
+        enable: true
     controlPlane:
       resources:
         infrastructureMachineTemplate:
