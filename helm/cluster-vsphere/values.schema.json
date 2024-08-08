@@ -163,6 +163,9 @@
                         },
                         "nodeExporter": {
                             "enable": true
+                        },
+                        "observabilityBundle": {
+                            "enable": true
                         }
                     },
                     "controlPlane": {
