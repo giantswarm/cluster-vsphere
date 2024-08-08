@@ -27,6 +27,8 @@ cluster:
         enable: true
       observabilityPolicies:
         enable: true
+      securityBundle:
+        enable: true
     controlPlane:
       resources:
         infrastructureMachineTemplate:

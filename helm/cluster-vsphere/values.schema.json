@@ -158,6 +158,9 @@
                         },
                         "observabilityPolicies": {
                             "enable": true
+                        },
+                        "securityBundle": {
+                            "enable": true
                         }
                     },
                     "controlPlane": {
