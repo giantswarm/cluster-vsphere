@@ -13,6 +13,8 @@ cluster:
         enable: true
       ciliumServiceMonitors:
         enable: true
+      etcdKubernetesResourcesCountExporter:
+        enable: true
     controlPlane:
       resources:
         infrastructureMachineTemplate:
