@@ -6,6 +6,7 @@ cluster:
       capiNodeLabeler:
         enable: true
       certExporter:
+        configTemplateName: vSphereCertExporterHelmValues
         enable: true
       certManager:
         configTemplateName: vSphereCertManagerHelmValues
