@@ -19,6 +19,8 @@ cluster:
         enable: true
       ciliumServiceMonitors:
         enable: true
+      etcdKubernetesResourcesCountExporter:
+        enable: true
     controlPlane:
       kubeadmConfig:
         files:

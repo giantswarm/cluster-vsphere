@@ -148,6 +148,9 @@
                         },
                         "ciliumServiceMonitors": {
                             "enable": true
+                        },
+                        "etcdKubernetesResourcesCountExporter": {
+                            "enable": true
                         }
                     },
                     "controlPlane": {
