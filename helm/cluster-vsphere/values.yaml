@@ -35,6 +35,8 @@ cluster:
         enable: true
       securityBundle:
         enable: true
+      verticalPodAutoscaler:
+        enable: true
     controlPlane:
       kubeadmConfig:
         files:

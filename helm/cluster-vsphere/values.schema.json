@@ -172,6 +172,9 @@
                         },
                         "securityBundle": {
                             "enable": true
+                        },
+                        "verticalPodAutoscaler": {
+                            "enable": true
                         }
                     },
                     "controlPlane": {
