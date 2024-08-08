@@ -24,6 +24,7 @@ cluster:
       netExporter:
         enable: true
       nodeExporter:
+        configTemplateName: vSphereNodeExporterHelmValues
         enable: true
       observabilityBundle:
         enable: true
