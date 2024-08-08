@@ -164,6 +164,7 @@
                             "enable": true
                         },
                         "nodeExporter": {
+                            "configTemplateName": "vSphereNodeExporterHelmValues",
                             "enable": true
                         },
                         "observabilityBundle": {
