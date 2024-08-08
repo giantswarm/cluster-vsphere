@@ -5,6 +5,8 @@ cluster:
     apps:
       capiNodeLabeler:
         enable: true
+      certExporter:
+        enable: true
     controlPlane:
       resources:
         infrastructureMachineTemplate:
