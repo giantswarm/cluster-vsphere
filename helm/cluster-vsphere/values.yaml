@@ -21,6 +21,8 @@ cluster:
         enable: true
       etcdKubernetesResourcesCountExporter:
         enable: true
+      k8sDnsNodeCache:
+        enable: true
     controlPlane:
       kubeadmConfig:
         files:

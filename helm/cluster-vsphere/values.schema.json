@@ -151,6 +151,9 @@
                         },
                         "etcdKubernetesResourcesCountExporter": {
                             "enable": true
+                        },
+                        "k8sDnsNodeCache": {
+                            "enable": true
                         }
                     },
                     "controlPlane": {
