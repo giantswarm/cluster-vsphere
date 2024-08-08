@@ -8,6 +8,7 @@ cluster:
       certExporter:
         enable: true
       certManager:
+        configTemplateName: vSphereCertManagerHelmValues
         enable: true
       chartOperatorExtensions:
         enable: true
