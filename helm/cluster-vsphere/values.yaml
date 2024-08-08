@@ -29,6 +29,9 @@ cluster:
         enable: true
       netExporter:
         enable: true
+      networkPolicies:
+        configTemplateName: vSphereNetworkPoliciesHelmValues
+        enable: true
       nodeExporter:
         configTemplateName: vSphereNodeExporterHelmValues
         enable: true
