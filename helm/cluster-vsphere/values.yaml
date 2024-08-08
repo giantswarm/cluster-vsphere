@@ -17,6 +17,8 @@ cluster:
         enable: true
       chartOperatorExtensions:
         enable: true
+      ciliumServiceMonitors:
+        enable: true
     controlPlane:
       kubeadmConfig:
         files:
