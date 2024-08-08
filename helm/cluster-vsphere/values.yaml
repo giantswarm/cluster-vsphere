@@ -2,6 +2,9 @@
 
 cluster:
   providerIntegration:
+    apps:
+      capiNodeLabeler:
+        enable: true
     controlPlane:
       resources:
         infrastructureMachineTemplate:
