@@ -27,6 +27,8 @@ cluster:
         enable: true
       netExporter:
         enable: true
+      nodeExporter:
+        enable: true
     controlPlane:
       kubeadmConfig:
         files:
