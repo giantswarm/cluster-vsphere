@@ -157,6 +157,9 @@
                         },
                         "metricsServer": {
                             "enable": true
+                        },
+                        "netExporter": {
+                            "enable": true
                         }
                     },
                     "controlPlane": {
