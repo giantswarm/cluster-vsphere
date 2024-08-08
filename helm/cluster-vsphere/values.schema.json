@@ -173,6 +173,9 @@
                         "securityBundle": {
                             "enable": true
                         },
+                        "teleportKubeAgent": {
+                            "enable": true
+                        },
                         "verticalPodAutoscaler": {
                             "enable": true
                         },

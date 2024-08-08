@@ -35,6 +35,8 @@ cluster:
         enable: true
       securityBundle:
         enable: true
+      teleportKubeAgent:
+        enable: true
       verticalPodAutoscaler:
         enable: true
       verticalPodAutoscalerCrd:
