@@ -13,6 +13,8 @@ cluster:
         enable: true
       certExporter:
         enable: true
+      certManager:
+        enable: true
     controlPlane:
       kubeadmConfig:
         files:
