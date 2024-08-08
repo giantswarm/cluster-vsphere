@@ -1,0 +1,6 @@
+{{/* vSphere-specific cert-exporter Helm values*/}}
+{{/* https://github.com/giantswarm/cert-exporter/blob/master/helm/cert-exporter/values.yaml */}}
+{{- define "vSphereCertExporterHelmValues" }}
+ciliumNetworkPolicy:
+  enabled: true
+{{- end }}

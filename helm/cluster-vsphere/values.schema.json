@@ -122,6 +122,63 @@
             "description": "Helm values for the provider-independent cluster chart.",
             "default": {
                 "providerIntegration": {
+                    "apps": {
+                        "capiNodeLabeler": {
+                            "enable": true
+                        },
+                        "certExporter": {
+                            "configTemplateName": "vSphereCertExporterHelmValues",
+                            "enable": true
+                        },
+                        "certManager": {
+                            "configTemplateName": "vSphereCertManagerHelmValues",
+                            "enable": true
+                        },
+                        "chartOperatorExtensions": {
+                            "enable": true
+                        },
+                        "ciliumServiceMonitors": {
+                            "enable": true
+                        },
+                        "etcdKubernetesResourcesCountExporter": {
+                            "enable": true
+                        },
+                        "k8sDnsNodeCache": {
+                            "enable": true
+                        },
+                        "metricsServer": {
+                            "enable": true
+                        },
+                        "netExporter": {
+                            "enable": true
+                        },
+                        "networkPolicies": {
+                            "configTemplateName": "vSphereNetworkPoliciesHelmValues",
+                            "enable": true
+                        },
+                        "nodeExporter": {
+                            "configTemplateName": "vSphereNodeExporterHelmValues",
+                            "enable": true
+                        },
+                        "observabilityBundle": {
+                            "enable": true
+                        },
+                        "observabilityPolicies": {
+                            "enable": true
+                        },
+                        "securityBundle": {
+                            "enable": true
+                        },
+                        "teleportKubeAgent": {
+                            "enable": true
+                        },
+                        "verticalPodAutoscaler": {
+                            "enable": true
+                        },
+                        "verticalPodAutoscalerCrd": {
+                            "enable": true
+                        }
+                    },
                     "controlPlane": {
                         "resources": {
                             "infrastructureMachineTemplate": {
@@ -143,7 +200,7 @@
                         "clusterResourceEnabled": true,
                         "controlPlaneResourceEnabled": false,
                         "coreDnsHelmReleaseResourceEnabled": false,
-                        "helmRepositoryResourcesEnabled": false,
+                        "helmRepositoryResourcesEnabled": true,
                         "infrastructureCluster": {
                             "group": "infrastructure.cluster.x-k8s.io",
                             "kind": "VSphereCluster",
@@ -780,18 +837,6 @@
                                 "$ref": "#/$defs/featureGate"
                             },
                             "default": []
-                        }
-                    }
-                },
-                "ciliumNetworkPolicy": {
-                    "type": "object",
-                    "title": "CiliumNetworkPolicies",
-                    "properties": {
-                        "enabled": {
-                            "type": "boolean",
-                            "title": "Enable CiliumNetworkPolicies",
-                            "description": "Installs the network-policies-app (deny all by default) if set to true",
-                            "default": true
                         }
                     }
                 },

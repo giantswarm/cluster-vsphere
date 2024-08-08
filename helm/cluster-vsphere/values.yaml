@@ -2,6 +2,45 @@
 
 cluster:
   providerIntegration:
+    apps:
+      capiNodeLabeler:
+        enable: true
+      certExporter:
+        configTemplateName: vSphereCertExporterHelmValues
+        enable: true
+      certManager:
+        configTemplateName: vSphereCertManagerHelmValues
+        enable: true
+      chartOperatorExtensions:
+        enable: true
+      ciliumServiceMonitors:
+        enable: true
+      etcdKubernetesResourcesCountExporter:
+        enable: true
+      k8sDnsNodeCache:
+        enable: true
+      metricsServer:
+        enable: true
+      netExporter:
+        enable: true
+      networkPolicies:
+        configTemplateName: vSphereNetworkPoliciesHelmValues
+        enable: true
+      nodeExporter:
+        configTemplateName: vSphereNodeExporterHelmValues
+        enable: true
+      observabilityBundle:
+        enable: true
+      observabilityPolicies:
+        enable: true
+      securityBundle:
+        enable: true
+      teleportKubeAgent:
+        enable: true
+      verticalPodAutoscaler:
+        enable: true
+      verticalPodAutoscalerCrd:
+        enable: true
     controlPlane:
       resources:
         infrastructureMachineTemplate:
@@ -19,7 +58,7 @@ cluster:
       clusterResourceEnabled: true
       controlPlaneResourceEnabled: false
       coreDnsHelmReleaseResourceEnabled: false
-      helmRepositoryResourcesEnabled: false
+      helmRepositoryResourcesEnabled: true
       infrastructureCluster:
         group: infrastructure.cluster.x-k8s.io
         kind: VSphereCluster
@@ -108,8 +147,6 @@ internal:
       - ServiceAccount
       - ValidatingAdmissionWebhook
     featureGates: []
-  ciliumNetworkPolicy:
-    enabled: true
   controllerManager:
     featureGates: []
   enableEncryptionProvider: true
