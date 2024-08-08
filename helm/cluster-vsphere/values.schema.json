@@ -134,6 +134,9 @@
                         },
                         "chartOperatorExtensions": {
                             "enable": true
+                        },
+                        "ciliumServiceMonitors": {
+                            "enable": true
                         }
                     },
                     "controlPlane": {
