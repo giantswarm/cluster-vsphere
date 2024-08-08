@@ -131,6 +131,9 @@
                         },
                         "certManager": {
                             "enable": true
+                        },
+                        "chartOperatorExtensions": {
+                            "enable": true
                         }
                     },
                     "controlPlane": {
