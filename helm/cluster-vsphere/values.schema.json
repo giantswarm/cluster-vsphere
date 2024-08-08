@@ -149,6 +149,9 @@
                         },
                         "netExporter": {
                             "enable": true
+                        },
+                        "nodeExporter": {
+                            "enable": true
                         }
                     },
                     "controlPlane": {
