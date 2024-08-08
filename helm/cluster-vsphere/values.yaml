@@ -37,6 +37,8 @@ cluster:
         enable: true
       verticalPodAutoscaler:
         enable: true
+      verticalPodAutoscalerCrd:
+        enable: true
     controlPlane:
       kubeadmConfig:
         files:
