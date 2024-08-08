@@ -136,6 +136,9 @@
                     "apps": {
                         "capiNodeLabeler": {
                             "enable": true
+                        },
+                        "certExporter": {
+                            "enable": true
                         }
                     },
                     "controlPlane": {
