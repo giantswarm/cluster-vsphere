@@ -31,6 +31,8 @@ cluster:
         enable: true
       observabilityBundle:
         enable: true
+      observabilityPolicies:
+        enable: true
     controlPlane:
       kubeadmConfig:
         files:
