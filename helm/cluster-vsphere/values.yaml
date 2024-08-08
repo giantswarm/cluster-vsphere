@@ -23,6 +23,8 @@ cluster:
         enable: true
       k8sDnsNodeCache:
         enable: true
+      metricsServer:
+        enable: true
     controlPlane:
       kubeadmConfig:
         files:
