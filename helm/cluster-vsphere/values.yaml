@@ -8,6 +8,9 @@ cluster:
           extraArgs:
             requestheader-allowed-names: front-proxy-client
   providerIntegration:
+    apps:
+      capiNodeLabeler:
+        enable: true
     controlPlane:
       kubeadmConfig:
         files:

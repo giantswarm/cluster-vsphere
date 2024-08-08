@@ -133,6 +133,11 @@
                     }
                 },
                 "providerIntegration": {
+                    "apps": {
+                        "capiNodeLabeler": {
+                            "enable": true
+                        }
+                    },
                     "controlPlane": {
                         "kubeadmConfig": {
                             "files": [
