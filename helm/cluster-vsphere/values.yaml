@@ -19,6 +19,8 @@ cluster:
         enable: true
       metricsServer:
         enable: true
+      netExporter:
+        enable: true
     controlPlane:
       resources:
         infrastructureMachineTemplate:
