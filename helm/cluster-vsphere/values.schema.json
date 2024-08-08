@@ -138,6 +138,7 @@
                             "enable": true
                         },
                         "certExporter": {
+                            "configTemplateName": "vSphereCertExporterHelmValues",
                             "enable": true
                         },
                         "certManager": {
