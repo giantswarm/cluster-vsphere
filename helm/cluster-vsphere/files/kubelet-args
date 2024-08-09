@@ -1,7 +1,0 @@
-cloud-provider: external
-feature-gates: ""
-eviction-hard : "memory.available<200Mi"
-eviction-max-pod-grace-period: "60"
-eviction-soft: "memory.available<500Mi"
-eviction-soft-grace-period: "memory.available=5s"
-anonymous-auth: "true"
