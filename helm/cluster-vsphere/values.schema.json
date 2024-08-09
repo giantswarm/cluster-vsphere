@@ -141,7 +141,7 @@
                         "ciliumHelmReleaseResourceEnabled": false,
                         "cleanupHelmReleaseResourcesEnabled": false,
                         "clusterResourceEnabled": true,
-                        "controlPlaneResourceEnabled": false,
+                        "controlPlaneResourceEnabled": true,
                         "coreDnsHelmReleaseResourceEnabled": false,
                         "helmRepositoryResourcesEnabled": false,
                         "infrastructureCluster": {
@@ -149,7 +149,7 @@
                             "kind": "VSphereCluster",
                             "version": "v1beta1"
                         },
-                        "machineHealthCheckResourceEnabled": false,
+                        "machineHealthCheckResourceEnabled": true,
                         "machinePoolResourcesEnabled": false,
                         "networkPoliciesHelmReleaseResourceEnabled": false,
                         "nodePoolKind": "MachineDeployment",
