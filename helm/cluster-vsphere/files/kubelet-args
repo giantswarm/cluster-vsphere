@@ -1,3 +1,4 @@
+# DEPRECATED - remove once CP and workers are rendered with cluster chart
 cloud-provider: external
 feature-gates: ""
 eviction-hard : "memory.available<200Mi"
