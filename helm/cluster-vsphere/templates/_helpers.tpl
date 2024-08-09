@@ -135,6 +135,10 @@ Create a prefix for all resource names.
 1000
 {{- end -}}
 
+{{- define "kubeletExtraArgs" -}}
+{{- .Files.Get "files/kubelet-args" -}}
+{{- end -}}
+
 {{- define "containerdProxyConfig" -}}
 - path: /etc/systemd/system/containerd.service.d/99-http-proxy.conf
   permissions: "0600"
