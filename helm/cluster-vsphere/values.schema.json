@@ -123,6 +123,21 @@
             "default": {
                 "providerIntegration": {
                     "controlPlane": {
+                        "kubeadmConfig": {
+                            "files": [
+                                {
+                                    "contentFrom": {
+                                        "secret": {
+                                            "key": "content",
+                                            "name": "kubevip-pod",
+                                            "prependClusterNameAsPrefix": true
+                                        }
+                                    },
+                                    "path": "/etc/kubernetes/manifests/kube-vip.yaml",
+                                    "permissions": "0600"
+                                }
+                            ]
+                        },
                         "resources": {
                             "infrastructureMachineTemplate": {
                                 "group": "infrastructure.cluster.x-k8s.io",
@@ -131,6 +146,14 @@
                             },
                             "infrastructureMachineTemplateSpecTemplateName": "controlplane-vspheremachinetemplate-spec"
                         }
+                    },
+                    "kubeadmConfig": {
+                        "preKubeadmCommands": [
+                            "bin/test ! -d /var/lib/kubelet && (/bin/mkdir -p /var/lib/kubelet && /bin/chmod 0750 /var/lib/kubelet)"
+                        ],
+                        "postKubeadmCommands": [
+                            "usermod -aG root nobody"
+                        ]
                     },
                     "pauseProperties": {
                         "global.connectivity.network.controlPlaneEndpoint.host": ""
@@ -141,7 +164,7 @@
                         "ciliumHelmReleaseResourceEnabled": false,
                         "cleanupHelmReleaseResourcesEnabled": false,
                         "clusterResourceEnabled": true,
-                        "controlPlaneResourceEnabled": false,
+                        "controlPlaneResourceEnabled": true,
                         "coreDnsHelmReleaseResourceEnabled": false,
                         "helmRepositoryResourcesEnabled": false,
                         "infrastructureCluster": {
@@ -149,7 +172,7 @@
                             "kind": "VSphereCluster",
                             "version": "v1beta1"
                         },
-                        "machineHealthCheckResourceEnabled": false,
+                        "machineHealthCheckResourceEnabled": true,
                         "machinePoolResourcesEnabled": false,
                         "networkPoliciesHelmReleaseResourceEnabled": false,
                         "nodePoolKind": "MachineDeployment",
