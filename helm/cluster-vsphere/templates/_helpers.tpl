@@ -209,14 +209,6 @@ mount containerd configuration.
       key: registry-config.toml
 {{- end -}}
 
-
-{{- define "auditLogFiles" -}}
-- path: /etc/kubernetes/policies/audit-policy.yaml
-  permissions: "0600"
-  encoding: base64
-  content: {{ $.Files.Get "files/etc/kubernetes/policies/audit-policy.yaml" | b64enc }}
-{{- end -}}
-
 {{/*
 Generate name of the k8s secret that contains containerd configuration for registries.
 When there is a change in the secret, it is not recognized by CAPI controllers.
