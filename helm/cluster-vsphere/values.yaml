@@ -93,6 +93,10 @@ global:
     enforced: true
   providerSpecific:
     vcenter: {}
+    defaultStorageClass:
+      storagePolicyName: ""
+      reclaimPolicy: Delete
+      enabled: true
 internal:
   apiServer:
     certSANs: []

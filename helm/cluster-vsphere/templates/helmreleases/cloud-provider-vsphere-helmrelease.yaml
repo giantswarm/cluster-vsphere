@@ -56,3 +56,12 @@ spec:
         enforced: {{ .Values.global.podSecurityStandards.enforced }}
     kube-vip-cloud-provider:
       cidrGlobal: '{{ join "," .Values.global.connectivity.network.loadBalancers.cidrBlocks }}'
+    vsphere-csi-driver:
+      storageClass:
+        {{- with .Values.global.providerSpecific.defaultStorageClass }}
+        enabled: {{ .enabled }}
+        reclaimPolicy: {{ .reclaimPolicy }}
+        {{- if .storagePolicyName }}
+        storageProfileName: {{ .storagePolicyName }}
+        {{- end }}
+        {{- end }}
