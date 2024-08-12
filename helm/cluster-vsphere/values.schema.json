@@ -749,7 +749,7 @@
                                 "enabled": {
                                     "type": "boolean",
                                     "title": "Enable default storage class",
-                                    "description": "Creates a default storage class if set to true",
+                                    "description": "Creates a default storage class if set to true.",
                                     "default": true
                                 }
                             }
