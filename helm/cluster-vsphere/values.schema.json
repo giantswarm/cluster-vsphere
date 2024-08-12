@@ -785,6 +785,20 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
+                "advancedConfiguration": {
+                    "type": "object",
+                    "title": "Advanced configuration",
+                    "description": "Advanced configuration options passed to shared cluster chart.",
+                    "default": {
+                        "controlPlane": {
+                            "apiServer": {
+                                "extraArgs": {
+                                    "requestheader-allowed-names": "front-proxy-client"
+                                }
+                            }
+                        }
+                    }
+                },
                 "apiServer": {
                     "type": "object",
                     "properties": {
