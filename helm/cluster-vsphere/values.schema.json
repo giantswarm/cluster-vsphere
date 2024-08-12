@@ -678,6 +678,35 @@
                     "type": "object",
                     "title": "Provider specific configuration",
                     "properties": {
+                        "defaultStorageClass": {
+                            "type": "object",
+                            "title": "Default Storage Class",
+                            "description": "Configuration of the default storage class.",
+                            "properties": {
+                                "enabled": {
+                                    "type": "boolean",
+                                    "title": "Enable default storage class",
+                                    "description": "Creates a default storage class if set to true.",
+                                    "default": true
+                                },
+                                "reclaimPolicy": {
+                                    "type": "string",
+                                    "title": "Reclaim Policy",
+                                    "description": "Reclaim policy of the storage class (Delete or Retain).",
+                                    "enum": [
+                                        "Delete",
+                                        "Retain"
+                                    ],
+                                    "default": "Delete"
+                                },
+                                "storagePolicyName": {
+                                    "type": "string",
+                                    "title": "Storage Policy name",
+                                    "description": "Name of the vSphere storage policy to use in the storage class. Leave empty for no storage policy.",
+                                    "default": ""
+                                }
+                            }
+                        },
                         "vcenter": {
                             "type": "object",
                             "title": "VCenter",
@@ -722,35 +751,6 @@
                                     "type": "string",
                                     "title": "Zone",
                                     "description": "Category name in VSphere for topology.kubernetes.io/zone labels."
-                                }
-                            }
-                        },
-                        "defaultStorageClass": {
-                            "type": "object",
-                            "title": "Default Storage Class",
-                            "description": "Configuration of the default storage class.",
-                            "properties": {
-                                "storagePolicyName": {
-                                    "type": "string",
-                                    "title": "Storage Policy name",
-                                    "description": "Name of the vSphere storage policy to use in the storage class. Leave empty for no storage policy.",
-                                    "default": ""
-                                },
-                                "reclaimPolicy": {
-                                    "type": "string",
-                                    "title": "Reclaim Policy",
-                                    "description": "Reclaim policy of the storage class (Delete or Retain).",
-                                    "default": "Delete",
-                                    "enum": [
-                                        "Delete",
-                                        "Retain"
-                                    ]
-                                },
-                                "enabled": {
-                                    "type": "boolean",
-                                    "title": "Enable default storage class",
-                                    "description": "Creates a default storage class if set to true.",
-                                    "default": true
                                 }
                             }
                         }
