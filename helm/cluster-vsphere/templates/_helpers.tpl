@@ -44,21 +44,6 @@ node replacement when the node spec is changed.
 {{- end -}}
 
 {{/*
-First takes a map of the controlPlane's spec and adds it to a new map, then
-takes a array of maps containing nodePools and adds each nodePool's map to
-the new map. Reults in a map of node specs which can be iterated over to 
-create VSphereMachineTemplates.
-*/}}
-{{ define "createMapOfClusterNodeSpecs" }}
-{{- $nodeMap := dict -}}
-{{- $_ := set $nodeMap "control-plane" .Values.global.controlPlane.machineTemplate -}}
-{{- range $index, $pool := .Values.global.nodePools | default .Values.cluster.providerIntegration.workers.defaultNodePools -}}
-  {{- $_ := set $nodeMap $index $pool -}}
-{{- end -}}
-{{ toYaml $nodeMap }}
-{{- end }}
-
-{{/*
 Takes an array of maps containing worker nodePools and adds each map to a new
 map. Results in a map of node specs which can be iterated over to create
 MachineDeployments.
