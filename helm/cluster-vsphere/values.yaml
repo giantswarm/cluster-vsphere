@@ -19,6 +19,9 @@ cluster:
         enable: true
       chartOperatorExtensions:
         enable: true
+      cilium:
+        configTemplateName: vSphereCiliumHelmValues
+        enable: true
       ciliumServiceMonitors:
         enable: true
       coreDns:
