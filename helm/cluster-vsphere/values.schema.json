@@ -330,6 +330,10 @@
                                             "description": "Ip for Service LB running in WC will be drawn from this GlobalInClusterIPPool resource.",
                                             "default": "svc-lb-ips",
                                             "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$"
+                                        },
+                                        "numberOfIps": {
+                                            "type": "integer",
+                                            "title": "Number of LB IPs to reserve"
                                         }
                                     }
                                 },
