@@ -21,6 +21,8 @@ cluster:
         enable: true
       ciliumServiceMonitors:
         enable: true
+      coreDns:
+        enable: true
       etcdKubernetesResourcesCountExporter:
         enable: true
       k8sDnsNodeCache:
@@ -154,7 +156,6 @@ cluster:
       cleanupHelmReleaseResourcesEnabled: false
       clusterResourceEnabled: true
       controlPlaneResourceEnabled: true
-      coreDnsHelmReleaseResourceEnabled: false
       helmRepositoryResourcesEnabled: true
       infrastructureCluster:
         group: infrastructure.cluster.x-k8s.io
@@ -162,7 +163,6 @@ cluster:
         version: v1beta1
       machineHealthCheckResourceEnabled: true
       machinePoolResourcesEnabled: false
-      networkPoliciesHelmReleaseResourceEnabled: false
       nodePoolKind: MachineDeployment
       verticalPodAutoscalerCrdHelmReleaseResourceEnabled: false
     workers:

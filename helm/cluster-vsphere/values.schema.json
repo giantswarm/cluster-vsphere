@@ -151,6 +151,9 @@
                         "ciliumServiceMonitors": {
                             "enable": true
                         },
+                        "coreDns": {
+                            "enable": true
+                        },
                         "etcdKubernetesResourcesCountExporter": {
                             "enable": true
                         },
@@ -319,7 +322,6 @@
                         "cleanupHelmReleaseResourcesEnabled": false,
                         "clusterResourceEnabled": true,
                         "controlPlaneResourceEnabled": true,
-                        "coreDnsHelmReleaseResourceEnabled": false,
                         "helmRepositoryResourcesEnabled": true,
                         "infrastructureCluster": {
                             "group": "infrastructure.cluster.x-k8s.io",
@@ -328,7 +330,6 @@
                         },
                         "machineHealthCheckResourceEnabled": true,
                         "machinePoolResourcesEnabled": false,
-                        "networkPoliciesHelmReleaseResourceEnabled": false,
                         "nodePoolKind": "MachineDeployment",
                         "verticalPodAutoscalerCrdHelmReleaseResourceEnabled": false
                     },
