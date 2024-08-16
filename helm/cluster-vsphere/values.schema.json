@@ -147,6 +147,10 @@
                             "infrastructureMachineTemplateSpecTemplateName": "controlplane-vspheremachinetemplate-spec"
                         }
                     },
+                    "environmentVariables": {
+                        "hostName": "COREOS_CUSTOM_HOSTNAME",
+                        "ipv4": "COREOS_CUSTOM_IPV4"
+                    },
                     "kubeadmConfig": {
                         "enableGiantswarmUser": true,
                         "files": [
