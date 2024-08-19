@@ -121,6 +121,17 @@
             "title": "Cluster",
             "description": "Helm values for the provider-independent cluster chart.",
             "default": {
+                "internal": {
+                    "advancedConfiguration": {
+                        "controlPlane": {
+                            "apiServer": {
+                                "extraArgs": {
+                                    "requestheader-allowed-names": "front-proxy-client"
+                                }
+                            }
+                        }
+                    }
+                },
                 "providerIntegration": {
                     "controlPlane": {
                         "kubeadmConfig": {
