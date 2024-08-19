@@ -84,7 +84,10 @@ yq eval --inplace 'del(.internal.apiServer.enableAdmissionPlugins) |
     del(.global.controlPlane.oidc.groupsPrefix) |
     del(.global.controlPlane.oidc.usernamePrefix) |
     del(.global.connectivity.shell.sshTrustedUserCAKeys) |
-    del(.global.connectivity.proxy.secretName)' values.yaml
+    del(.global.connectivity.proxy.secretName) |
+    del(.internal.apiServer) |
+    del(.internal.controllerManager) |
+    del(.internal.enableEncryptionProvider) ' values.yaml
 ```
 </details>
 

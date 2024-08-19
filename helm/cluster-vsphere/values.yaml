@@ -193,30 +193,8 @@ global:
       storagePolicyName: ""
     vcenter: {}
 internal:
-  advancedConfiguration:
-    controlPlane:
-      apiServer:
-        extraArgs:
-          requestheader-allowed-names: front-proxy-client
-  apiServer:
-    certSANs: []
-    enableAdmissionPlugins:
-      - DefaultStorageClass
-      - DefaultTolerationSeconds
-      - LimitRanger
-      - MutatingAdmissionWebhook
-      - NamespaceLifecycle
-      - PersistentVolumeClaimResize
-      - Priority
-      - ResourceQuota
-      - ServiceAccount
-      - ValidatingAdmissionWebhook
-    featureGates: []
   ciliumNetworkPolicy:
     enabled: true
-  controllerManager:
-    featureGates: []
-  enableEncryptionProvider: true
   kubectlImage:
     name: giantswarm/kubectl
     registry: gsoci.azurecr.io

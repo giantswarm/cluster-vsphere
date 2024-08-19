@@ -634,11 +634,6 @@
                                     "title": "Groups claim",
                                     "description": "Name of the identity token claim bearing the user's group memberships."
                                 },
-                                "groupsPrefix": {
-                                    "type": "string",
-                                    "title": "Groups prefix",
-                                    "description": "Prefix prepended to groups values to prevent clashes with existing names."
-                                },
                                 "issuerUrl": {
                                     "type": "string",
                                     "title": "Issuer URL",
@@ -648,11 +643,6 @@
                                     "type": "string",
                                     "title": "Username claim",
                                     "description": "Name of the identity token claim bearing the unique user identifier."
-                                },
-                                "usernamePrefix": {
-                                    "type": "string",
-                                    "title": "Username prefix",
-                                    "description": "Prefix prepended to username values to prevent clashes with existing names."
                                 }
                             }
                         },
@@ -881,70 +871,6 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "advancedConfiguration": {
-                    "type": "object",
-                    "title": "Advanced configuration",
-                    "description": "Advanced configuration options passed to shared cluster chart.",
-                    "default": {
-                        "controlPlane": {
-                            "apiServer": {
-                                "extraArgs": {
-                                    "requestheader-allowed-names": "front-proxy-client"
-                                }
-                            }
-                        }
-                    }
-                },
-                "apiServer": {
-                    "type": "object",
-                    "properties": {
-                        "certSANs": {
-                            "type": "array",
-                            "title": "Subject alternative names (SAN)",
-                            "description": "Alternative names to encode in the API server's certificate.",
-                            "items": {
-                                "type": "string",
-                                "title": "SAN"
-                            },
-                            "default": []
-                        },
-                        "enableAdmissionPlugins": {
-                            "type": "array",
-                            "title": "Admission plugins",
-                            "description": "List of admission plugins to be passed to the API server via the --enable-admission-plugins flag.",
-                            "items": {
-                                "type": "string",
-                                "title": "Plugin",
-                                "examples": [
-                                    "DefaultStorageClass",
-                                    "Priority"
-                                ],
-                                "pattern": "^[A-Za-z0-9]+$"
-                            },
-                            "default": [
-                                "DefaultStorageClass",
-                                "DefaultTolerationSeconds",
-                                "LimitRanger",
-                                "MutatingAdmissionWebhook",
-                                "NamespaceLifecycle",
-                                "PersistentVolumeClaimResize",
-                                "Priority",
-                                "ResourceQuota",
-                                "ServiceAccount",
-                                "ValidatingAdmissionWebhook"
-                            ]
-                        },
-                        "featureGates": {
-                            "type": "array",
-                            "title": "Feature gates",
-                            "description": "API server feature gate activation/deactivation.",
-                            "items": {
-                                "$ref": "#/$defs/featureGate"
-                            },
-                            "default": []
-                        }
-                    }
-                },
                 "ciliumNetworkPolicy": {
                     "type": "object",
                     "title": "CiliumNetworkPolicies",
@@ -956,28 +882,6 @@
                             "default": true
                         }
                     }
-                },
-                "controllerManager": {
-                    "type": "object",
-                    "title": "Controller manager",
-                    "additionalProperties": false,
-                    "properties": {
-                        "featureGates": {
-                            "type": "array",
-                            "title": "Feature gates",
-                            "description": "Controller manager feature gate activation/deactivation.",
-                            "items": {
-                                "$ref": "#/$defs/featureGate"
-                            },
-                            "default": []
-                        }
-                    }
-                },
-                "enableEncryptionProvider": {
-                    "type": "boolean",
-                    "title": "API server encryption at REST",
-                    "description": "Enable encryption at REST feature of API server.",
-                    "default": true
                 },
                 "kubectlImage": {
                     "type": "object",
