@@ -76,6 +76,7 @@ cluster:
                         [Unit]
                         Requires=coreos-metadata.service
                         After=coreos-metadata.service
+                        Before=teleport.service
                         [Service]
                         Type=oneshot
                         RemainAfterExit=yes
