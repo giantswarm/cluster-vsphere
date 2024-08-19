@@ -80,7 +80,7 @@ cluster:
                         Type=oneshot
                         RemainAfterExit=yes
                         EnvironmentFile=/run/metadata/coreos
-                        ExecStart=/opt/bin/set-hostname
+                        ExecStart=/opt/bin/set-hostname.sh
                       name: 10-set-hostname.conf
                   enabled: true
                   name: set-hostname.service
