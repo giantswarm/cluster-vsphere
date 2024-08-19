@@ -204,7 +204,7 @@
                                                 },
                                                 "dropins": [
                                                     {
-                                                        "contents": "[Unit]\nRequires=coreos-metadata.service\nAfter=coreos-metadata.service\n[Service]\nType=oneshot\nRemainAfterExit=yes\nEnvironmentFile=/run/metadata/coreos\nExecStart=/opt/set-hostname",
+                                                        "contents": "[Unit]\nRequires=coreos-metadata.service\nAfter=coreos-metadata.service\n[Service]\nType=oneshot\nRemainAfterExit=yes\nEnvironmentFile=/run/metadata/coreos\nExecStart=/opt/bin/set-hostname",
                                                         "name": "10-set-hostname.conf"
                                                     }
                                                 ],
