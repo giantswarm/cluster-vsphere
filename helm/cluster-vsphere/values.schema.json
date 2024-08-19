@@ -230,16 +230,6 @@
                                                 ],
                                                 "enabled": true,
                                                 "name": "ethtool-segmentation.service"
-                                            },
-                                            {
-                                                "dropins": [
-                                                    {
-                                                        "contents": "[Unit]\n# kubeadm must run after coreos-metadata populated /run/metadata directory.\nRequires=coreos-metadata.service\nAfter=coreos-metadata.service\n[Service]\n# Make metadata environment variables available for pre-kubeadm commands.\nEnvironmentFile=/run/metadata/*",
-                                                        "name": "10-flatcar.conf"
-                                                    }
-                                                ],
-                                                "enabled": true,
-                                                "name": "kubeadm.service"
                                             }
                                         ]
                                     }
