@@ -7,6 +7,93 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### **Breaking change**.
+
+> [!CAUTION]
+> It is important that you check each of the sections in the upgrade guide below. Note that some may not apply to your specific cluster configuration. However, the cleanup section must always be run against the cluster values.
+
+<details>
+<summary>Upgrade guide: how to migrate values (from v0.59.0)</summary>
+
+Use the snippets below if the section applies to your chart's values:
+
+## Control Plane endpoint address
+
+If the controlPlane endpoint IP (loadbalancer for the Kubernetes API) has been statically assigned (this likely will not apply to workload clusters) then this value will need to be duplicated to the extraCertificateSANs list.
+
+```
+yq eval --inplace 'with(select(.global.connectivity.network.controlPlaneEndpoint.host != null); .cluster.internal.advancedConfiguration.controlPlane.apiServer.extraCertificateSANs += [ .global.connectivity.network.controlPlaneEndpoint.host ])' values.yaml
+```
+
+## API server admission plugins
+
+The default list is [here](https://github.com/giantswarm/cluster/blob/main/helm/cluster/templates/clusterapi/controlplane/_helpers_clusterconfiguration_apiserver.tpl#L104). If you have not extended this list then you do not need to provide a list of admission plugins at all (defaults will be used from the cluster chart). If this is the case, please ignore the following command.
+
+```
+yq eval --inplace 'with(select(.internal.apiServer.enableAdmissionPlugins != null); .cluster.providerIntegration.controlPlane.kubeadmConfig.clusterConfiguration.apiServer.additionalAdmissionPlugins = .internal.apiServer.enableAdmissionPlugins)' values.yaml
+
+```
+
+## API server feature gates
+
+There is no default list of feature gates in the shared cluster chart, so if you have any values under `.internal.apiServer.featureGates` then these must be migrated to the new location.
+
+```
+yq eval --inplace 'with(select(.internal.apiServer.featureGates != null); .cluster.providerIntegration.controlPlane.kubeadmConfig.clusterConfiguration.apiServer.featureGates = .internal.apiServer.featureGates)' values.yaml
+```
+
+## OIDC config
+
+`caFile` has been renamed to `caPem`.
+
+```
+yq eval --inplace 'with(select(.global.controlPlane.oidc.caFile != null); .global.controlPlane.oidc.caPem = .global.controlPlane.oidc.caFile)' values.yaml
+```
+
+## SSH trusted CA keys
+
+If you are providing additional trusted CA keys for SSH authentication (other than the default Giant Swarm key) then these need to migrated to the new location.
+
+```
+yq eval --inplace 'with(select(.global.connectivity.shell.sshTrustedUserCAKeys != null); .cluster.providerIntegration.connectivity.sshSsoPublicKey = .global.connectivity.shell.sshTrustedUserCAKeys)' values.yaml
+```
+
+## Upstream proxy settings
+
+If your cluster is behind an upstream proxy (if `.global.connectivity.proxy.enabled: true`) then the proxy configuration must also be added to the cluster chart's values.
+
+- `httpProxy`: upstream proxy protocol, address and port (e.g. `http://proxy-address:port`)
+- `httpsProxy`: upstream proxy protocol, address and port (e.g. `http://proxy-address:port`)
+- `noProxy`: comma-separated list of domains and IP CIDRs which should not be proxied (e.g. `10.10.10.0/24,internal.domain.com`)
+
+Additional notes:
+
+- Encryption is always enabled with the shared cluster chart, so this toggle is removed entirely (`.internal.enableEncryptionProvider`).
+- OIDC `groupsPrefix` and `usernamePrefix` are removed.
+- Upstream proxy configuration is no longer read from the `.global.connectivity.proxy.secretName` value.
+
+## Cleanup
+
+Final tidyup to remove deprecated values:
+
+```
+yq eval --inplace 'del(.internal.apiServer.enableAdmissionPlugins) |
+    del(.internal.apiServer.featureGates) |
+    del(.internal.enableEncryptionProvider) |
+    del(.global.controlPlane.oidc.caFile) |
+    del(.global.controlPlane.oidc.groupsPrefix) |
+    del(.global.controlPlane.oidc.usernamePrefix) |
+    del(.global.connectivity.shell.sshTrustedUserCAKeys) |
+    del(.global.connectivity.proxy.secretName) |
+    del(.internal.apiServer) |
+    del(.internal.controllerManager) |
+    del(.internal.enableEncryptionProvider) ' values.yaml
+```
+</details>
+
+- Use `giantswarm/cluster` chart to render `KubeadmControlPlane` resource.
+- Update giantswarm/cluster chart to 1.2.1.
+
 ## [0.59.0] - 2024-08-12
 
 ### Changed

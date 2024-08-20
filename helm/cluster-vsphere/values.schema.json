@@ -121,8 +121,34 @@
             "title": "Cluster",
             "description": "Helm values for the provider-independent cluster chart.",
             "default": {
+                "internal": {
+                    "advancedConfiguration": {
+                        "controlPlane": {
+                            "apiServer": {
+                                "extraArgs": {
+                                    "requestheader-allowed-names": "front-proxy-client"
+                                }
+                            }
+                        }
+                    }
+                },
                 "providerIntegration": {
                     "controlPlane": {
+                        "kubeadmConfig": {
+                            "files": [
+                                {
+                                    "contentFrom": {
+                                        "secret": {
+                                            "key": "content",
+                                            "name": "kubevip-pod",
+                                            "prependClusterNameAsPrefix": true
+                                        }
+                                    },
+                                    "path": "/etc/kubernetes/manifests/kube-vip.yaml",
+                                    "permissions": "0600"
+                                }
+                            ]
+                        },
                         "resources": {
                             "infrastructureMachineTemplate": {
                                 "group": "infrastructure.cluster.x-k8s.io",
@@ -132,6 +158,100 @@
                             "infrastructureMachineTemplateSpecTemplateName": "controlplane-vspheremachinetemplate-spec"
                         }
                     },
+                    "environmentVariables": {
+                        "hostName": "COREOS_CUSTOM_HOSTNAME",
+                        "ipv4": "COREOS_CUSTOM_IPV4"
+                    },
+                    "kubeadmConfig": {
+                        "enableGiantswarmUser": true,
+                        "files": [
+                            {
+                                "contentFrom": {
+                                    "secret": {
+                                        "key": "set-hostname.sh",
+                                        "name": "provider-specific-files-1",
+                                        "prependClusterNameAsPrefix": true
+                                    }
+                                },
+                                "path": "/opt/bin/set-hostname.sh",
+                                "permissions": "0755"
+                            }
+                        ],
+                        "ignition": {
+                            "containerLinuxConfig": {
+                                "additionalConfig": {
+                                    "systemd": {
+                                        "units": [
+                                            {
+                                                "contents": {
+                                                    "install": {
+                                                        "wantedBy": [
+                                                            "multi-user.target"
+                                                        ]
+                                                    },
+                                                    "unit": {
+                                                        "description": "VMWare metadata agent"
+                                                    }
+                                                },
+                                                "dropins": [
+                                                    {
+                                                        "contents": "[Unit]\nAfter=nss-lookup.target\nAfter=network-online.target\nWants=network-online.target\n[Service]\nType=oneshot\nRestart=on-failure\nRemainAfterExit=yes\nEnvironment=OUTPUT=/run/metadata/coreos\nExecStart=/usr/bin/mkdir --parent /run/metadata\nExecStart=/usr/bin/bash -cv 'echo \"COREOS_CUSTOM_HOSTNAME=$(\"$(find /usr/bin /usr/share/oem -name vmtoolsd -type f -executable 2>/dev/null | head -n 1)\" --cmd \"info-get guestinfo.metadata\" | base64 -d | awk \\'/local-hostname/ {print $2}\\' | tr -d \\'\"\\')\" >> ${OUTPUT}'\nExecStart=/usr/bin/bash -cv 'echo \"COREOS_CUSTOM_IPV4=$(\"$(find /usr/bin /usr/share/oem -name vmtoolsd -type f -executable 2>/dev/null | head -n 1)\" --cmd \"info-get guestinfo.ip\")\" >> ${OUTPUT}'",
+                                                        "name": "10-coreos-metadata.conf"
+                                                    }
+                                                ],
+                                                "enabled": true,
+                                                "name": "coreos-metadata.service"
+                                            },
+                                            {
+                                                "contents": {
+                                                    "install": {
+                                                        "wantedBy": [
+                                                            "multi-user.target"
+                                                        ]
+                                                    },
+                                                    "unit": {
+                                                        "description": "Set machine hostname"
+                                                    }
+                                                },
+                                                "dropins": [
+                                                    {
+                                                        "contents": "[Unit]\nRequires=coreos-metadata.service\nAfter=coreos-metadata.service\nBefore=teleport.service\n[Service]\nType=oneshot\nRemainAfterExit=yes\nEnvironmentFile=/run/metadata/coreos\nExecStart=/opt/bin/set-hostname.sh",
+                                                        "name": "10-set-hostname.conf"
+                                                    }
+                                                ],
+                                                "enabled": true,
+                                                "name": "set-hostname.service"
+                                            },
+                                            {
+                                                "contents": {
+                                                    "install": {
+                                                        "wantedBy": [
+                                                            "default.target"
+                                                        ]
+                                                    },
+                                                    "unit": {
+                                                        "description": "Disable TCP segmentation offloading"
+                                                    }
+                                                },
+                                                "dropins": [
+                                                    {
+                                                        "contents": "[Unit]\nAfter=network.target\n[Service]\nType=oneshot\nRemainAfterExit=yes\nExecStart=/usr/sbin/ethtool -K ens192 tx-udp_tnl-csum-segmentation off\nExecStart=/usr/sbin/ethtool -K ens192 tx-udp_tnl-segmentation off",
+                                                        "name": "10-ethtool-segmentation.conf"
+                                                    }
+                                                ],
+                                                "enabled": true,
+                                                "name": "ethtool-segmentation.service"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        },
+                        "postKubeadmCommands": [
+                            "usermod -aG root nobody"
+                        ]
+                    },
+                    "kubernetesVersion": "1.27.14",
                     "pauseProperties": {
                         "global.connectivity.network.controlPlaneEndpoint.host": ""
                     },
@@ -141,7 +261,7 @@
                         "ciliumHelmReleaseResourceEnabled": false,
                         "cleanupHelmReleaseResourcesEnabled": false,
                         "clusterResourceEnabled": true,
-                        "controlPlaneResourceEnabled": false,
+                        "controlPlaneResourceEnabled": true,
                         "coreDnsHelmReleaseResourceEnabled": false,
                         "helmRepositoryResourcesEnabled": false,
                         "infrastructureCluster": {
@@ -149,7 +269,7 @@
                             "kind": "VSphereCluster",
                             "version": "v1beta1"
                         },
-                        "machineHealthCheckResourceEnabled": false,
+                        "machineHealthCheckResourceEnabled": true,
                         "machinePoolResourcesEnabled": false,
                         "networkPoliciesHelmReleaseResourceEnabled": false,
                         "nodePoolKind": "MachineDeployment",
@@ -515,11 +635,6 @@
                                     "title": "Groups claim",
                                     "description": "Name of the identity token claim bearing the user's group memberships."
                                 },
-                                "groupsPrefix": {
-                                    "type": "string",
-                                    "title": "Groups prefix",
-                                    "description": "Prefix prepended to groups values to prevent clashes with existing names."
-                                },
                                 "issuerUrl": {
                                     "type": "string",
                                     "title": "Issuer URL",
@@ -529,11 +644,6 @@
                                     "type": "string",
                                     "title": "Username claim",
                                     "description": "Name of the identity token claim bearing the unique user identifier."
-                                },
-                                "usernamePrefix": {
-                                    "type": "string",
-                                    "title": "Username prefix",
-                                    "description": "Prefix prepended to username values to prevent clashes with existing names."
                                 }
                             }
                         },
@@ -762,56 +872,6 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "apiServer": {
-                    "type": "object",
-                    "properties": {
-                        "certSANs": {
-                            "type": "array",
-                            "title": "Subject alternative names (SAN)",
-                            "description": "Alternative names to encode in the API server's certificate.",
-                            "items": {
-                                "type": "string",
-                                "title": "SAN"
-                            },
-                            "default": []
-                        },
-                        "enableAdmissionPlugins": {
-                            "type": "array",
-                            "title": "Admission plugins",
-                            "description": "List of admission plugins to be passed to the API server via the --enable-admission-plugins flag.",
-                            "items": {
-                                "type": "string",
-                                "title": "Plugin",
-                                "examples": [
-                                    "DefaultStorageClass",
-                                    "Priority"
-                                ],
-                                "pattern": "^[A-Za-z0-9]+$"
-                            },
-                            "default": [
-                                "DefaultStorageClass",
-                                "DefaultTolerationSeconds",
-                                "LimitRanger",
-                                "MutatingAdmissionWebhook",
-                                "NamespaceLifecycle",
-                                "PersistentVolumeClaimResize",
-                                "Priority",
-                                "ResourceQuota",
-                                "ServiceAccount",
-                                "ValidatingAdmissionWebhook"
-                            ]
-                        },
-                        "featureGates": {
-                            "type": "array",
-                            "title": "Feature gates",
-                            "description": "API server feature gate activation/deactivation.",
-                            "items": {
-                                "$ref": "#/$defs/featureGate"
-                            },
-                            "default": []
-                        }
-                    }
-                },
                 "ciliumNetworkPolicy": {
                     "type": "object",
                     "title": "CiliumNetworkPolicies",
@@ -823,28 +883,6 @@
                             "default": true
                         }
                     }
-                },
-                "controllerManager": {
-                    "type": "object",
-                    "title": "Controller manager",
-                    "additionalProperties": false,
-                    "properties": {
-                        "featureGates": {
-                            "type": "array",
-                            "title": "Feature gates",
-                            "description": "Controller manager feature gate activation/deactivation.",
-                            "items": {
-                                "$ref": "#/$defs/featureGate"
-                            },
-                            "default": []
-                        }
-                    }
-                },
-                "enableEncryptionProvider": {
-                    "type": "boolean",
-                    "title": "API server encryption at REST",
-                    "description": "Enable encryption at REST feature of API server.",
-                    "default": true
                 },
                 "kubectlImage": {
                     "type": "object",
