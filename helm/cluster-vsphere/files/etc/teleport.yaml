@@ -1,3 +1,4 @@
+# DEPRECATED - remove once CP and workers are rendered with cluster chart
 version: v3
 teleport:
   data_dir: /var/lib/teleport
