@@ -155,7 +155,6 @@ cluster:
     provider: vsphere
     resourcesApi:
       bastionResourceEnabled: false
-      ciliumHelmReleaseResourceEnabled: false
       cleanupHelmReleaseResourcesEnabled: false
       clusterResourceEnabled: true
       controlPlaneResourceEnabled: true
@@ -167,7 +166,6 @@ cluster:
       machineHealthCheckResourceEnabled: true
       machinePoolResourcesEnabled: false
       nodePoolKind: MachineDeployment
-      verticalPodAutoscalerCrdHelmReleaseResourceEnabled: false
     workers:
       defaultNodePools:
         def00:

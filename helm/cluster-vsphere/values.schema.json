@@ -322,7 +322,6 @@
                     "provider": "vsphere",
                     "resourcesApi": {
                         "bastionResourceEnabled": false,
-                        "ciliumHelmReleaseResourceEnabled": false,
                         "cleanupHelmReleaseResourcesEnabled": false,
                         "clusterResourceEnabled": true,
                         "controlPlaneResourceEnabled": true,
@@ -334,8 +333,7 @@
                         },
                         "machineHealthCheckResourceEnabled": true,
                         "machinePoolResourcesEnabled": false,
-                        "nodePoolKind": "MachineDeployment",
-                        "verticalPodAutoscalerCrdHelmReleaseResourceEnabled": false
+                        "nodePoolKind": "MachineDeployment"
                     },
                     "workers": {
                         "defaultNodePools": {
