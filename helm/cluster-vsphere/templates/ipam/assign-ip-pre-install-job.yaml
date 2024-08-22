@@ -123,6 +123,7 @@ spec:
 
               ip_list=""
               # Iterate over each ipAddressClaim
+              count=1
               while [ $count -le {{ .Values.global.connectivity.network.loadBalancers.numberOfIps }} ]
               do
                 new_ip=""
@@ -139,6 +140,7 @@ spec:
                 else
                   ip_list="${new_ip}"
                 fi
+                count=$((count+1))
               done
 
               # patch the cloud-provider-vsphere-helmrelease
