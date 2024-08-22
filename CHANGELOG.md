@@ -21,10 +21,11 @@ Use the snippets below if the section applies to your chart's values:
 
 ## Control Plane endpoint address
 
-If the controlPlane endpoint IP (loadbalancer for the Kubernetes API) has been statically assigned (this likely will not apply to workload clusters) then this value will need to be duplicated to the extraCertificateSANs list.
+If the controlPlane endpoint IP (loadbalancer for the Kubernetes API) has been statically assigned (this likely will not apply to workload clusters) then this value will need to be duplicated to the extraCertificateSANs list. Also, any additional certificate SANs must be added to the extraCertificateSANs list.
 
 ```
-yq eval --inplace 'with(select(.global.connectivity.network.controlPlaneEndpoint.host != null); .cluster.internal.advancedConfiguration.controlPlane.apiServer.extraCertificateSANs += [ .global.connectivity.network.controlPlaneEndpoint.host ])' values.yaml
+yq eval --inplace 'with(select(.global.connectivity.network.controlPlaneEndpoint.host != null); .cluster.internal.advancedConfiguration.controlPlane.apiServer.extraCertificateSANs += [ .global.connectivity.network.controlPlaneEndpoint.host ]) |
+    with(select(.internal.apiServer.certSANs != null); .cluster.internal.advancedConfiguration.controlPlane.apiServer.extraCertificateSANs += [ .internal.apiServer.certSANs[] ])' values.yaml
 ```
 
 ## API server admission plugins
@@ -81,6 +82,7 @@ Final tidyup to remove deprecated values:
 ```
 yq eval --inplace 'del(.internal.apiServer.enableAdmissionPlugins) |
     del(.internal.apiServer.featureGates) |
+    del(.internal.apiServer.certSANs) |
     del(.internal.enableEncryptionProvider) |
     del(.global.controlPlane.oidc.caFile) |
     del(.global.controlPlane.oidc.groupsPrefix) |
