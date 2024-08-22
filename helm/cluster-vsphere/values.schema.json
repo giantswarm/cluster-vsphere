@@ -453,7 +453,8 @@
                                         },
                                         "numberOfIps": {
                                             "type": "integer",
-                                            "title": "Number of LB IPs to reserve"
+                                            "title": "Number of LB IPs to reserve",
+                                            "default": 3
                                         }
                                     }
                                 },
