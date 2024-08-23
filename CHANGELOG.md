@@ -48,7 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### ⚠️ Workload cluster upgrade with manual steps
 
 The steps to upgrade a workload cluster, with unifying cluster-vsphere and default-apps-vsphere, are the following:
-- Upgrade default-apps-vsphere App to the latest release that includes this change.
+- Upgrade default-apps-vsphere App to the v0.16.0 release.
 - Update default-apps-vsphere Helm value `.Values.deleteOptions.moveAppsHelmOwnershipToClusterVSphere` to `true`.
   - All App CRs, except observability-bundle and security-bundle, will get `app-operator.giantswarm.io/paused: true` annotation,
     so wait few minutes for Helm post-upgrade hook to apply the change to all required App CRs.
@@ -58,7 +58,7 @@ The steps to upgrade a workload cluster, with unifying cluster-vsphere and defau
     Flux does not delete default-apps-vsphere App CR from the management cluster, make sure to delete it manually.
   - App CRs (on the MC) for all default apps will get deleted. Wait few minutes for this to happen.
   - Chart CRs on the workload cluster will remain untouched, so all apps will continue running.
-- Upgrade cluster-vsphere App CR to the latest (TBA release which includes [these changes](https://github.com/giantswarm/cluster-vsphere/pull/262)).
+- Upgrade cluster-vsphere App CR to the v0.61.0 release.
   - cluster-vsphere will deploy all default apps, so wait a few minutes for all Apps to be successfully deployed.
   - Chart resources on the workload cluster will get updated, as newly deployed App resources will take over the reconciliation
     of the existing Chart resources.
