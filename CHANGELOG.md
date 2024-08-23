@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.61.0] - 2024-08-23
+
 > [!WARNING]
 > This release adds all default apps to cluster-vsphere, so default-apps-vsphere App is not used anymore. Changes in
 > cluster-vsphere are breaking and cluster upgrade requires manual steps where default-apps-vsphere App is removed
@@ -681,7 +683,8 @@ at least 1 public IP is always needed for the ingress controller to be able to e
 
 - Initial chart implementation.
 
-[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v0.60.1...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v0.61.0...HEAD
+[0.61.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.60.1...v0.61.0
 [0.60.1]: https://github.com/giantswarm/cluster-vsphere/compare/v0.60.0...v0.60.1
 [0.60.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.59.0...v0.60.0
 [0.59.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.58.3...v0.59.0
