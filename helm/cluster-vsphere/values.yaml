@@ -8,6 +8,50 @@ cluster:
           extraArgs:
             requestheader-allowed-names: front-proxy-client
   providerIntegration:
+    apps:
+      capiNodeLabeler:
+        enable: true
+      certExporter:
+        configTemplateName: vSphereCertExporterHelmValues
+        enable: true
+      certManager:
+        configTemplateName: vSphereCertManagerHelmValues
+        enable: true
+      chartOperatorExtensions:
+        enable: true
+      cilium:
+        configTemplateName: vSphereCiliumHelmValues
+        enable: true
+      ciliumServiceMonitors:
+        enable: true
+      coreDns:
+        enable: true
+      etcdKubernetesResourcesCountExporter:
+        enable: true
+      k8sDnsNodeCache:
+        enable: true
+      metricsServer:
+        enable: true
+      netExporter:
+        enable: true
+      networkPolicies:
+        configTemplateName: vSphereNetworkPoliciesHelmValues
+        enable: true
+      nodeExporter:
+        configTemplateName: vSphereNodeExporterHelmValues
+        enable: true
+      observabilityBundle:
+        enable: true
+      observabilityPolicies:
+        enable: true
+      securityBundle:
+        enable: true
+      teleportKubeAgent:
+        enable: true
+      verticalPodAutoscaler:
+        enable: true
+      verticalPodAutoscalerCrd:
+        enable: true
     controlPlane:
       kubeadmConfig:
         files:
@@ -111,21 +155,17 @@ cluster:
     provider: vsphere
     resourcesApi:
       bastionResourceEnabled: false
-      ciliumHelmReleaseResourceEnabled: false
       cleanupHelmReleaseResourcesEnabled: false
       clusterResourceEnabled: true
       controlPlaneResourceEnabled: true
-      coreDnsHelmReleaseResourceEnabled: false
-      helmRepositoryResourcesEnabled: false
+      helmRepositoryResourcesEnabled: true
       infrastructureCluster:
         group: infrastructure.cluster.x-k8s.io
         kind: VSphereCluster
         version: v1beta1
       machineHealthCheckResourceEnabled: true
       machinePoolResourcesEnabled: false
-      networkPoliciesHelmReleaseResourceEnabled: false
       nodePoolKind: MachineDeployment
-      verticalPodAutoscalerCrdHelmReleaseResourceEnabled: false
     workers:
       defaultNodePools:
         def00:
@@ -163,6 +203,7 @@ global:
       sshTrustedUserCAKeys:
         - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM4cvZ01fLmO9cJbWUj7sfF+NhECgy+Cl0bazSrZX7sU vault-ca@vault.operations.giantswarm.io
   controlPlane:
+    apiServerPort: 6443
     image:
       repository: gsoci.azurecr.io/giantswarm
     machineTemplate:
@@ -195,8 +236,6 @@ global:
       storagePolicyName: ""
     vcenter: {}
 internal:
-  ciliumNetworkPolicy:
-    enabled: true
   kubectlImage:
     name: giantswarm/kubectl
     registry: gsoci.azurecr.io

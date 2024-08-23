@@ -7,6 +7,101 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+> [!WARNING]
+> This release adds all default apps to cluster-vsphere, so default-apps-vsphere App is not used anymore. Changes in
+> cluster-vsphere are breaking and cluster upgrade requires manual steps where default-apps-vsphere App is removed
+> before upgrading cluster-vsphere. See details below.
+
+### Added
+
+- Render capi-node-labeler App CR from cluster chart.
+- Render cert-exporter App CR from cluster chart and add vSphere-specific cert-exporter config.
+- Render cert-manager App CR from cluster chart and add vSphere-specific cert-manager config.
+- Render chart-operator-extensions App CR from cluster chart.
+- Render cilium HelmRelease CR from cluster chart and add vSphere-specific cilium config.
+- Render cilium-servicemonitors App CR from cluster chart.
+- Render coredns HelmRelease CR from cluster chart.
+- Render etc-kubernetes-resources-count-exporter App CR from cluster chart.
+- Render k8s-dns-node-cache App CR from cluster chart.
+- Render metrics-server App CR from cluster chart.
+- Render net-exporter App CR from cluster chart.
+- Render network-policies HelmRelease CR from cluster chart and add vSphere-specific network-policies config.
+- Render node-exporter App CR from cluster chart and add vSphere-specific node-exporter config.
+- Render observability-bundle App CR from cluster chart.
+- Render observability-policies App CR from cluster chart.
+- Render security-bundle App CR from cluster chart.
+- Render teleport-kube-agent App CR from cluster chart.
+- Render vertical-pod-autoscaler App CR from cluster chart.
+- Render vertical-pod-autoscaler-crd HelmRelease CR from cluster chart.
+- Render HelmRepository CRs from cluster chart.
+- Add missing Helm value .Values.global.controlPlane.apiServerPort.
+- Add Makefile `template` target that renders manifests with CI values from the chart.
+- Add Makefile `generate` target that normalizes and validates schema, generates docs and Helm values, and updates Helm dependencies.
+
+### Removed
+
+- Remove cilium HelmRelease.
+- Remove coredns HelmRelease.
+- Remove network-policies HelmRelease.
+- Remove HelmRepository CRs.
+
+### ⚠️ Workload cluster upgrade with manual steps
+
+The steps to upgrade a workload cluster, with unifying cluster-vsphere and default-apps-vsphere, are the following:
+- Upgrade default-apps-vsphere App to the v0.16.0 release.
+- Update default-apps-vsphere Helm value `.Values.deleteOptions.moveAppsHelmOwnershipToClusterVSphere` to `true`.
+  - All App CRs, except observability-bundle and security-bundle, will get `app-operator.giantswarm.io/paused: true` annotation,
+    so wait few minutes for Helm post-upgrade hook to apply the change to all required App CRs.
+- Delete default-apps-vsphere CR.
+  - ⚠️ In case you are removing default-apps-vsphere App CR from your gitops repo which is using Flux, and depending on
+    how Flux is configured, default-apps-vsphere App CR may or may not get deleted from the management cluster. In case
+    Flux does not delete default-apps-vsphere App CR from the management cluster, make sure to delete it manually.
+  - App CRs (on the MC) for all default apps will get deleted. Wait few minutes for this to happen.
+  - Chart CRs on the workload cluster will remain untouched, so all apps will continue running.
+- Upgrade cluster-vsphere App CR to the v0.61.0 release.
+  - cluster-vsphere will deploy all default apps, so wait a few minutes for all Apps to be successfully deployed.
+  - Chart resources on the workload cluster will get updated, as newly deployed App resources will take over the reconciliation
+    of the existing Chart resources.
+
+We're almost there, with just one more issue to fix manually.
+
+VPA CRD used to installed as an App resource from default-apps-vsphere, and now it's being installed as a HelmRelease from
+cluster-vsphere. Now, as a consequence of the above upgrade, we have the following situation:
+- default-apps-vsphere App has been deleted, but the vertical-pod-autoscaler-crd Chart CRs remained in the workload cluster.
+- cluster-vsphere has been upgraded, so now it also installs vertical-pod-autoscaler-crd HelmRelease.
+- outcome: we now have vertical-pod-autoscaler-crd HelmRelease in the MC and vertical-pod-autoscaler-crd Chart CR in the WC.
+
+Now we will remove the leftover vertical-pod-autoscaler-crd Chart CR in a safe way:
+
+1. Pause vertical-pod-autoscaler-crd Chart CR.
+
+Add annotation `chart-operator.giantswarm.io/paused: "true"` to vertical-pod-autoscaler-crd Chart CR in the workload cluster:
+
+```sh
+kubectl annotate -n giantswarm chart vertical-pod-autoscaler-crd chart-operator.giantswarm.io/paused="true" --overwrite
+```
+
+2. Delete vertical-pod-autoscaler-crd Chart CR in the workload cluster.
+
+```shell
+kubectl delete -n giantswarm chart vertical-pod-autoscaler-crd
+```
+
+The command line will probably hang, as the chart-operator finalizer has is not getting removed (vertical-pod-autoscaler-crd
+Chart CR has been paused). Proceed to the next step to remove the finalizer and unblock the deletion.
+
+3. Remove finalizers from the vertical-pod-autoscaler-crd Chart CR
+
+Open another terminal window and run the following command to remove the vertical-pod-autoscaler-crd Chart CR finalizers:
+
+```shell
+kubectl patch chart vertical-pod-autoscaler-crd -n giantswarm --type=json -p='[{"op": "remove", "path": "/metadata/finalizers"}]'
+```
+
+This will unblock the deletion and vertical-pod-autoscaler-crd will get removed, **without actually deleting VPA CustomResourceDefinition**.
+
+From now on, VPA CustomResourceDefinition will be maintained by the vertical-pod-autoscaler HelmRelease on the management cluster.
+
 ## [0.60.1] - 2024-08-23
 
 ### Fixed
