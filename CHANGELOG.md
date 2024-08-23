@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Rename caFile to caPem in values schema.
+
 ## [0.60.0] - 2024-08-22
 
 ### **Breaking change**.
