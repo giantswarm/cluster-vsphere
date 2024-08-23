@@ -8,9 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 > [!WARNING]
-> This release includes changes that enable the unification of cluster-vsphere and default-apps-vsphere. The unification
-> of cluster-vsphere and default-apps-vsphere does not happen automatically, it must be enabled explicitly and even then
-> it requires manual steps. See details below.
+> This release adds all default apps to cluster-vsphere, so default-apps-vsphere App is not used anymore. Changes in
+> cluster-vsphere are breaking and cluster upgrade requires manual steps where default-apps-vsphere App is removed
+> before upgrading cluster-vsphere. See details below.
 
 ### Added
 
