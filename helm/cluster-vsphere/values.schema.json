@@ -620,7 +620,7 @@
                             "title": "OIDC authentication",
                             "additionalProperties": false,
                             "properties": {
-                                "caFile": {
+                                "caPem": {
                                     "type": "string",
                                     "title": "Certificate authority file",
                                     "description": "Path to identity provider's CA certificate in PEM format."
