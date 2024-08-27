@@ -145,7 +145,7 @@ Properties within the `.global.providerSpecific` object
 
 | **Property** | **Description** | **More Details** |
 | :----------- | :-------------- | :--------------- |
-| `global.providerSpecific.additionalInfrastructureAnnotations` | **additional infrastructure annotations** - Additional annotations to be added to the infrastructure cluster.|**Type:** `object`<br/>**Default:** `{}`|
+| `global.providerSpecific.additionalInfrastructureAnnotations` | **Additional infrastructure annotations** - Additional annotations to be added to the infrastructure cluster.|**Type:** `object`<br/>**Default:** `{}`|
 | `global.providerSpecific.additionalInfrastructureAnnotations.*` | **Annotation value** - Value of the annotation|**Type:** `string`<br/>|
 | `global.providerSpecific.defaultStorageClass` | **Default Storage Class** - Configuration of the default storage class.|**Type:** `object`<br/>|
 | `global.providerSpecific.defaultStorageClass.enabled` | **Enable default storage class** - Creates a default storage class if set to true.|**Type:** `boolean`<br/>**Default:** `true`|

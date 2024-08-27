@@ -858,7 +858,7 @@
                     "properties": {
                         "additionalInfrastructureAnnotations": {
                             "type": "object",
-                            "title": "additional infrastructure annotations",
+                            "title": "Additional infrastructure annotations",
                             "description": "Additional annotations to be added to the infrastructure cluster.",
                             "additionalProperties": {
                                 "type": "string",
