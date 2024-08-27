@@ -6,6 +6,9 @@ metadata:
   labels:
     {{- include "labels.common" . | nindent 4 }}
     {{- include "preventDeletionLabel" $ | nindent 4 }}
+  {{- if .Values.global.providerSpecific.additionalInfrastructureAnnotations }}
+  {{- include "additional-annotations" . | indent 2}}
+  {{- end }}
 spec:
   controlPlaneEndpoint:
     host: '{{ ((.Values.global.connectivity.network).controlPlaneEndpoint).host }}'
