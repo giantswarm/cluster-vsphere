@@ -1,14 +1,14 @@
 apiVersion: {{ include "infrastructureApiVersion" . }}
 kind: VSphereCluster
 metadata:
+  {{- if .Values.global.providerSpecific.additionalInfrastructureAnnotations -}}
+  {{- include "additional-annotations" . | indent 2}}
+  {{- end }}
   name: {{ include "resource.default.name" $ }}
   namespace: {{ .Release.Namespace }}
   labels:
     {{- include "labels.common" . | nindent 4 }}
     {{- include "preventDeletionLabel" $ | nindent 4 }}
-  {{- if .Values.global.providerSpecific.additionalInfrastructureAnnotations }}
-  {{- include "additional-annotations" . | indent 2}}
-  {{- end }}
 spec:
   controlPlaneEndpoint:
     host: '{{ ((.Values.global.connectivity.network).controlPlaneEndpoint).host }}'
