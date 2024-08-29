@@ -856,10 +856,10 @@
                     "type": "object",
                     "title": "Provider specific configuration",
                     "properties": {
-                        "additionalInfrastructureAnnotations": {
+                        "additionalVsphereClusterAnnotations": {
                             "type": "object",
-                            "title": "Additional infrastructure annotations",
-                            "description": "Additional annotations to be added to the infrastructure cluster.",
+                            "title": "Additional vsphere cluster annotations",
+                            "description": "Additional annotations to be added to the vspherecluster custom resource.",
                             "additionalProperties": {
                                 "type": "string",
                                 "title": "Annotation value",

@@ -1,5 +1,5 @@
 {{- define "additional-annotations" -}}
-{{- $tags := .Values.global.providerSpecific.additionalInfrastructureAnnotations | default dict }}
+{{- $tags := .Values.global.providerSpecific.additionalVsphereClusterAnnotations | default dict }}
 annotations:
   azure-resource-tag.giantswarm-cluster: {{ include "resource.default.name" . }}
   {{- if $tags }}

@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Allow adding custom annotations to the infrastructure cluster resource using `providerSpecific.additionalInfrastructureAnnotations` value.
+- Allow adding custom annotations to the infrastructure cluster resource using `providerSpecific.additionalVsphereClusterAnnotations` value.
 
 ## [0.61.0] - 2024-08-23
 

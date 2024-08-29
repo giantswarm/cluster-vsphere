@@ -1,7 +1,7 @@
 apiVersion: {{ include "infrastructureApiVersion" . }}
 kind: VSphereCluster
 metadata:
-  {{- if .Values.global.providerSpecific.additionalInfrastructureAnnotations -}}
+  {{- if .Values.global.providerSpecific.additionalVsphereClusterAnnotations -}}
   {{- include "additional-annotations" . | indent 2}}
   {{- end }}
   name: {{ include "resource.default.name" $ }}

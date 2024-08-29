@@ -230,7 +230,7 @@ global:
   podSecurityStandards:
     enforced: true
   providerSpecific:
-    additionalInfrastructureAnnotations: {}
+    additionalVsphereClusterAnnotations: {}
     defaultStorageClass:
       enabled: true
       reclaimPolicy: Delete
