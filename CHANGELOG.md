@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Allow adding custom annotations to the infrastructure cluster resource using `providerSpecific.additionalInfrastructureAnnotations` value.
+
 ## [0.61.0] - 2024-08-23
 
 > [!WARNING]
@@ -16,7 +18,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Allow adding custom annotations to the infrastructure cluster resource using `providerSpecific.additionalInfrastructureAnnotations` value.
 - Render capi-node-labeler App CR from cluster chart.
 - Render cert-exporter App CR from cluster chart and add vSphere-specific cert-exporter config.
 - Render cert-manager App CR from cluster chart and add vSphere-specific cert-manager config.
