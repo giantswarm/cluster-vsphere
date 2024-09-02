@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.62.0] - 2024-08-29
+
 - Allow adding custom annotations to the infrastructure cluster resource using `providerSpecific.additionalVsphereClusterAnnotations` value.
 
 ## [0.61.0] - 2024-08-23
@@ -685,7 +687,8 @@ at least 1 public IP is always needed for the ingress controller to be able to e
 
 - Initial chart implementation.
 
-[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v0.61.0...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v0.62.0...HEAD
+[0.62.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.61.0...v0.62.0
 [0.61.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.60.1...v0.61.0
 [0.60.1]: https://github.com/giantswarm/cluster-vsphere/compare/v0.60.0...v0.60.1
 [0.60.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.59.0...v0.60.0
