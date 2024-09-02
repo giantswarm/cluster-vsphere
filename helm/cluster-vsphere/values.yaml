@@ -189,6 +189,7 @@ global:
         port: 6443
       loadBalancers:
         ipPoolName: svc-lb-ips
+        numberOfIps: 3
       pods:
         cidrBlocks:
           - 10.244.0.0/16
