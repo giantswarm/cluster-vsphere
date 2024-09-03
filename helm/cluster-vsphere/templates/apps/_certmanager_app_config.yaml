@@ -1,0 +1,6 @@
+{{/* vSphere-specific cert-manager Helm values*/}}
+{{/* https://github.com/giantswarm/cert-manager-app/blob/main/helm/cert-manager/values.yaml*/}}
+{{- define "vSphereCertManagerHelmValues" }}
+enableServiceLinks: true
+dns01RecursiveNameserversOnly: false # cluster chart sets to `true`, so revert to default false here
+{{- end }}

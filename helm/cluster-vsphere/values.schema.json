@@ -133,6 +133,70 @@
                     }
                 },
                 "providerIntegration": {
+                    "apps": {
+                        "capiNodeLabeler": {
+                            "enable": true
+                        },
+                        "certExporter": {
+                            "configTemplateName": "vSphereCertExporterHelmValues",
+                            "enable": true
+                        },
+                        "certManager": {
+                            "configTemplateName": "vSphereCertManagerHelmValues",
+                            "enable": true
+                        },
+                        "chartOperatorExtensions": {
+                            "enable": true
+                        },
+                        "cilium": {
+                            "configTemplateName": "vSphereCiliumHelmValues",
+                            "enable": true
+                        },
+                        "ciliumServiceMonitors": {
+                            "enable": true
+                        },
+                        "coreDns": {
+                            "enable": true
+                        },
+                        "etcdKubernetesResourcesCountExporter": {
+                            "enable": true
+                        },
+                        "k8sDnsNodeCache": {
+                            "enable": true
+                        },
+                        "metricsServer": {
+                            "enable": true
+                        },
+                        "netExporter": {
+                            "enable": true
+                        },
+                        "networkPolicies": {
+                            "configTemplateName": "vSphereNetworkPoliciesHelmValues",
+                            "enable": true
+                        },
+                        "nodeExporter": {
+                            "configTemplateName": "vSphereNodeExporterHelmValues",
+                            "enable": true
+                        },
+                        "observabilityBundle": {
+                            "enable": true
+                        },
+                        "observabilityPolicies": {
+                            "enable": true
+                        },
+                        "securityBundle": {
+                            "enable": true
+                        },
+                        "teleportKubeAgent": {
+                            "enable": true
+                        },
+                        "verticalPodAutoscaler": {
+                            "enable": true
+                        },
+                        "verticalPodAutoscalerCrd": {
+                            "enable": true
+                        }
+                    },
                     "controlPlane": {
                         "kubeadmConfig": {
                             "files": [
@@ -258,12 +322,10 @@
                     "provider": "vsphere",
                     "resourcesApi": {
                         "bastionResourceEnabled": false,
-                        "ciliumHelmReleaseResourceEnabled": false,
                         "cleanupHelmReleaseResourcesEnabled": false,
                         "clusterResourceEnabled": true,
                         "controlPlaneResourceEnabled": true,
-                        "coreDnsHelmReleaseResourceEnabled": false,
-                        "helmRepositoryResourcesEnabled": false,
+                        "helmRepositoryResourcesEnabled": true,
                         "infrastructureCluster": {
                             "group": "infrastructure.cluster.x-k8s.io",
                             "kind": "VSphereCluster",
@@ -271,9 +333,7 @@
                         },
                         "machineHealthCheckResourceEnabled": true,
                         "machinePoolResourcesEnabled": false,
-                        "networkPoliciesHelmReleaseResourceEnabled": false,
-                        "nodePoolKind": "MachineDeployment",
-                        "verticalPodAutoscalerCrdHelmReleaseResourceEnabled": false
+                        "nodePoolKind": "MachineDeployment"
                     },
                     "workers": {
                         "defaultNodePools": {
@@ -450,6 +510,11 @@
                                             "description": "Ip for Service LB running in WC will be drawn from this GlobalInClusterIPPool resource.",
                                             "default": "svc-lb-ips",
                                             "pattern": "^[a-z0-9]([-a-z0-9]*[a-z0-9])?(\\.[a-z0-9]([-a-z0-9]*[a-z0-9])?)*$"
+                                        },
+                                        "numberOfIps": {
+                                            "type": "integer",
+                                            "title": "Number of LB IPs to reserve",
+                                            "default": 3
                                         }
                                     }
                                 },
@@ -563,6 +628,14 @@
                     "title": "Control plane",
                     "additionalProperties": false,
                     "properties": {
+                        "apiServerPort": {
+                            "type": "integer",
+                            "title": "API server port",
+                            "description": "The API server Load Balancer port. This option sets the Spec.ClusterNetwork.APIServerPort field on the Cluster CR. In CAPI this field isn't used currently. It is instead used in providers. In CAPA this sets only the public facing port of the Load Balancer. In CAPZ both the public facing and the destination port are set to this value. CAPV and CAPVCD do not use it.",
+                            "default": 6443,
+                            "maximum": 65535,
+                            "minimum": 0
+                        },
                         "image": {
                             "type": "object",
                             "title": "Node container image",
@@ -788,6 +861,25 @@
                     "type": "object",
                     "title": "Provider specific configuration",
                     "properties": {
+                        "additionalVsphereClusterAnnotations": {
+                            "type": "object",
+                            "title": "Additional vsphere cluster annotations",
+                            "description": "Additional annotations to be added to the vspherecluster custom resource.",
+                            "additionalProperties": {
+                                "type": "string",
+                                "title": "Annotation value",
+                                "description": "Value of the annotation",
+                                "maxLength": 256
+                            },
+                            "default": {},
+                            "propertyNames": {
+                                "type": "string",
+                                "title": "Annotation name",
+                                "description": "Name of the annotation",
+                                "maxLength": 128,
+                                "pattern": "^[^<>%&?/\\\\]*$"
+                            }
+                        },
                         "defaultStorageClass": {
                             "type": "object",
                             "title": "Default Storage Class",
@@ -872,18 +964,6 @@
             "type": "object",
             "additionalProperties": false,
             "properties": {
-                "ciliumNetworkPolicy": {
-                    "type": "object",
-                    "title": "CiliumNetworkPolicies",
-                    "properties": {
-                        "enabled": {
-                            "type": "boolean",
-                            "title": "Enable CiliumNetworkPolicies",
-                            "description": "Installs the network-policies-app (deny all by default) if set to true",
-                            "default": true
-                        }
-                    }
-                },
                 "kubectlImage": {
                     "type": "object",
                     "title": "Kubectl image",

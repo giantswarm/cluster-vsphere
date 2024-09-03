@@ -120,19 +120,34 @@ spec:
               set -o errexit
               set -o pipefail
               set -o nounset
-              new_ip=""
-              while [ -z "${new_ip}" ] ; do
-                echo "waiting for a free IP address.."
-                new_ip=$(kubectl get ipaddresses.ipam.cluster.x-k8s.io --ignore-not-found -n {{ $.Release.Namespace }} {{ include "lbClaimName" $ }} -o 'jsonpath={.spec.address}')
-                sleep 2
+
+              ip_list=""
+              # Iterate over each ipAddressClaim
+              count=0
+              while [ $count -lt {{ .Values.global.connectivity.network.loadBalancers.numberOfIps }} ]
+              do
+                new_ip=""
+                while [ -z "${new_ip}" ] ; do
+                  echo "waiting for a free IP address.."
+                  new_ip=$(kubectl get ipaddresses.ipam.cluster.x-k8s.io --ignore-not-found -n {{ $.Release.Namespace }} {{ include "lbClaimName" $ }}-${count} -o 'jsonpath={.spec.address}')
+                  sleep 2
+                done
+                echo "Got the IP: ${new_ip}"
+                new_ip="${new_ip}/32"
+
+                if [ -n "$ip_list" ]; then
+                  ip_list="${ip_list},${new_ip}"
+                else
+                  ip_list="${new_ip}"
+                fi
+                count=$((count+1))
               done
-              echo "Got the IP: ${new_ip}"
-              new_ip="${new_ip}/32"
+
               # patch the cloud-provider-vsphere-helmrelease
               {{- if .Values.global.connectivity.network.loadBalancers.cidrBlocks }}
-              new_ip="${new_ip},{{ join "," .Values.global.connectivity.network.loadBalancers.cidrBlocks }}"
+              ip_list="${ip_list},{{ join "," .Values.global.connectivity.network.loadBalancers.cidrBlocks }}"
               {{- end }}
-              kubectl patch helmrelease -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }}-cloud-provider-vsphere --type=merge -p '{"spec":{"suspend":false,"values":{"kube-vip-cloud-provider": {"cidrGlobal": "'${new_ip}'"}}}}'
+              kubectl patch helmrelease -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }}-cloud-provider-vsphere --type=merge -p '{"spec":{"suspend":false,"values":{"kube-vip-cloud-provider": {"cidrGlobal": "'${ip_list}'"}}}}'
 {{- end }}
       containers:
         - name: resume-cluster
