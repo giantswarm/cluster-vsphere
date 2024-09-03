@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.63.0] - 2024-09-03
 
+### Added
+
+- Adding `global.connectivity.network.loadBalancers.numberOfIps` to specify the number of preassigned ips for load balancers. (New default is 3)
+
 ## [0.62.0] - 2024-08-29
 
 - Allow adding custom annotations to the infrastructure cluster resource using `providerSpecific.additionalVsphereClusterAnnotations` value.
