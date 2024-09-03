@@ -331,6 +331,11 @@
                             "kind": "VSphereCluster",
                             "version": "v1beta1"
                         },
+                        "infrastructureMachinePool": {
+                            "group": "infrastructure.cluster.x-k8s.io",
+                            "kind": "VSphereMachineTemplate",
+                            "version": "v1beta1"
+                        },
                         "machineHealthCheckResourceEnabled": true,
                         "machinePoolResourcesEnabled": true,
                         "nodePoolKind": "MachineDeployment"
@@ -346,6 +351,9 @@
                                 "resourcePool": "*/Resources",
                                 "template": "flatcar-stable-3815.2.2-kube-v1.27.14-gs"
                             }
+                        },
+                        "resources": {
+                            "infrastructureMachineTemplateSpecTemplateName" : "worker-vspheremachinetemplate-spec"
                         }
                     }
                 }
