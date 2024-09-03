@@ -332,7 +332,7 @@
                             "version": "v1beta1"
                         },
                         "machineHealthCheckResourceEnabled": true,
-                        "machinePoolResourcesEnabled": false,
+                        "machinePoolResourcesEnabled": true,
                         "nodePoolKind": "MachineDeployment"
                     },
                     "workers": {

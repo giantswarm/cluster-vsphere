@@ -163,10 +163,16 @@ cluster:
         group: infrastructure.cluster.x-k8s.io
         kind: VSphereCluster
         version: v1beta1
+      infrastructureMachinePool:
+        group: infrastructure.cluster.x-k8s.io
+        kind: VSphereMachineTemplate
+        version: v1beta1
       machineHealthCheckResourceEnabled: true
-      machinePoolResourcesEnabled: false
+      machinePoolResourcesEnabled: true
       nodePoolKind: MachineDeployment
     workers:
+      resources:
+        infrastructureMachineTemplateSpecTemplateName: worker-vspheremachinetemplate-spec
       defaultNodePools:
         def00:
           cloneMode: linkedClone

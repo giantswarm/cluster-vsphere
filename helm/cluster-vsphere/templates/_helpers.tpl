@@ -120,33 +120,6 @@ Create a prefix for all resource names.
 1000
 {{- end -}}
 
-# DEPRECATED - remove once CP and workers are rendered with cluster chart
-{{- define "kubeletExtraArgs" -}}
-{{- .Files.Get "files/kubelet-args" -}}
-{{- end -}}
-
-# DEPRECATED - remove once CP and workers are rendered with cluster chart
-{{- define "containerdProxyConfig" -}}
-- path: /etc/systemd/system/containerd.service.d/99-http-proxy.conf
-  permissions: "0600"
-  contentFrom:
-    secret:
-      name: {{ include "containerdProxySecret" $ }}
-      key: containerdProxy   
-{{- end -}}
-
-# DEPRECATED - remove once CP and workers are rendered with cluster chart
-{{- define "teleportProxyConfig" -}}
-{{- if $.Values.internal.teleport.enabled }}
-- path: /etc/systemd/system/teleport.service.d/99-http-proxy.conf
-  permissions: "0600"
-  contentFrom:
-    secret:
-      name: {{ include "containerdProxySecret" $ }}
-      key: containerdProxy
-{{- end }}
-{{- end -}}
-
 {{/*
 Updates in KubeadmConfigTemplate will not trigger any rollout for worker nodes.
 It is necessary to create a new template with a new name to trigger an upgrade.
@@ -182,20 +155,6 @@ preKubeadmCommands:
   {{- end }}
 postKubeadmCommands:
 - usermod -aG root nobody # required for node-exporter to access the host's filesystem
-{{- end -}}
-
-# DEPRECATED - remove once CP and workers are rendered with cluster chart
-{{/*
-Generate a stanza for KubeAdmConfig and KubeAdmControlPlane in order to 
-mount containerd configuration.
-*/}}
-{{- define "containerdConfig" -}}
-- path: /etc/containerd/config.toml
-  permissions: "0600"
-  contentFrom:
-    secret:
-      name: {{ include "containerdConfigSecretName" $ }}
-      key: registry-config.toml
 {{- end -}}
 
 {{/*
