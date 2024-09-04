@@ -382,8 +382,11 @@
                             "def00": {
                                 "cloneMode": "linkedClone",
                                 "machineHealthCheck": {
-                                    "$ref": "#/$defs/machineHealthCheck",
-                                    "description": "Machine health check configuration for worker nodes."
+                                    "enabled": true,
+                                    "maxUnhealthy": "40%",
+                                    "nodeStartupTimeout": "20m0s",
+                                    "unhealthyNotReadyTimeout": "10m0s",
+                                    "unhealthyUnknownTimeout": "10m0s"
                                 },
                                 "memoryMiB": 16896,
                                 "network": {},
@@ -861,6 +864,10 @@
                                 "cloneMode": {
                                     "$ref": "#/$defs/cloneMode",
                                     "description": "VM template cloning method."
+                                },
+                                "machineHealthCheck": {
+                                    "$ref": "#/$defs/machineHealthCheck",
+                                    "description": "Machine health check configuration for worker nodes."
                                 },
                                 "diskGiB": {
                                     "$ref": "#/$defs/diskGiB",
