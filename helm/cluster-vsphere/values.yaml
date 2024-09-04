@@ -171,8 +171,6 @@ cluster:
       machinePoolResourcesEnabled: true
       nodePoolKind: MachineDeployment
     workers:
-      resources:
-        infrastructureMachineTemplateSpecTemplateName: worker-vspheremachinetemplate-spec
       defaultNodePools:
         def00:
           cloneMode: linkedClone
@@ -182,12 +180,8 @@ cluster:
           replicas: 2
           resourcePool: '*/Resources'
           template: flatcar-stable-3815.2.2-kube-v1.27.14-gs
-          machineHealthCheck:
-            enabled: true
-            maxUnhealthy: 40%
-            nodeStartupTimeout: 20m0s
-            unhealthyNotReadyTimeout: 10m0s
-            unhealthyUnknownTimeout: 10m0s
+      resources:
+        infrastructureMachineTemplateSpecTemplateName: worker-vspheremachinetemplate-spec
 global:
   connectivity:
     containerRegistries: {}
@@ -219,6 +213,12 @@ global:
     apiServerPort: 6443
     image:
       repository: gsoci.azurecr.io/giantswarm
+    machineHealthCheck:
+      enabled: true
+      maxUnhealthy: 40%
+      nodeStartupTimeout: 20m0s
+      unhealthyNotReadyTimeout: 10m0s
+      unhealthyUnknownTimeout: 10m0s
     machineTemplate:
       cloneMode: linkedClone
       memoryMiB: 8192
@@ -226,12 +226,6 @@ global:
       numCPUs: 4
       resourcePool: '*/Resources'
       template: flatcar-stable-3815.2.2-kube-v1.27.14-gs
-    machineHealthCheck:
-      enabled: true
-      maxUnhealthy: 40%
-      nodeStartupTimeout: 20m0s
-      unhealthyNotReadyTimeout: 10m0s
-      unhealthyUnknownTimeout: 10m0s
     oidc: {}
     resourceRatio: 8
   metadata:
@@ -240,6 +234,12 @@ global:
   nodePools:
     worker:
       cloneMode: linkedClone
+      machineHealthCheck:
+        enabled: true
+        maxUnhealthy: 40%
+        nodeStartupTimeout: 20m0s
+        unhealthyNotReadyTimeout: 10m0s
+        unhealthyUnknownTimeout: 10m0s
       memoryMiB: 16896
       network: {}
       numCPUs: 6
