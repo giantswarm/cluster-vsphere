@@ -79,6 +79,12 @@ Properties within the `.global.controlPlane` object
 | `global.controlPlane.apiServerPort` | **API server port** - The API server Load Balancer port. This option sets the Spec.ClusterNetwork.APIServerPort field on the Cluster CR. In CAPI this field isn't used currently. It is instead used in providers. In CAPA this sets only the public facing port of the Load Balancer. In CAPZ both the public facing and the destination port are set to this value. CAPV and CAPVCD do not use it.|**Type:** `integer`<br/>**Default:** `6443`|
 | `global.controlPlane.image` | **Node container image**|**Type:** `object`<br/>|
 | `global.controlPlane.image.repository` | **Repository**|**Type:** `string`<br/>**Default:** `"gsoci.azurecr.io/giantswarm"`|
+| `global.controlPlane.machineHealthCheck` | **Machine health check**|**Type:** `object`<br/>|
+| `global.controlPlane.machineHealthCheck.enabled` | **Enabled** - Enable machine health checks.|**Type:** `boolean`<br/>**Default:** `true`|
+| `global.controlPlane.machineHealthCheck.maxUnhealthy` | **Max unhealthy** - Maximum number or percentage of unhealthy nodes.|**Type:** `string`<br/>**Default:** `"40%"`|
+| `global.controlPlane.machineHealthCheck.nodeStartupTimeout` | **Node startup timeout** - Time to wait for a node to become healthy.|**Type:** `string`<br/>**Default:** `"20m0s"`|
+| `global.controlPlane.machineHealthCheck.unhealthyNotReadyTimeout` | **Unhealthy not ready timeout** - Time to wait for a node to become ready.|**Type:** `string`<br/>**Default:** `"10m0s"`|
+| `global.controlPlane.machineHealthCheck.unhealthyUnknownTimeout` | **Unhealthy unknown timeout** - Time to wait for a node to become known.|**Type:** `string`<br/>**Default:** `"10m0s"`|
 | `global.controlPlane.machineTemplate` | **Template to define control plane nodes**|**Type:** `object`<br/>|
 | `global.controlPlane.machineTemplate.cloneMode` | **VM template clone mode**|**Type:** `string`<br/>**Default:** `"linkedClone"`|
 | `global.controlPlane.machineTemplate.diskGiB` | **Disk size**|**Type:** `integer`<br/>**Example:** `30`<br/>|
@@ -123,6 +129,12 @@ Groups of worker nodes with identical configuration.
 | `global.nodePools.worker` | **Default nodePool**|**Type:** `object`<br/>|
 | `global.nodePools.worker.cloneMode` | **VM template clone mode**|**Type:** `string`<br/>**Default:** `"linkedClone"`|
 | `global.nodePools.worker.diskGiB` | **Disk size**|**Type:** `integer`<br/>**Example:** `30`<br/>|
+| `global.nodePools.worker.machineHealthCheck` | **Machine health check**|**Type:** `object`<br/>|
+| `global.nodePools.worker.machineHealthCheck.enabled` | **Enabled** - Enable machine health checks.|**Type:** `boolean`<br/>**Default:** `true`|
+| `global.nodePools.worker.machineHealthCheck.maxUnhealthy` | **Max unhealthy** - Maximum number or percentage of unhealthy nodes.|**Type:** `string`<br/>**Default:** `"40%"`|
+| `global.nodePools.worker.machineHealthCheck.nodeStartupTimeout` | **Node startup timeout** - Time to wait for a node to become healthy.|**Type:** `string`<br/>**Default:** `"20m0s"`|
+| `global.nodePools.worker.machineHealthCheck.unhealthyNotReadyTimeout` | **Unhealthy not ready timeout** - Time to wait for a node to become ready.|**Type:** `string`<br/>**Default:** `"10m0s"`|
+| `global.nodePools.worker.machineHealthCheck.unhealthyUnknownTimeout` | **Unhealthy unknown timeout** - Time to wait for a node to become known.|**Type:** `string`<br/>**Default:** `"10m0s"`|
 | `global.nodePools.worker.memoryMiB` | **Memory size**|**Type:** `integer`<br/>**Example:** `8192`<br/>|
 | `global.nodePools.worker.network` | **Network configuration**|**Type:** `object`<br/>|
 | `global.nodePools.worker.network.devices` | **Network devices** - Network interface configuration for VMs.|**Type:** `array`<br/>|

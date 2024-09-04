@@ -174,6 +174,12 @@ cluster:
       defaultNodePools:
         def00:
           cloneMode: linkedClone
+          machineHealthCheck:
+            enabled: true
+            maxUnhealthy: 40%
+            nodeStartupTimeout: 20m0s
+            unhealthyNotReadyTimeout: 10m0s
+            unhealthyUnknownTimeout: 10m0s
           memoryMiB: 16896
           network: {}
           numCPUs: 6

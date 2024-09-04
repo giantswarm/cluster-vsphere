@@ -865,13 +865,13 @@
                                     "$ref": "#/$defs/cloneMode",
                                     "description": "VM template cloning method."
                                 },
-                                "machineHealthCheck": {
-                                    "$ref": "#/$defs/machineHealthCheck",
-                                    "description": "Machine health check configuration for worker nodes."
-                                },
                                 "diskGiB": {
                                     "$ref": "#/$defs/diskGiB",
                                     "description": "Worker node root volume size, in GB."
+                                },
+                                "machineHealthCheck": {
+                                    "$ref": "#/$defs/machineHealthCheck",
+                                    "description": "Machine health check configuration for worker nodes."
                                 },
                                 "memoryMiB": {
                                     "$ref": "#/$defs/memoryGiB",
