@@ -84,7 +84,8 @@
                     "description": "Time to wait for a node to become known.",
                     "default": "10m0s"
                 }
-            },
+            }
+        },
         "memoryGiB": {
             "type": "integer",
             "title": "Memory size",
@@ -383,7 +384,7 @@
                                 "machineHealthCheck": {
                                     "$ref": "#/$defs/machineHealthCheck",
                                     "description": "Machine health check configuration for worker nodes."
-                                }, 
+                                },
                                 "memoryMiB": 16896,
                                 "network": {},
                                 "numCPUs": 6,
