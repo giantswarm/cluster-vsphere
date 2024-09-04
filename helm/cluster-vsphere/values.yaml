@@ -182,6 +182,12 @@ cluster:
           replicas: 2
           resourcePool: '*/Resources'
           template: flatcar-stable-3815.2.2-kube-v1.27.14-gs
+          machineHealthCheck:
+            enabled: true
+            maxUnhealthy: 40%
+            nodeStartupTimeout: 20m0s
+            unhealthyNotReadyTimeout: 10m0s
+            unhealthyUnknownTimeout: 10m0s
 global:
   connectivity:
     containerRegistries: {}
@@ -220,6 +226,12 @@ global:
       numCPUs: 4
       resourcePool: '*/Resources'
       template: flatcar-stable-3815.2.2-kube-v1.27.14-gs
+    machineHealthCheck:
+      enabled: true
+      maxUnhealthy: 40%
+      nodeStartupTimeout: 20m0s
+      unhealthyNotReadyTimeout: 10m0s
+      unhealthyUnknownTimeout: 10m0s
     oidc: {}
     resourceRatio: 8
   metadata:
