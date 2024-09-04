@@ -49,6 +49,42 @@
                 }
             }
         },
+        "machineHealthCheck": {
+            "type": "object",
+            "title": "Machine health check",
+            "additionalProperties": false,
+            "properties": {
+                "enabled": {
+                    "type": "boolean",
+                    "title": "Enabled",
+                    "description": "Enable machine health checks.",
+                    "default": true
+                },
+                "maxUnhealthy": {
+                    "type": "string",
+                    "title": "Max unhealthy",
+                    "description": "Maximum number or percentage of unhealthy nodes.",
+                    "default": "40%"
+                },
+                "nodeStartupTimeout": {
+                    "type": "string",
+                    "title": "Node startup timeout",
+                    "description": "Time to wait for a node to become healthy.",
+                    "default": "20m0s"
+                },
+                "unhealthyNotReadyTimeout": {
+                    "type": "string",
+                    "title": "Unhealthy not ready timeout",
+                    "description": "Time to wait for a node to become ready.",
+                    "default": "10m0s"
+                },
+                "unhealthyUnknownTimeout": {
+                    "type": "string",
+                    "title": "Unhealthy unknown timeout",
+                    "description": "Time to wait for a node to become known.",
+                    "default": "10m0s"
+                }
+            },
         "memoryGiB": {
             "type": "integer",
             "title": "Memory size",
@@ -344,23 +380,20 @@
                         "defaultNodePools": {
                             "def00": {
                                 "cloneMode": "linkedClone",
+                                "machineHealthCheck": {
+                                    "$ref": "#/$defs/machineHealthCheck",
+                                    "description": "Machine health check configuration for worker nodes."
+                                }, 
                                 "memoryMiB": 16896,
                                 "network": {},
                                 "numCPUs": 6,
                                 "replicas": 2,
                                 "resourcePool": "*/Resources",
-                                "template": "flatcar-stable-3815.2.2-kube-v1.27.14-gs",
-                                "machineHealthCheck": {
-                                    "enabled": true,
-                                    "maxUnhealthy": "40%",
-                                    "nodeStartupTimeout": "20m0s",
-                                    "unhealthyNotReadyTimeout": "10m0s",
-                                    "unhealthyUnknownTimeout": "10m0s"
-                                }
+                                "template": "flatcar-stable-3815.2.2-kube-v1.27.14-gs"
                             }
                         },
                         "resources": {
-                            "infrastructureMachineTemplateSpecTemplateName" : "worker-vspheremachinetemplate-spec"
+                            "infrastructureMachineTemplateSpecTemplateName": "worker-vspheremachinetemplate-spec"
                         }
                     }
                 }
@@ -664,11 +697,8 @@
                             }
                         },
                         "machineHealthCheck": {
-                            "enabled": true,
-                            "maxUnhealthy": "40%",
-                            "nodeStartupTimeout": "20m0s",
-                            "unhealthyNotReadyTimeout": "10m0s",
-                            "unhealthyUnknownTimeout": "10m0s"
+                            "$ref": "#/$defs/machineHealthCheck",
+                            "description": "Machine health check configuration for control plane nodes."
                         },
                         "machineTemplate": {
                             "type": "object",
