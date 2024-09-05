@@ -186,20 +186,8 @@ cluster:
           replicas: 2
           resourcePool: '*/Resources'
           template: flatcar-stable-3815.2.2-kube-v1.27.14-gs
-      kubeadmConfig:
-#       criSocket: /run/containerd/containerd.sock
-#       kubeletExtraArgs:
-#         feature-gates: ""
-#         eviction-hard : "memory.available<200Mi"
-#         eviction-max-pod-grace-period: "60"
-#         eviction-soft: "memory.available<500Mi"
-#         eviction-soft-grace-period: "memory.available=5s"
-#         anonymous-auth: "true"
-        preKubeadmCommands:
-        - systemctl restart sshd
-        - /bin/test ! -d /var/lib/kubelet && (/bin/mkdir -p /var/lib/kubelet && /bin/chmod 0750 /var/lib/kubelet)
-#       - systemctl daemon-reload # only if proxy is enabled - how?
-#       - systemctl restart teleport # only if teleport is enabled - how?
+      resources:
+        infrastructureMachineTemplateSpecTemplateName: worker-vspheremachinetemplate-spec
 global:
   connectivity:
     containerRegistries: {}

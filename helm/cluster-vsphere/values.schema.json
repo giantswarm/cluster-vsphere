@@ -396,12 +396,6 @@
                                 "template": "flatcar-stable-3815.2.2-kube-v1.27.14-gs"
                             }
                         },
-                        "kubeadmConfig": {
-                            "preKubeadmCommands": [
-                                "systemctl restart sshd",
-                                "/bin/test ! -d /var/lib/kubelet && (/bin/mkdir -p /var/lib/kubelet && /bin/chmod 0750 /var/lib/kubelet)"
-                            ]
-                        },
                         "resources": {
                             "infrastructureMachineTemplateSpecTemplateName": "worker-vspheremachinetemplate-spec"
                         }
