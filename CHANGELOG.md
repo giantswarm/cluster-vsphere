@@ -68,6 +68,7 @@ The steps to upgrade a workload cluster, with unifying cluster-vsphere and defau
   - ⚠️ In case you are removing default-apps-vsphere App CR from your gitops repo which is using Flux, and depending on
     how Flux is configured, default-apps-vsphere App CR may or may not get deleted from the management cluster. In case
     Flux does not delete default-apps-vsphere App CR from the management cluster, make sure to delete it manually.
+  - If default-apps-vsphere have specific configure in the values, transfer these values to the cluster app values.
   - App CRs (on the MC) for all default apps will get deleted. Wait few minutes for this to happen.
   - Chart CRs on the workload cluster will remain untouched, so all apps will continue running.
 - Upgrade cluster-vsphere App CR to the v0.61.0 release.
