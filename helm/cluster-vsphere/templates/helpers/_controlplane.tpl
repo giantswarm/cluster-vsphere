@@ -8,6 +8,7 @@ datastore: {{ $d.global.providerSpecific.vcenter.datastore }}
 server: {{ $d.global.providerSpecific.vcenter.server }}
 thumbprint: {{ $d.global.providerSpecific.vcenter.thumbprint }}
 {{ unset $d.global.controlPlane.machineTemplate "replicas" | toYaml }}
+{{ unset $d.global.controlPlane.machineHealthCheck "replicas" | toYaml }}
 {{- end -}}
 
 {{/*

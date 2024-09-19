@@ -8,4 +8,5 @@ datastore: {{ $d.global.providerSpecific.vcenter.datastore }}
 server: {{ $d.global.providerSpecific.vcenter.server }}
 thumbprint: {{ $d.global.providerSpecific.vcenter.thumbprint }}
 {{ unset $d.global.nodePools "replicas" | toYaml }}
+{{ unset $d.global.nodePools "machineHealthCheck" | toYaml }}
 {{- end -}}

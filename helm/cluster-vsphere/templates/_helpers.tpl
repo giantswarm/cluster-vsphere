@@ -29,6 +29,7 @@ datastore: {{ $.global.providerSpecific.vcenter.datastore }}
 server: {{ $.global.providerSpecific.vcenter.server }}
 thumbprint: {{ $.global.providerSpecific.vcenter.thumbprint }}
 {{ unset .currentPool "replicas" | toYaml }}
+{{ unset .currentPool "machineHealthCheck" | toYaml }}
 {{- end -}}
 
 {{/*
