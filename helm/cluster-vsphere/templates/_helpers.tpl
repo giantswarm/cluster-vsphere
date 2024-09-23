@@ -28,20 +28,11 @@ datacenter: {{ $.global.providerSpecific.vcenter.datacenter }}
 datastore: {{ $.global.providerSpecific.vcenter.datastore }}
 server: {{ $.global.providerSpecific.vcenter.server }}
 thumbprint: {{ $.global.providerSpecific.vcenter.thumbprint }}
-{{ unset .currentPool "replicas" | toYaml }}
-{{ unset .currentPool "machineHealthCheck" | toYaml }}
-{{- end -}}
 
-{{/*
-mtRevision takes a dict which includes the node's spec and computes a hash value
-from it. This hash value is appended to the name of immutable resources to facilitate
-node replacement when the node spec is changed.
-*/}}
-{{- define "mtRevision" -}}
-{{- $inputs := (dict
-  "spec" (include "mtSpec" .)
-  "infrastructureApiVersion" ( include "infrastructureApiVersion" . ) ) }}
-{{- mustToJson $inputs | toString | quote | sha1sum | trunc 8 }}
+{{- $pool := .currentPool | deepCopy -}}   # Make a deep copy to avoid mutating the original
+{{- $pool = unset $pool "replicas" -}}     # Unset "replicas" in the copied version
+{{- $pool = unset $pool "machineHealthCheck" -}}   # Unset "machineHealthCheck" in the copied version
+{{ $pool | toYaml }}
 {{- end -}}
 
 {{/*
