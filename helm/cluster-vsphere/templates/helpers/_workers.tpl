@@ -4,8 +4,12 @@ datastore: {{ $.Values.global.providerSpecific.vcenter.datastore }}
 server: {{ $.Values.global.providerSpecific.vcenter.server }}
 thumbprint: {{ $.Values.global.providerSpecific.vcenter.thumbprint }}
 
-{{- $pool := $.nodePool.config | deepCopy -}}   # Access the node pool configuration
-{{- $pool = unset $pool "replicas" -}}          # Unset "replicas"
-{{- $pool = unset $pool "machineHealthCheck" -}}   # Unset "machineHealthCheck"
-{{ $pool | toYaml }}   # Render the modified pool configuration
+{{- $pool := $.nodePool.config | deepCopy -}}
+{{- $pool = unset $pool "replicas" -}}
+{{- $pool = unset $pool "machineHealthCheck" -}}
+
+{{- if $pool }}
+{{ $pool | toYaml }}
+{{- end }}
+
 {{- end -}}
