@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Migrated all worker resources (`KubeadmConfigTemplate`, `MachineDeployment` and `MachineHealthCheck`) to be rendered from the shared `cluster` chart.
+
 ## [0.63.0] - 2024-09-03
 
 ### Added

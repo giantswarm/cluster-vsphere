@@ -163,19 +163,31 @@ cluster:
         group: infrastructure.cluster.x-k8s.io
         kind: VSphereCluster
         version: v1beta1
+      infrastructureMachinePool:
+        group: infrastructure.cluster.x-k8s.io
+        kind: VSphereMachineTemplate
+        version: v1beta1
       machineHealthCheckResourceEnabled: true
-      machinePoolResourcesEnabled: false
+      machinePoolResourcesEnabled: true
       nodePoolKind: MachineDeployment
     workers:
       defaultNodePools:
         def00:
           cloneMode: linkedClone
+          machineHealthCheck:
+            enabled: true
+            maxUnhealthy: 40%
+            nodeStartupTimeout: 20m0s
+            unhealthyNotReadyTimeout: 10m0s
+            unhealthyUnknownTimeout: 10m0s
           memoryMiB: 16896
           network: {}
           numCPUs: 6
           replicas: 2
           resourcePool: '*/Resources'
           template: flatcar-stable-3815.2.2-kube-v1.27.14-gs
+      resources:
+        infrastructureMachineTemplateSpecTemplateName: worker-vspheremachinetemplate-spec
 global:
   connectivity:
     containerRegistries: {}
@@ -207,6 +219,12 @@ global:
     apiServerPort: 6443
     image:
       repository: gsoci.azurecr.io/giantswarm
+    machineHealthCheck:
+      enabled: true
+      maxUnhealthy: 40%
+      nodeStartupTimeout: 20m0s
+      unhealthyNotReadyTimeout: 10m0s
+      unhealthyUnknownTimeout: 10m0s
     machineTemplate:
       cloneMode: linkedClone
       memoryMiB: 8192
@@ -222,6 +240,12 @@ global:
   nodePools:
     worker:
       cloneMode: linkedClone
+      machineHealthCheck:
+        enabled: true
+        maxUnhealthy: 40%
+        nodeStartupTimeout: 20m0s
+        unhealthyNotReadyTimeout: 10m0s
+        unhealthyUnknownTimeout: 10m0s
       memoryMiB: 16896
       network: {}
       numCPUs: 6
