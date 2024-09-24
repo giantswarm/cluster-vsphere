@@ -19,23 +19,6 @@ infrastructure.cluster.x-k8s.io/v1beta1
 {{- end -}}
 
 {{/*
-VSphereMachineTemplate is immutable. We need to create new versions during upgrades.
-Here we are generating a hash suffix to trigger upgrade when only it is necessary by
-using only the parameters used in vspheredmachinetemplate.yaml.
-*/}}
-{{- define "mtSpec" -}}
-datacenter: {{ $.global.providerSpecific.vcenter.datacenter }}
-datastore: {{ $.global.providerSpecific.vcenter.datastore }}
-server: {{ $.global.providerSpecific.vcenter.server }}
-thumbprint: {{ $.global.providerSpecific.vcenter.thumbprint }}
-
-{{- $pool := .currentPool | deepCopy -}}   # Make a deep copy to avoid mutating the original
-{{- $pool = unset $pool "replicas" -}}     # Unset "replicas" in the copied version
-{{- $pool = unset $pool "machineHealthCheck" -}}   # Unset "machineHealthCheck" in the copied version
-{{ $pool | toYaml }}
-{{- end -}}
-
-{{/*
 Takes an array of maps containing worker nodePools and adds each map to a new
 map. Results in a map of node specs which can be iterated over to create
 MachineDeployments.
