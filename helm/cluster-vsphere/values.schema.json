@@ -359,7 +359,7 @@
                     "provider": "vsphere",
                     "resourcesApi": {
                         "bastionResourceEnabled": false,
-                        "cleanupHelmReleaseResourcesEnabled": false,
+                        "cleanupHelmReleaseResourcesEnabled": true,
                         "clusterResourceEnabled": true,
                         "controlPlaneResourceEnabled": true,
                         "helmRepositoryResourcesEnabled": true,
