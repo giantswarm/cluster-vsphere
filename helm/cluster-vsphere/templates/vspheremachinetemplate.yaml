@@ -11,19 +11,18 @@ spec:
     spec:
       {{- include "controlplane-vspheremachinetemplate-spec" $ | nindent 6 -}}
 
-{{- range $nodePoolName, $value := include "createMapOfWorkerPoolSpecs" . | fromYaml }}
-{{- $c := (merge (dict "currentPool"  $value) (deepCopy $.Values)) }}
+{{- range $nodePoolName, $nodePool := include "createMapOfWorkerPoolSpecs" . | fromYaml }}
+{{- $_ := set $ "nodePool" (dict "name" $nodePoolName "config" $nodePool) }}
 ---
 apiVersion: {{ include "infrastructureApiVersion" . }}
 kind: VSphereMachineTemplate
 metadata:
-  name: {{ include "resource.default.name" $ }}-{{ $nodePoolName }}-{{ include "machineTemplateSpec.hash" (dict "data" (include "worker-vspheremachinetemplate-spec" $) "salt" $.Values.cluster.providerIntegration.hashSalt) }}
+  name: {{ include "resource.default.name" $ }}-{{ $.nodePool.name }}-{{ include "machineTemplateSpec.hash" (dict "data" (include "worker-vspheremachinetemplate-spec" $) "salt" $.Values.cluster.providerIntegration.hashSalt) }}
   namespace: {{ $.Release.Namespace }}
   labels:
     {{- include "labels.common" $ | nindent 4 }}
 spec:
   template:
     spec:
-      {{- include "mtSpec" $c | nindent 6 -}}
-
+      {{- include "worker-vspheremachinetemplate-spec" $ | nindent 6 -}}
 {{- end }}

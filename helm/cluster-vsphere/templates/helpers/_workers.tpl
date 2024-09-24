@@ -1,12 +1,11 @@
-{{/*
-Generates template spec for worker machines.
-*/}}
 {{- define "worker-vspheremachinetemplate-spec" -}}
-{{- $d := (deepCopy $.Values) }}
-datacenter: {{ $d.global.providerSpecific.vcenter.datacenter }}
-datastore: {{ $d.global.providerSpecific.vcenter.datastore }}
-server: {{ $d.global.providerSpecific.vcenter.server }}
-thumbprint: {{ $d.global.providerSpecific.vcenter.thumbprint }}
-{{ unset $d.global.nodePools "replicas" | toYaml }}
-{{ unset $d.global.nodePools "machineHealthCheck" | toYaml }}
+datacenter: {{ $.Values.global.providerSpecific.vcenter.datacenter }}
+datastore: {{ $.Values.global.providerSpecific.vcenter.datastore }}
+server: {{ $.Values.global.providerSpecific.vcenter.server }}
+thumbprint: {{ $.Values.global.providerSpecific.vcenter.thumbprint }}
+
+{{- $pool := $.nodePool.config | deepCopy -}}   # Access the node pool configuration
+{{- $pool = unset $pool "replicas" -}}          # Unset "replicas"
+{{- $pool = unset $pool "machineHealthCheck" -}}   # Unset "machineHealthCheck"
+{{ $pool | toYaml }}   # Render the modified pool configuration
 {{- end -}}
