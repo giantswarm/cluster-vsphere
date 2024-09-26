@@ -377,7 +377,6 @@
                         "machinePoolResourcesEnabled": true,
                         "nodePoolKind": "MachineDeployment"
                     },
-                    "useReleases": true,
                     "workers": {
                         "defaultNodePools": {
                             "def00": {
@@ -1033,7 +1032,8 @@
                             "title": "Version"
                         }
                     }
-                }
+                },
+                "useReleases": true
             }
         },
         "internal": {
