@@ -64,10 +64,10 @@ global:
       region: "k8s-region"
       zone: "k8s-zone"
   release:
-     version: v27.0.0
+    version: v27.0.0
 
 cluster:
-   internal:
-     ephemeralConfiguration:
-       offlineTesting:
-         renderWithoutReleaseResource: true
+  internal:
+    ephemeralConfiguration:
+      offlineTesting:
+        renderWithoutReleaseResource: true
