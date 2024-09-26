@@ -170,6 +170,7 @@ cluster:
       machineHealthCheckResourceEnabled: true
       machinePoolResourcesEnabled: true
       nodePoolKind: MachineDeployment
+    useReleases: true
     workers:
       defaultNodePools:
         def00:
