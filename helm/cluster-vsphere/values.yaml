@@ -170,6 +170,7 @@ cluster:
       machineHealthCheckResourceEnabled: true
       machinePoolResourcesEnabled: true
       nodePoolKind: MachineDeployment
+    useReleases: true
     workers:
       defaultNodePools:
         def00:
@@ -261,6 +262,7 @@ global:
       reclaimPolicy: Delete
       storagePolicyName: ""
     vcenter: {}
+  release: {}
 internal:
   kubectlImage:
     name: giantswarm/kubectl
