@@ -17,7 +17,7 @@ spec:
   chart:
     spec:
       chart: cloud-provider-vsphere
-      {{- $_ := set $ "appName" "cloud-provider-vsphere"
+      {{- $_ := set $ "appName" "cloud-provider-vsphere" }}
       {{- $appVersion := include "cluster.app.version" $ }}
       version: {{ $appVersion }}" }}
       sourceRef:
