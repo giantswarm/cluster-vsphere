@@ -412,7 +412,7 @@
             "title": "Properties that are available to all charts and subcharts",
             "required": [
                 "metadata",
-                "releases"
+                "release"
             ],
             "properties": {
                 "connectivity": {
