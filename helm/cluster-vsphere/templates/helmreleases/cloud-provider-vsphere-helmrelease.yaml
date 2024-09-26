@@ -17,10 +17,9 @@ spec:
   chart:
     spec:
       chart: cloud-provider-vsphere
-      {{- $_ := set $ "appName" "cloud-provider-vsphere
-      version: {{ $appVersion }}" }}
+      {{- $_ := set $ "appName" "cloud-provider-vsphere"
       {{- $appVersion := include "cluster.app.version" $ }}
-      version: {{ $appVersion }}
+      version: {{ $appVersion }}" }}
       sourceRef:
         kind: HelmRepository
         name: {{ include "resource.default.name" $ }}-default
