@@ -146,6 +146,12 @@ Groups of worker nodes with identical configuration.
 | `global.nodePools.worker.resourcePool` | **VSphere resource pool name**|**Type:** `string`<br/>**Default:** `"*/Resources"`|
 | `global.nodePools.worker.template` | **VM template**|**Type:** `string`<br/>**Default:** `"flatcar-stable-3815.2.2-kube-v1.27.14-gs"`|
 
+### Other global
+
+| **Property** | **Description** | **More Details** |
+| :----------- | :-------------- | :--------------- |
+| `global.managementCluster` | **Management cluster** - Name of the Cluster API cluster managing this workload cluster.|**Type:** `string`<br/>|
+
 ### Pod Security Standards
 Properties within the `.global.podSecurityStandards` object
 

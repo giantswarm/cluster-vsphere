@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Update `kube-vip` static pod to v0.8.3.
+- Allow `.Values.global.managementCluster` in values schema.
 
 ## [0.64.0] - 2024-09-24
 

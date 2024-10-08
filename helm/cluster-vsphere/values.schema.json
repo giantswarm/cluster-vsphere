@@ -792,6 +792,11 @@
                         }
                     }
                 },
+                "managementCluster": {
+                    "type": "string",
+                    "title": "Management cluster",
+                    "description": "Name of the Cluster API cluster managing this workload cluster."
+                },
                 "metadata": {
                     "type": "object",
                     "title": "Metadata",
