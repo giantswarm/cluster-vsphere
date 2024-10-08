@@ -19,10 +19,10 @@ spec:
       chart: cloud-provider-vsphere
       # used by renovate
       # repo: giantswarm/cloud-provider-vsphere-app
-      version: 1.11.0
+      version: 1.11.0-01aa9a9f983d17c8feb70576906759173144130f
       sourceRef:
         kind: HelmRepository
-        name: {{ include "resource.default.name" $ }}-default
+        name: {{ include "resource.default.name" $ }}-default-test
   dependsOn:
     - name: {{ include "resource.default.name" $ }}-cilium
       namespace: {{ $.Release.Namespace }}
