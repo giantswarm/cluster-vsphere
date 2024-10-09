@@ -13,7 +13,6 @@ Properties within the `.internal` top-level object
 | `internal.kubectlImage.name` | **Repository**|**Type:** `string`<br/>**Default:** `"giantswarm/kubectl"`|
 | `internal.kubectlImage.registry` | **Registry**|**Type:** `string`<br/>**Default:** `"gsoci.azurecr.io"`|
 | `internal.kubectlImage.tag` | **Tag**|**Type:** `string`<br/>**Default:** `"1.27.14"`|
-| `internal.kubernetesVersion` | **Kubernetes version** - Kubernetes version to deploy. Must match the version available in the image defined at template.|**Type:** `string`<br/>**Default:** `"v1.27.14"`|
 | `internal.sandboxContainerImage` | **Sandbox Container image**|**Type:** `object`<br/>|
 | `internal.sandboxContainerImage.name` | **Repository**|**Type:** `string`<br/>**Default:** `"giantswarm/pause"`|
 | `internal.sandboxContainerImage.registry` | **Registry**|**Type:** `string`<br/>**Default:** `"gsoci.azurecr.io"`|

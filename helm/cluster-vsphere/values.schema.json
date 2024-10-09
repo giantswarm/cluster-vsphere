@@ -1067,12 +1067,6 @@
                         }
                     }
                 },
-                "kubernetesVersion": {
-                    "type": "string",
-                    "title": "Kubernetes version",
-                    "description": "Kubernetes version to deploy. Must match the version available in the image defined at template.",
-                    "default": "v1.27.14"
-                },
                 "sandboxContainerImage": {
                     "type": "object",
                     "title": "Sandbox Container image",
