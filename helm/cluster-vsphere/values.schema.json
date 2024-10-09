@@ -352,7 +352,6 @@
                             "usermod -aG root nobody"
                         ]
                     },
-                    "kubernetesVersion": "1.27.14",
                     "pauseProperties": {
                         "global.connectivity.network.controlPlaneEndpoint.host": ""
                     },
