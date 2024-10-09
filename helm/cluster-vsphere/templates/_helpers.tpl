@@ -52,6 +52,7 @@ https://github.com/giantswarm/giantswarm/issues/22441
 {{- include "labels.selector" . }}
 app.kubernetes.io/version: {{ $.Chart.Version | quote }}
 helm.sh/chart: {{ include "chart" . | quote }}
+release.giantswarm.io/version: {{ .Values.global.release.version | trimPrefix "v" | quote }}
 {{- end -}}
 
 {{/*
