@@ -19,7 +19,7 @@ spec:
       chart: cloud-provider-vsphere
       # used by renovate
       # repo: giantswarm/cloud-provider-vsphere-app
-      version: 1.11.0-01aa9a9f983d17c8feb70576906759173144130f
+      version: 1.11.0-649ee1ee8e4ce44541e84cc57c0c8bad6d29d68b
       sourceRef:
         kind: HelmRepository
         name: {{ include "resource.default.name" $ }}-default-test
