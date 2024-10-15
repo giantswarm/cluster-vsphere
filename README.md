@@ -24,3 +24,5 @@ When creating a new vsphere cluster, a user can put an empty string to `.connect
 The goal of this job is to acquire the new IP address and assign it to `.spec.controlPlaneEndpoint.host` of newly created clusters and other places where it's needed (kubevip static pod definition and `certSANs`). Only then the cluster is unpaused.
 
 The abovementioned mechanism relies on `IpAddressClaim` and `IpAddress` CRDs. These are part of the Cluster API spec and can be reconciled for instance by [`cluster-api-ipam-provider-in-cluster`](https://github.com/kubernetes-sigs/cluster-api-ipam-provider-in-cluster). So if you want to use it, make sure this [app](https://github.com/giantswarm/cluster-api-ipam-provider-in-cluster-app) is also installed in the management cluster.
+
+DELETE ME
