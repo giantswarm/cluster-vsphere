@@ -11,6 +11,7 @@ data:
       metadata:
         description: "test cluster"
         organization: "multi-project"
+      release: "27.0.0"
       connectivity:
         network:
           allowAllEgress: true
@@ -81,7 +82,7 @@ spec:
     secret:
       name: vsphere-credentials
       namespace: org-multi-project
-  version: 0.51.0
+  version: ""
 ---
 apiVersion: v1
 data:

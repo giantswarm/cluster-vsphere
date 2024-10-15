@@ -17,9 +17,9 @@ spec:
   chart:
     spec:
       chart: cloud-provider-vsphere
-      # used by renovate
-      # repo: giantswarm/cloud-provider-vsphere-app
-      version: 1.11.0
+      {{- $_ := set $ "appName" "cloud-provider-vsphere" }}
+      {{- $appVersion := include "cluster.app.version" $ }}
+      version: {{ $appVersion }}
       sourceRef:
         kind: HelmRepository
         name: {{ include "resource.default.name" $ }}-default
