@@ -2,12 +2,26 @@
 Generates template spec for control plane machines.
 */}}
 {{- define "controlplane-vspheremachinetemplate-spec" -}}
+
 {{- $d := (deepCopy $.Values) }}
+
+{{- $osName := include "cluster.os.name" $ }}
+{{- $osReleaseChannel := include "cluster.os.releaseChannel" $ }}
+{{- $osVersion := include "cluster.os.version" $ }}
+{{- $kubernetesVersion := include "cluster.component.kubernetes.version" $ }}
+
+{{- /* Modify $d.global.controlPlane.machineTemplate.template here */ -}}
+{{- $templateValue := printf "%s-%s-%s-kube-v%s-gs" $osName $osReleaseChannel $osVersion $kubernetesVersion -}}
+{{- $_ := set $d.global.controlPlane.machineTemplate "template" $templateValue -}}
+
+{{- $_ := unset $d.global.controlPlane.machineTemplate "replicas" -}}
+
 datacenter: {{ $d.global.providerSpecific.vcenter.datacenter }}
 datastore: {{ $d.global.providerSpecific.vcenter.datastore }}
 server: {{ $d.global.providerSpecific.vcenter.server }}
 thumbprint: {{ $d.global.providerSpecific.vcenter.thumbprint }}
-{{ unset $d.global.controlPlane.machineTemplate "replicas" | toYaml }}
+
+{{ $d.global.controlPlane.machineTemplate | toYaml }}
 {{- end -}}
 
 {{/*
