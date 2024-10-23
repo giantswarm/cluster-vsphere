@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Render Flatcar and Kubernetes version from cluster chart.
+
 ## [0.65.0] - 2024-10-15
 
 ### :warning: **Breaking change** :warning:

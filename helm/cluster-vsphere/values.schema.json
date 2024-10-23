@@ -142,8 +142,7 @@
         },
         "template": {
             "type": "string",
-            "title": "VM template",
-            "default": "flatcar-stable-3815.2.2-kube-v1.27.14-gs"
+            "title": "VM template"
         }
     },
     "type": "object",
@@ -393,7 +392,7 @@
                                 "numCPUs": 6,
                                 "replicas": 2,
                                 "resourcePool": "*/Resources",
-                                "template": "flatcar-stable-3815.2.2-kube-v1.27.14-gs"
+                                "template": ""
                             }
                         },
                         "resources": {
