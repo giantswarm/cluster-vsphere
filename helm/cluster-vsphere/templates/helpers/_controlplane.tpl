@@ -5,8 +5,6 @@ Generates template spec for control plane machines.
 {{- $d := (deepCopy $.Values) }}
 {{- $_ := unset $d.global.controlPlane.machineTemplate "replicas" -}}
 
-{{- $_ := unset $d.global.controlPlane.machineTemplate "replicas" -}}
-
 {{- $osName := include "cluster.os.name" $ }}
 {{- $osReleaseChannel := include "cluster.os.releaseChannel" $ }}
 {{- $osVersion := include "cluster.os.version" $ }}
