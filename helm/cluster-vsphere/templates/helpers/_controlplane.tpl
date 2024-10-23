@@ -3,6 +3,7 @@ Generates template spec for control plane machines.
 */}}
 {{- define "controlplane-vspheremachinetemplate-spec" -}}
 {{- $d := (deepCopy $.Values) }}
+{{- $_ := unset $d.global.controlPlane.machineTemplate "replicas" -}}
 
 {{- $_ := unset $d.global.controlPlane.machineTemplate "replicas" -}}
 
