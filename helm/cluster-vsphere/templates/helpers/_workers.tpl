@@ -19,5 +19,4 @@ server: {{ $.Values.global.providerSpecific.vcenter.server }}
 thumbprint: {{ $.Values.global.providerSpecific.vcenter.thumbprint }}
 
 {{ $pool | toYaml }}
-
 {{- end -}}
