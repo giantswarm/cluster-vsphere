@@ -185,7 +185,7 @@ cluster:
           numCPUs: 6
           replicas: 2
           resourcePool: '*/Resources'
-          template: flatcar-stable-3815.2.2-kube-v1.27.14-gs
+          template: ""
       resources:
         infrastructureMachineTemplateSpecTemplateName: worker-vspheremachinetemplate-spec
 global:
@@ -231,7 +231,6 @@ global:
       network: {}
       numCPUs: 4
       resourcePool: '*/Resources'
-      template: flatcar-stable-3815.2.2-kube-v1.27.14-gs
     oidc: {}
     resourceRatio: 8
   metadata:
@@ -251,7 +250,6 @@ global:
       numCPUs: 6
       replicas: 2
       resourcePool: '*/Resources'
-      template: flatcar-stable-3815.2.2-kube-v1.27.14-gs
   podSecurityStandards:
     enforced: true
   providerSpecific:
