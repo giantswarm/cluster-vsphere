@@ -247,6 +247,12 @@
                                     "path": "/etc/kubernetes/manifests/kube-vip.yaml",
                                     "permissions": "0600"
                                 }
+                            ],
+                            "postKubeadmCommands": [
+                                "sed --in-place \"s|/etc/kubernetes/super-admin.conf|/etc/kubernetes/admin.conf|g\" /etc/kubernetes/manifests/kube-vip.yaml"
+                            ],
+                            "preKubeadmCommands": [
+                                "test -f /etc/kubernetes/super-admin.conf && sed --in-place --null-data \"s|/etc/kubernetes/admin.conf|/etc/kubernetes/super-admin.conf|2\" /etc/kubernetes/manifests/kube-vip.yaml"
                             ]
                         },
                         "resources": {
