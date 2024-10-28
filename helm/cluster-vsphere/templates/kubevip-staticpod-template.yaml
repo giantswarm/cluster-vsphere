@@ -55,7 +55,7 @@ stringData:
       hostNetwork: true
       volumes:
       - hostPath:
-          path: /etc/kubernetes/admin.conf
+          path: /etc/kubernetes/super-admin.conf # this is reverted to admin.conf by a postKubeadmCommand
           type: FileOrCreate
         name: kubeconfig
     status: {}
