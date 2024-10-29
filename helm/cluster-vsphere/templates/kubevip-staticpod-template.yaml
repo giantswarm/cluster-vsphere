@@ -38,7 +38,7 @@ stringData:
           value: "2"
         # used by renovate
         # repo: kube-vip/kube-vip
-        image: gsoci.azurecr.io/giantswarm/kube-vip:v0.8.3
+        image: gsoci.azurecr.io/giantswarm/kube-vip:v0.8.4
         imagePullPolicy: IfNotPresent
         name: kube-vip
         resources: {}
