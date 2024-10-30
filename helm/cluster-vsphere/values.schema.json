@@ -342,8 +342,6 @@
                     "resourcesApi": {
                         "bastionResourceEnabled": false,
                         "cleanupHelmReleaseResourcesEnabled": true,
-                        "clusterResourceEnabled": true,
-                        "controlPlaneResourceEnabled": true,
                         "helmRepositoryResourcesEnabled": true,
                         "infrastructureCluster": {
                             "group": "infrastructure.cluster.x-k8s.io",
@@ -355,8 +353,6 @@
                             "kind": "VSphereMachineTemplate",
                             "version": "v1beta1"
                         },
-                        "machineHealthCheckResourceEnabled": true,
-                        "machinePoolResourcesEnabled": true,
                         "nodePoolKind": "MachineDeployment"
                     },
                     "useReleases": true,
