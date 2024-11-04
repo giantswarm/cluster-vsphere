@@ -973,7 +973,7 @@
                         "tag": {
                             "type": "string",
                             "title": "Tag",
-                            "default": "1.27.14"
+                            "default": "1.29.9"
                         }
                     }
                 }

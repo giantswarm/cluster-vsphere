@@ -252,4 +252,4 @@ internal:
   kubectlImage:
     name: giantswarm/kubectl
     registry: gsoci.azurecr.io
-    tag: 1.27.14
+    tag: 1.29.9
