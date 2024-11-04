@@ -157,8 +157,6 @@ cluster:
     resourcesApi:
       bastionResourceEnabled: false
       cleanupHelmReleaseResourcesEnabled: true
-      clusterResourceEnabled: true
-      controlPlaneResourceEnabled: true
       helmRepositoryResourcesEnabled: true
       infrastructureCluster:
         group: infrastructure.cluster.x-k8s.io
@@ -168,8 +166,6 @@ cluster:
         group: infrastructure.cluster.x-k8s.io
         kind: VSphereMachineTemplate
         version: v1beta1
-      machineHealthCheckResourceEnabled: true
-      machinePoolResourcesEnabled: true
       nodePoolKind: MachineDeployment
     useReleases: true
     workers:
@@ -211,16 +207,7 @@ global:
         cidrBlocks:
           - 172.31.0.0/16
     proxy: {}
-    shell:
-      osUsers:
-        - name: giantswarm
-          sudo: ALL=(ALL) NOPASSWD:ALL
-      sshTrustedUserCAKeys:
-        - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIM4cvZ01fLmO9cJbWUj7sfF+NhECgy+Cl0bazSrZX7sU vault-ca@vault.operations.giantswarm.io
   controlPlane:
-    apiServerPort: 6443
-    image:
-      repository: gsoci.azurecr.io/giantswarm
     machineHealthCheck:
       enabled: true
       maxUnhealthy: 40%
@@ -234,7 +221,6 @@ global:
       numCPUs: 4
       resourcePool: '*/Resources'
     oidc: {}
-    resourceRatio: 8
   metadata:
     preventDeletion: false
     servicePriority: highest
@@ -267,11 +253,3 @@ internal:
     name: giantswarm/kubectl
     registry: gsoci.azurecr.io
     tag: 1.27.14
-  sandboxContainerImage:
-    name: giantswarm/pause
-    registry: gsoci.azurecr.io
-    tag: "3.9"
-  teleport:
-    enabled: true
-    proxyAddr: teleport.giantswarm.io:443
-    version: 14.1.3

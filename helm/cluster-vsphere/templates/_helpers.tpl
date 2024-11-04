@@ -14,22 +14,16 @@ Create chart name and version as used by the chart label.
 {{- printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
 {{- end -}}
 
+{{/*
+Create a prefix for all resource names.
+*/}}
+{{- define "resource.default.name" -}}
+{{ .Release.Name }}
+{{- end -}}
+
 {{- define "infrastructureApiVersion" -}}
 infrastructure.cluster.x-k8s.io/v1beta1
 {{- end -}}
-
-{{/*
-Takes an array of maps containing worker nodePools and adds each map to a new
-map. Results in a map of node specs which can be iterated over to create
-MachineDeployments.
-*/}}
-{{ define "createMapOfWorkerPoolSpecs" -}}
-{{- $nodeMap := dict -}}
-{{- range $index, $pool := .Values.global.nodePools | default .Values.cluster.providerIntegration.workers.defaultNodePools -}}
-  {{- $_ := set $nodeMap $index $pool -}}
-{{- end -}}
-{{ toYaml $nodeMap }}
-{{- end }}
 
 {{/*
 Common labels without kubernetes version
@@ -64,13 +58,6 @@ giantswarm.io/prevent-deletion: "true"
 {{ end -}}
 {{- end -}}
 
-{{/*
-Create a prefix for all resource names.
-*/}}
-{{- define "resource.default.name" -}}
-{{ .Release.Name }}
-{{- end -}}
-
 {{- define "securityContext.runAsUser" -}}
 1000
 {{- end -}}
@@ -80,4 +67,25 @@ Create a prefix for all resource names.
 
 {{- define "credentialSecretName" -}}
 {{- include "resource.default.name" $ }}-credentials
+{{- end -}}
+
+{{/*
+Takes an array of maps containing worker nodePools and adds each map to a new
+map. Results in a map of node specs which can be iterated over to create
+MachineDeployments.
+*/}}
+{{ define "createMapOfWorkerPoolSpecs" -}}
+{{- $nodeMap := dict -}}
+{{- range $index, $pool := .Values.global.nodePools | default .Values.cluster.providerIntegration.workers.defaultNodePools -}}
+  {{- $_ := set $nodeMap $index $pool -}}
+{{- end -}}
+{{ toYaml $nodeMap }}
+{{- end }}
+
+{{- define "additional-annotations" -}}
+{{- $tags := .Values.global.providerSpecific.additionalVsphereClusterAnnotations | default dict }}
+annotations:
+  {{- if $tags }}
+  {{- toYaml $tags | nindent 2 }}
+  {{- end -}}
 {{- end -}}
