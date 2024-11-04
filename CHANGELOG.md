@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Use Renovate to update `kube-vip` static pod manifest.
 - Updated `giantswarm/cluster` to `v1.6.0`.
+- Update `kubectl` image used by IPAM job to `1.29.9`.
 
 ## [0.65.2] - 2024-10-28
 

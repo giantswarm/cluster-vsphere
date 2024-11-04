@@ -12,7 +12,7 @@ Properties within the `.internal` top-level object
 | `internal.kubectlImage` | **Kubectl image** - Used by cluster-shared library chart to configure coredns in-cluster.|**Type:** `object`<br/>|
 | `internal.kubectlImage.name` | **Repository**|**Type:** `string`<br/>**Default:** `"giantswarm/kubectl"`|
 | `internal.kubectlImage.registry` | **Registry**|**Type:** `string`<br/>**Default:** `"gsoci.azurecr.io"`|
-| `internal.kubectlImage.tag` | **Tag**|**Type:** `string`<br/>**Default:** `"1.27.14"`|
+| `internal.kubectlImage.tag` | **Tag**|**Type:** `string`<br/>**Default:** `"1.29.9"`|
 
 ### Connectivity
 Properties within the `.global.connectivity` object
