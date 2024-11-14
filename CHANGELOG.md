@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.66.0] - 2024-11-14
+
 ### Changed
 
 - Use Renovate to update `kube-vip` static pod manifest.
@@ -738,7 +740,8 @@ at least 1 public IP is always needed for the ingress controller to be able to e
 
 - Initial chart implementation.
 
-[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v0.65.2...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v0.66.0...HEAD
+[0.66.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.65.2...v0.66.0
 [0.65.2]: https://github.com/giantswarm/cluster-vsphere/compare/v0.65.1...v0.65.2
 [0.65.1]: https://github.com/giantswarm/cluster-vsphere/compare/v0.65.0...v0.65.1
 [0.65.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.64.0...v0.65.0
