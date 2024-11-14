@@ -12,6 +12,10 @@ stringData:
       name: kube-vip
       namespace: kube-system
     spec:
+      initContainers:
+      - name: update-hosts-record
+        image: gsoci.azurecr.io/giantswarm/busybox:1.37.0
+        command: ["/bin/sh", "-c", "echo '127.0.0.1  kubernetes' >> /etc/hosts"]
       containers:
       - args:
         - manager
