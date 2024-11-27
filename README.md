@@ -11,7 +11,7 @@ The abovementioned mechanism relies on `IpAddressClaim` and `IpAddress` CRDs. Th
 
 ## Tagging VMs
 
-It is possivle to apply vSphere tags to the virtual machines deployed by this chart.
+It is possible to apply vSphere tags to the virtual machines deployed by this chart.
 
 * First find the ID of the tags to apply.
 
@@ -23,7 +23,7 @@ govc:
 govc tags.info -c <tag category> -json | jq -r ".[] | select(.name == \"<tag name>") | .id"
 ```
 
-It looks like this: `urn:vmomi:InventoryServiceTag:a5242a12-87e4-4954-b357-d711c99c91e5:GLOBAL`
+The ID should look like this: `urn:vmomi:InventoryServiceTag:a5242a12-87e4-4954-b357-d711c99c91e5:GLOBAL`
 
 * Set the values where you want to apply the tag.
 
