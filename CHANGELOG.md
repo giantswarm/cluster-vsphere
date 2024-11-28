@@ -7,6 +7,39 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### **Breaking change**.
+
+> [!CAUTION]
+> The interface for setting annotations on the `vsphereCluster` CR has changed.
+
+<details>
+<summary>Upgrade guide: how to migrate values (from v0.66.0)</summary>
+
+The `additionalVsphereClusterAnnotations` field is now an array of strings to accomodate for escape characters. Convert your dictionary to an array of strings as per the following example.
+
+Old interface for annotations:
+
+```yaml
+global:
+  providerSpecific:
+    additionalVsphereClusterAnnotations:
+      my-key: "my-value"
+```
+
+New interface for annotations:
+
+```yaml
+global:
+  providerSpecific:
+    additionalVsphereClusterAnnotations:
+      - "my-key: value"
+```
+</details>
+
+### Changed
+
+- Change `global.providerSpecific.additionalVsphereClusterAnnotations` attribute into an array.
+
 ## [0.66.0] - 2024-11-14
 
 ### Changed
