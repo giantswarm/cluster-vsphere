@@ -838,23 +838,16 @@
                     "title": "Provider specific configuration",
                     "properties": {
                         "additionalVsphereClusterAnnotations": {
-                            "type": "object",
+                            "type": "array",
                             "title": "Additional vsphere cluster annotations",
                             "description": "Additional annotations to be added to the vspherecluster custom resource.",
-                            "additionalProperties": {
+                            "items": {
                                 "type": "string",
-                                "title": "Annotation value",
-                                "description": "Value of the annotation",
-                                "maxLength": 256
+                                "examples": [
+                                    "example.com/annotation: value"
+                                ]
                             },
-                            "default": {},
-                            "propertyNames": {
-                                "type": "string",
-                                "title": "Annotation name",
-                                "description": "Name of the annotation",
-                                "maxLength": 128,
-                                "pattern": "^[^<>%&?/\\\\]*$"
-                            }
+                            "default": []
                         },
                         "defaultStorageClass": {
                             "type": "object",
