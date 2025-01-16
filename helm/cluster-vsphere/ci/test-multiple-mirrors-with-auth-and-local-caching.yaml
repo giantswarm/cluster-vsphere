@@ -4,8 +4,6 @@ global:
     name: "test"
     organization: "giantswarm"
   components:
-    auditd:
-      enabled: false
     containerd:
       containerRegistries:
         gsoci.azurecr.io:
