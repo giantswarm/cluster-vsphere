@@ -3,23 +3,27 @@ global:
     description: "test cluster"
     name: "test"
     organization: "giantswarm"
+  components:
+    auditd:
+      enabled: false
+    containerd:
+      containerRegistries:
+        gsoci.azurecr.io:
+          - endpoint: zot-test-1.golem.gaws.gigantic.io
+            credentials:
+              username: example
+              password: xxxxx
+        gsociprivate.azurecr.io:
+          - endpoint: zot-test-2.golem.gaws.gigantic.io
+            credentials:
+              username: example
+              password: yyyyy
+      localRegistryCache:
+        enabled: 
+        mirroredRegistries:
+          - gsoci.azurecr.io
+          - gsociprivate.azurecr.io
   connectivity:
-    containerRegistries:
-      gsoci.azurecr.io:
-        - endpoint: zot-test-1.golem.gaws.gigantic.io
-          credentials:
-            username: example
-            password: xxxxx
-      gsociprivate.azurecr.io:
-        - endpoint: zot-test-2.golem.gaws.gigantic.io
-          credentials:
-            username: example
-            password: yyyyy
-    localRegistryCache:
-      enabled: true
-      mirroredRegistries:
-        - gsoci.azurecr.io
-        - gsociprivate.azurecr.io
     network:
       controlPlaneEndpoint:
         host: "10.10.222.241"
