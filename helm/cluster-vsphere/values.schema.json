@@ -537,7 +537,8 @@
                                 }
                             }
                         }
-                    },
+                    }
+                },
                 "connectivity": {
                     "type": "object",
                     "title": "Connectivity",
