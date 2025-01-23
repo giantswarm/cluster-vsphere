@@ -1,6 +1,6 @@
 # cluster-vsphere
 
-This repository contains the Helm chart used for deploying CAPV clusters using CAPI. The chart only contains the CAPV-specific components; the core CAPI compnents are deployed via the shared [giantswarm/cluster](https://github.com/giantswarm/cluster) chart.
+This repository contains the Helm chart used for deploying CAPV clusters using CAPI. The chart only contains the CAPV-specific components; the core CAPI compnents are deployed via the shared [giantswarm/cluster](https://github.com/giantswarm/cluster) chart
 
 ## IP address management (IPAM) for workload clusters
 
