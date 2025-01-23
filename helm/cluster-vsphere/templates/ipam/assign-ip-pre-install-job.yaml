@@ -102,8 +102,7 @@ spec:
 
               # patch also the static pod for kube-vip
               # add CIDR to the IP (required for kube-vip 0.8.9 onwards)
-              # the forward slash in the CIDR needs to be escaped so as to not break the sed command below
-              new_ip="${new_ip}\/32"
+              new_ip="${new_ip}/32"
               encoded=$(kubectl get secret -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }}-kubevip-pod -o jsonpath={.data.content} \
                 | base64 --decode \
                 | tr '\n' '\r' \
