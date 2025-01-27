@@ -7,9 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.68.1] - 2025-01-27
+
 ### Added
 
 - Add `components.containerd` to the schema and values.
+- Add VIP CIDR to kube-vip static pod manifest
 
 ### Changed
 
@@ -791,7 +794,8 @@ at least 1 public IP is always needed for the ingress controller to be able to e
 
 - Initial chart implementation.
 
-[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v0.68.0...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v0.68.1...HEAD
+[0.68.1]: https://github.com/giantswarm/cluster-vsphere/compare/v0.68.0...v0.68.1
 [0.68.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.67.0...v0.68.0
 [0.67.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.66.0...v0.67.0
 [0.66.0]: https://github.com/giantswarm/cluster-vsphere/compare/v0.65.2...v0.66.0
