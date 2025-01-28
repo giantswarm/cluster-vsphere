@@ -3,60 +3,55 @@ metadata:
   labels:
     app-operator.giantswarm.io/watching: "true"
   name: testing-user-values
-  namespace: org-multi-project
+  namespace: org-giantswarm
 apiVersion: v1
 data:
   values: |
     global:
+      release:
+        version: "29.1.0"
       metadata:
         description: "test cluster"
-        organization: "multi-project"
-      release:
-        version: "27.0.0"
+        name: "testing"
+        organization: "giantswarm"
       connectivity:
         network:
           allowAllEgress: true
           controlPlaneEndpoint:
             host: ""
-            ipPoolName: wc-cp-ips # auto allocated from this pool (GlobalInClusterIpPool crd). When left empty, no allocation is happening.
+            ipPoolName: wc-cp-ips # GlobalInClusterIpPool used to allocate IP from
             port: 6443
           loadBalancers:
-            cidrBlocks: [] # explicit cidr ranges 
-            ipPoolName: svc-lb-ips # auto allocated from this pool (only 1 ip) When left empty, no allocation is happening.
+            cidrBlocks: [] # explicit cidr ranges
+            ipPoolName: svc-lb-ips # GlobalInClusterIpPool used to allocate IP from
         baseDomain: test.gigantic.io
       controlPlane:
         replicas: 3
-        catalog: "giantswarm"
         machineTemplate:
           network:
             devices:
-              - networkName: 'LS-GS-CAPV'
+              - networkName: 'v500-data'
                 dhcp4: true
-          cloneMode: "linkedClone"
           diskGiB: 40
           numCPUs: 4
           memoryMiB: 8196
-          resourcePool: "giantswarm"
-          folder: "Giantswarm"
-          template: flatcar-stable-3815.2.2-kube-v1.27.14-gs
+          folder: "kube-nodes"
         oidc:
           issuerUrl: https://dex.testing.test.gigantic.io
           clientId: "dex-k8s-authenticator"
           usernameClaim: "email"
           groupsClaim: "groups"
-          usernamePrefix: ""
       nodePools:
         worker:
-          cloneMode: linkedClone
           diskGiB: 40
+          folder: kube-nodes
           memoryMiB: 10240
           network:
             devices:
-              - networkName: 'LS-GS-CAPV'
+              - networkName: v500-data
                 dhcp4: true
           numCPUs: 6
           replicas: 3
-          resourcePool: '*/Resources'
 ---
 apiVersion: application.giantswarm.io/v1alpha1
 kind: App
@@ -65,19 +60,19 @@ metadata:
     app-operator.giantswarm.io/version: 0.0.0
     app.kubernetes.io/name: cluster-vsphere
   name: testing
-  namespace: org-multi-project
+  namespace: org-giantswarm
 spec:
   catalog: cluster
   kubeConfig:
     inCluster: true
   name: cluster-vsphere
-  namespace: org-multi-project
+  namespace: org- giantswarm
   userConfig:
     configMap:
       name: testing-user-values
-      namespace: org-multi-project
+      namespace: org-giantswarm
     secret:
       name: vsphere-credentials
-      namespace: org-multi-project
+      namespace: org-giantswarm
   version: ""
 
