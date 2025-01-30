@@ -1,5 +1,3 @@
-
-
 # Changelog
 
 All notable changes to this project will be documented in this file.
@@ -12,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Update example manifest.
+- Make cloud-provider-vsphere HelmRelease catalog configurable.
 
 ## [0.68.0] - 2024-12-11
 
