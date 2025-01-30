@@ -22,7 +22,6 @@ data:
             ipPoolName: wc-cp-ips # GlobalInClusterIpPool used to allocate IP from
             port: 6443
           loadBalancers:
-            cidrBlocks: [] # explicit cidr ranges
             ipPoolName: svc-lb-ips # GlobalInClusterIpPool used to allocate IP from
         baseDomain: test.gigantic.io
       controlPlane:
