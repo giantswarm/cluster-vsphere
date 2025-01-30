@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Add `components.containerd` to the schema and values.
+
 ### Changed
 
 - Update example manifest.

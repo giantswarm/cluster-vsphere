@@ -187,6 +187,16 @@ cluster:
       resources:
         infrastructureMachineTemplateSpecTemplateName: worker-vspheremachinetemplate-spec
 global:
+  components:
+    containerd:
+      containerRegistries: {}
+      localRegistryCache:
+        enabled: false
+        mirroredRegistries: []
+        port: 32767
+      managementClusterRegistryCache:
+        enabled: true
+        mirroredRegistries: []
   connectivity:
     containerRegistries: {}
     localRegistryCache:
