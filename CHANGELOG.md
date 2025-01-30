@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Update example manifest.
 - Make cloud-provider-vsphere HelmRelease catalog configurable.
+- Update `kube-vip` to `0.8.9`.
+- Update `kube-vip` static pod manifest with CIDR.
 
 ## [0.68.0] - 2024-12-11
 
