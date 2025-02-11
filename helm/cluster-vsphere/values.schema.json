@@ -625,8 +625,6 @@
                             "type": "object",
                             "title": "Network",
                             "required": [
-                                "pods",
-                                "services",
                                 "loadBalancers"
                             ],
                             "properties": {
