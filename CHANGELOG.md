@@ -7,9 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Fixed
+### Changed
 
 - Remove requirement for `pods` and `services` as they are defaulted by the values schema.
+- Chart: Update `cluster` to v2.0.1.
 
 ## [0.68.1] - 2025-01-30
 
