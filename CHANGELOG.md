@@ -11,6 +11,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Split cloud provider app into separate HelmReleases.
 
+### Added
+
+- Add `global.providerSpecific.templateSuffix` to set a suffix on the VM template to use.
+
 ## [0.69.0] - 2025-03-05
 
 ### Changed

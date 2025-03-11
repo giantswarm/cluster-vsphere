@@ -260,6 +260,7 @@ global:
       enabled: true
       reclaimPolicy: Delete
       storagePolicyName: ""
+    templateSuffix: ""
     vcenter: {}
   release: {}
 internal:

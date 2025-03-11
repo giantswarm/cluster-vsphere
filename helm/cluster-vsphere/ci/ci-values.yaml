@@ -37,6 +37,7 @@ global:
           - networkName: 'grasshopper-capv'
             dhcp4: true
   providerSpecific:
+    # templateSuffix: "paris"
     vcenter:
       server: "https://foo.example.com"
       username: "vcenter-admin"

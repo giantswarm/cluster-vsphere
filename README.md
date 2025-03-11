@@ -38,3 +38,12 @@ The ID should look like this: `urn:vmomi:InventoryServiceTag:a5242a12-87e4-4954-
           tagIDs:
           - "urn:vmomi:InventoryServiceTag:827c9b5a-e6e5-4c3f-8349-29c083395a7f:GLOBAL"
 ```
+
+## Using a VM template per location
+
+When there are clusters in different geographical locations under the same `datacenter` entity, it is recommended to use a VM template stored in that cluster to avoid cloning over a WAN connection.
+
+In this case:
+
+- Set e.g. `global.providerSpecific.templateSuffix=paris`
+- Upload the VM image template to the Paris cluster and rename it to add the `-paris` suffix.
