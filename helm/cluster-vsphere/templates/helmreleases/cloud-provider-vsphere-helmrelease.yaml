@@ -51,5 +51,3 @@ spec:
         region: "{{ .Values.global.providerSpecific.vcenter.region }}"
         zone: "{{ .Values.global.providerSpecific.vcenter.zone }}"
         thumbprint: "{{ .Values.global.providerSpecific.vcenter.thumbprint }}"
-      podSecurityStandards:
-        enforced: {{ .Values.global.podSecurityStandards.enforced }}
