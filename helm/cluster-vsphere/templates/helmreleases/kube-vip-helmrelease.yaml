@@ -11,7 +11,7 @@ metadata:
     {{- include "labels.common" . | nindent 4 }}
 spec:
   suspend: false
-  releaseName: vsphere-csi-driver
+  releaseName: kube-vip
   targetNamespace: kube-system
   storageNamespace: kube-system
   chart:
