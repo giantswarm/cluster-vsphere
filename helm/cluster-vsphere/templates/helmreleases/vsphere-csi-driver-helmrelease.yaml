@@ -1,7 +1,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: {{ include "resource.default.name" $ }}-cloud-provider-vsphere
+  name: {{ include "resource.default.name" $ }}-vsphere-csi-driver
   namespace: {{ $.Release.Namespace }}
   annotations:
     cluster.giantswarm.io/description: "{{ .Values.global.metadata.description }}"
@@ -11,13 +11,13 @@ metadata:
     {{- include "labels.common" . | nindent 4 }}
 spec:
   suspend: false
-  releaseName: cloud-provider-vsphere
+  releaseName: vsphere-csi-driver
   targetNamespace: kube-system
   storageNamespace: kube-system
   chart:
     spec:
-      chart: cloud-provider-vsphere
-      {{- $_ := set $ "appName" "cloud-provider-vsphere" }}
+      chart: vsphere-csi-driver
+      {{- $_ := set $ "appName" "vsphere-csi-driver" }}
       version: {{ include "cluster.app.version" $ }}
       sourceRef:
         kind: HelmRepository
@@ -28,7 +28,7 @@ spec:
   kubeConfig:
     secretRef:
       name: {{ include "resource.default.name" $ }}-kubeconfig
-  interval: {{ (((.Values.internal).helmReleases).cpi).interval | default "10m" }}
+  interval: {{ (((.Values.internal).helmReleases).CSIDriver).interval | default "10m" }}
   install:
     remediation:
       retries: 30
@@ -36,20 +36,24 @@ spec:
     - kind: Secret
       name: {{ include "credentialSecretName" $ }}
       valuesKey: "username"
-      targetPath: "global.config.username"
+      targetPath: "config.username"
     - kind: Secret
       name: {{ include "credentialSecretName" $ }}
       valuesKey: "escapedPassword"
-      targetPath: "global.config.password"
+      targetPath: "config.password"
   values:
-    global:
-      config:
-        enabled: true
-        clusterId: {{ include "resource.default.name" $ }}
-        vcenter: "{{ .Values.global.providerSpecific.vcenter.server }}"
-        datacenter: "{{ .Values.global.providerSpecific.vcenter.datacenter }}"
-        region: "{{ .Values.global.providerSpecific.vcenter.region }}"
-        zone: "{{ .Values.global.providerSpecific.vcenter.zone }}"
-        thumbprint: "{{ .Values.global.providerSpecific.vcenter.thumbprint }}"
-      podSecurityStandards:
-        enforced: {{ .Values.global.podSecurityStandards.enforced }}
+    config:
+      clusterId: {{ include "resource.default.name" $ }}
+      vcenter: "{{ .Values.global.providerSpecific.vcenter.server }}"
+      datacenter: "{{ .Values.global.providerSpecific.vcenter.datacenter }}"
+      region: "{{ .Values.global.providerSpecific.vcenter.region }}"
+      zone: "{{ .Values.global.providerSpecific.vcenter.zone }}"
+      thumbprint: "{{ .Values.global.providerSpecific.vcenter.thumbprint }}"
+    storageClass:
+      {{- with .Values.global.providerSpecific.defaultStorageClass }}
+      enabled: {{ .enabled }}
+      reclaimPolicy: {{ .reclaimPolicy }}
+      {{- if .storagePolicyName }}
+      storageProfileName: {{ .storagePolicyName }}
+      {{- end }}
+      {{- end }}
