@@ -178,6 +178,7 @@ Properties within the `.global.providerSpecific` object
 | `global.providerSpecific.defaultStorageClass.enabled` | **Enable default storage class** - Creates a default storage class if set to true.|**Type:** `boolean`<br/>**Default:** `true`|
 | `global.providerSpecific.defaultStorageClass.reclaimPolicy` | **Reclaim Policy** - Reclaim policy of the storage class (Delete or Retain).|**Type:** `string`<br/>**Default:** `"Delete"`|
 | `global.providerSpecific.defaultStorageClass.storagePolicyName` | **Storage Policy name** - Name of the vSphere storage policy to use in the storage class. Leave empty for no storage policy.|**Type:** `string`<br/>**Default:** `""`|
+| `global.providerSpecific.templateSuffix` | **Template suffix** - Suffix to append to the VM template name to find the correct template.|**Type:** `string`<br/>**Default:** `""`|
 | `global.providerSpecific.vcenter` | **VCenter** - Configuration for vSphere API access.|**Type:** `object`<br/>|
 | `global.providerSpecific.vcenter.datacenter` | **Datacenter** - Name of the datacenter to deploy nodes into.|**Type:** `string`<br/>|
 | `global.providerSpecific.vcenter.datastore` | **Datastore** - Name of the datastore for node disk storage.|**Type:** `string`<br/>|
