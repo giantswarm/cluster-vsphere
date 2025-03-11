@@ -1011,6 +1011,12 @@
                                 }
                             }
                         },
+                        "templateSuffix": {
+                            "type": "string",
+                            "title": "Template suffix",
+                            "description": "Suffix to append to the VM template name to find the correct template.",
+                            "default": ""
+                        },
                         "vcenter": {
                             "type": "object",
                             "title": "VCenter",
