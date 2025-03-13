@@ -46,7 +46,7 @@ rules:
 {{- if (include "isIpamSvcLoadBalancerEnabled" $) }}
   - apiGroups: ["helm.toolkit.fluxcd.io"]
     resources: ["helmreleases"]
-    resourceNames: ["{{ include "resource.default.name" $ }}-cloud-provider-vsphere"]
+    resourceNames: ["{{ include "resource.default.name" $ }}-kube-vip-cloud-provider"]
     verbs: ["get", "patch"]
 {{- end }}
 ---
