@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Split cloud provider app into separate HelmReleases.
+
 ### Added
 
 - Add `global.providerSpecific.templateSuffix` to set a suffix on the VM template to use.
@@ -105,7 +109,7 @@ global:
  <details>
  <summary>Migration steps</summary>
 
- * In ConfigMap `<cluster name>-userconfig` set `.Values.global.release.version` to the release version, e.g. `27.0.0`. 
+ * In ConfigMap `<cluster name>-userconfig` set `.Values.global.release.version` to the release version, e.g. `27.0.0`.
  * In App `<cluster name>` set the `version` to an empty string.
  </details>
 
@@ -694,7 +698,7 @@ at least 1 public IP is always needed for the ingress controller to be able to e
 
 - Consolidate containerd `config.toml` into single file to address [#1737](https://github.com/giantswarm/roadmap/issues/1737)
 - Add host OS user `nobody` to `root` group to enable node-exporter's `filesystem` collector to access the host filesystem.
-- Bump `cilium` version to `0.10.0` 
+- Bump `cilium` version to `0.10.0`
 
 ## [0.6.1] - 2023-07-13
 
@@ -702,7 +706,7 @@ at least 1 public IP is always needed for the ingress controller to be able to e
 
 - Add a way to customize the timeout in `HelmRelease.spec`.
 - Set value for `controller-manager` `terminated-pod-gc-threshold` to `125` ( consistent with vintage )
-- Bump `cloud-provider-vsphere` version to `1.5.0` 
+- Bump `cloud-provider-vsphere` version to `1.5.0`
 
 ## [0.6.0] - 2023-07-04
 

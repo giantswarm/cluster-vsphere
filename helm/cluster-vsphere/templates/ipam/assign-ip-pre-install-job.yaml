@@ -2,16 +2,16 @@
 # Because IP for control plane of new workload cluster is not known at the time of cluster creation
 # we use a post-install/post-upgrade hook Job to assign the IP from IPAddress CR.
 # This IPAddress CR should be created by cluster-api-ipam-provider-in-cluster controller as a
-# response to creating the IPAddressClaim CR (the name of both is the same). 
+# response to creating the IPAddressClaim CR (the name of both is the same).
 # The IP is set to:
 #   - vspherecluster.spec.controlPlaneEndpoint.host
 #   - static pod definition for kubevip (.spec.containers.env[vip_address])
 #   - kubeadmcontrolplane.spec.kubeadmConfigSpec.clusterConfiguration.apiServer.certSANs[0]
 #
 # In case of upgrade, the Cluster CR is first paused, then IP is assigned and then the cluster is unpaused.
-# 
-# If `isIpamSvcLoadBalancerEnabled`, this job also allocates a new free IP for kubevip Service Load Balancer running in WC. 
-# This is passed as a config option in HelmRelease -> helm release needs to be suspended first, updated and resumed 
+#
+# If `isIpamSvcLoadBalancerEnabled`, this job also allocates a new free IP for kubevip Service Load Balancer running in WC.
+# This is passed as a config option in HelmRelease -> helm release needs to be suspended first, updated and resumed
 #
 # every resource in this file has "helm.sh/hook-weight": "0"
 apiVersion: batch/v1
@@ -47,7 +47,7 @@ spec:
             - "-xc"
             - kubectl patch cluster.cluster.x-k8s.io -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} --type=merge -p '{"spec":{"paused":true}}'
 {{- if (include "isIpamSvcLoadBalancerEnabled" $) }}
-            - kubectl patch helmrelease -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }}-cloud-provider-vsphere --type=merge -p '{"spec":{"suspend":true}}'
+            - kubectl patch helmrelease -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }}-kube-vip-cloud-provider --type=merge -p '{"spec":{"suspend":true}}'
 {{- end }}
 ---
 apiVersion: batch/v1
@@ -143,11 +143,11 @@ spec:
                 count=$((count+1))
               done
 
-              # patch the cloud-provider-vsphere-helmrelease
+              # patch the kube-vip-cloud-provider helmrelease
               {{- if .Values.global.connectivity.network.loadBalancers.cidrBlocks }}
               ip_list="${ip_list},{{ join "," .Values.global.connectivity.network.loadBalancers.cidrBlocks }}"
               {{- end }}
-              kubectl patch helmrelease -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }}-cloud-provider-vsphere --type=merge -p '{"spec":{"suspend":false,"values":{"kube-vip-cloud-provider": {"cidrGlobal": "'${ip_list}'"}}}}'
+              kubectl patch helmrelease -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }}-kube-vip-cloud-provider --type=merge -p '{"spec":{"suspend":false,"values":{"cm":{"data":{"cidr-global":"'${ip_list}'"}}}}}'
 {{- end }}
       containers:
         - name: resume-cluster
