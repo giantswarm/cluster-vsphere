@@ -36,18 +36,17 @@ spec:
     - kind: Secret
       name: {{ include "credentialSecretName" $ }}
       valuesKey: "username"
-      targetPath: "global.config.username"
+      targetPath: "config.username"
     - kind: Secret
       name: {{ include "credentialSecretName" $ }}
       valuesKey: "escapedPassword"
-      targetPath: "global.config.password"
+      targetPath: "config.password"
   values:
-    global:
-      config:
-        enabled: true
-        clusterId: {{ include "resource.default.name" $ }}
-        vcenter: "{{ .Values.global.providerSpecific.vcenter.server }}"
-        datacenter: "{{ .Values.global.providerSpecific.vcenter.datacenter }}"
-        region: "{{ .Values.global.providerSpecific.vcenter.region }}"
-        zone: "{{ .Values.global.providerSpecific.vcenter.zone }}"
-        thumbprint: "{{ .Values.global.providerSpecific.vcenter.thumbprint }}"
+    config:
+      enabled: true
+      clusterId: {{ include "resource.default.name" $ }}
+      vcenter: "{{ .Values.global.providerSpecific.vcenter.server }}"
+      datacenter: "{{ .Values.global.providerSpecific.vcenter.datacenter }}"
+      region: "{{ .Values.global.providerSpecific.vcenter.region }}"
+      zone: "{{ .Values.global.providerSpecific.vcenter.zone }}"
+      thumbprint: "{{ .Values.global.providerSpecific.vcenter.thumbprint }}"
