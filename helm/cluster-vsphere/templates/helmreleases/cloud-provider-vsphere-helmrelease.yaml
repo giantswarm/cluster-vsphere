@@ -44,7 +44,6 @@ spec:
   values:
     config:
       enabled: true
-      clusterId: {{ include "resource.default.name" $ }}
       vcenter: "{{ .Values.global.providerSpecific.vcenter.server }}"
       datacenter: "{{ .Values.global.providerSpecific.vcenter.datacenter }}"
       region: "{{ .Values.global.providerSpecific.vcenter.region }}"
