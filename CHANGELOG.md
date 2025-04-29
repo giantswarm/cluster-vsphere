@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 - Update `kube-vip` to `0.9.0`.
+- Update `kube-vip` to `0.9.1`.
 
 ## [1.1.0] - 2025-03-18
 
