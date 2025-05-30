@@ -9,11 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.2.0] - 2025-04-29
 
-- Update `kube-vip` to `0.9.0`.
-- Update `kube-vip` to `0.9.1`.
-
 ### Changed
 
+- Update `kube-vip` to `0.9.1`.
+- Update `kube-vip` to `0.9.0`.
 - Chart: Update `cluster` to v2.2.1.
 
 ## [1.1.0] - 2025-03-18
