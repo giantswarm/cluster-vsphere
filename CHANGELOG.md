@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Update `kube-vip` static pod manifest to `v1.0.0`.
+
 ## [1.5.0] - 2025-07-31
 
 ### Changed
