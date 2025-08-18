@@ -201,6 +201,8 @@ global:
       managementClusterRegistryCache:
         enabled: true
         mirroredRegistries: []
+      selinux:
+        enabled: false
   connectivity:
     containerRegistries: {}
     localRegistryCache:
