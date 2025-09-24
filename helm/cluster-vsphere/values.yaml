@@ -9,8 +9,6 @@ cluster:
             requestheader-allowed-names: front-proxy-client
   providerIntegration:
     apps:
-      capiNodeLabeler:
-        enable: true
       certExporter:
         configTemplateName: vSphereCertExporterHelmValues
         enable: true
