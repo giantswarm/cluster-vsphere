@@ -42,7 +42,7 @@ stringData:
           value: "10"
         - name: vip_retryperiod
           value: "2"
-        image: gsoci.azurecr.io/giantswarm/kube-vip:v1.0.0
+        image: gsoci.azurecr.io/giantswarm/kube-vip:v1.0.1
         imagePullPolicy: IfNotPresent
         name: kube-vip
         resources: {}
