@@ -21,6 +21,10 @@ Advanced configuration of components that are running on all nodes.
 | **Property** | **Description** | **More Details** |
 | :----------- | :-------------- | :--------------- |
 | `global.components.containerd` | **Containerd** - Configuration of containerd.|**Type:** `[object]`<br/>|
+| `global.components.containerd.cdi` | **Container Device Interface (CDI)** - Configuration of CDI support in containerd.|**Type:** `[object]`<br/>|
+| `global.components.containerd.cdi.enabled` | **Enabled** - Enabling this will configure containerd to support Container Device Interface (CDI) specification.|**Type:** `[boolean]`<br/>**Default:** `false`|
+| `global.components.containerd.cdi.specDirs` | **CDI spec directories** - List of directories to search for CDI spec files.|**Type:** `[array]`<br/>**Default:** `["/etc/cdi","/var/run/cdi"]`|
+| `global.components.containerd.cdi.specDirs[*]` | **CDI spec directory** - Directory to search for CDI spec files.|**Type:** `[string]`<br/>|
 | `global.components.containerd.containerRegistries` | **Container registries** - Endpoints and credentials configuration for container registries.|**Type:** `[object]`<br/>**Default:** `{}`|
 | `global.components.containerd.containerRegistries.*` | **Registries** - Container registries and mirrors|**Type:** `[array]`<br/>|
 | `global.components.containerd.containerRegistries.*[*]` | **Registry**|**Type:** `[object]`<br/>|
