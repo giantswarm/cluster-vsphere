@@ -191,6 +191,11 @@ cluster:
 global:
   components:
     containerd:
+      cdi:
+        enabled: false
+        specDirs:
+          - /etc/cdi
+          - /var/run/cdi
       containerRegistries: {}
       localRegistryCache:
         enabled: false
