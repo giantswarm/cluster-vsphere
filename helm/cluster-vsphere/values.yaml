@@ -252,6 +252,10 @@ global:
       numCPUs: 6
       replicas: 2
       resourcePool: '*/Resources'
+      strategy:
+        rollingUpdate:
+          maxSurge: "1"
+          maxUnavailable: "0"
   podSecurityStandards:
     enforced: true
   providerSpecific:

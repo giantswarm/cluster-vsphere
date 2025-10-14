@@ -154,6 +154,11 @@ Groups of worker nodes with identical configuration.
 | `global.nodePools.worker.numCPUs` | **Number of CPUs**|**Type:** `[integer]`<br/>**Example:** `6`<br/>|
 | `global.nodePools.worker.replicas` | **Number of nodes**|**Type:** `[integer]`<br/>**Default:** `2`|
 | `global.nodePools.worker.resourcePool` | **VSphere resource pool name**|**Type:** `[string]`<br/>**Default:** `"*/Resources"`|
+| `global.nodePools.worker.strategy` | **Update strategy** - Strategy to use when updating the machines.|**Type:** `[object]`<br/>|
+| `global.nodePools.worker.strategy.rollingUpdate` | **Rolling update strategy** - Rolling update config params.|**Type:** `[object]`<br/>|
+| `global.nodePools.worker.strategy.rollingUpdate.deletePolicy` | **Delete policy** - DeletePolicy defines the policy used by the MachineDeployment to identify nodes to delete when downscaling. When no value is supplied, the default DeletePolicy of MachineSet is used.|**Type:** `[string]`<br/>|
+| `global.nodePools.worker.strategy.rollingUpdate.maxSurge` | **Max surge** - The maximum number of machines that can be scheduled above the desired number of machines. Value can be an absolute number (ex: 5) or a percentage of desired machines (ex: 10%). This can not be 0 if MaxUnavailable is 0. Absolute number is calculated from percentage by rounding up. Defaults to 1.|**Type:** `[string]`<br/>**Default:** `"1"`|
+| `global.nodePools.worker.strategy.rollingUpdate.maxUnavailable` | **Max unavailable** - The maximum number of machines that can be unavailable during the update. Value can be an absolute number (ex: 5) or a percentage of desired machines (ex: 10%). Absolute number is calculated from percentage by rounding down. This can not be 0 if MaxSurge is 0. Defaults to 0.|**Type:** `[string]`<br/>**Default:** `"0"`|
 | `global.nodePools.worker.template` | **VM template**|**Type:** `[string]`<br/>|
 
 ### Other global
