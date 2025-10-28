@@ -33,36 +33,80 @@
         "machineHealthCheck": {
             "type": "object",
             "title": "Machine health check",
-            "additionalProperties": false,
+            "required": [
+                "enabled"
+            ],
             "properties": {
+                "diskFullContainerdTimeout": {
+                    "type": "string",
+                    "title": "DiskFullContainerd timeout",
+                    "description": "Determines how long a machine health check should wait for a node with condition DiskFullContainerd=True before considering a machine unhealthy. Use an empty value to not consider this condition.",
+                    "examples": [
+                        "10m",
+                        "100s"
+                    ],
+                    "default": ""
+                },
+                "diskFullKubeletTimeout": {
+                    "type": "string",
+                    "title": "DiskFullKubelet timeout",
+                    "description": "Determines how long a machine health check should wait for a node with condition DiskFullKubelet=True before considering a machine unhealthy. Use an empty value to not consider this condition.",
+                    "examples": [
+                        "10m",
+                        "100s"
+                    ],
+                    "default": ""
+                },
+                "diskFullVarLogTimeout": {
+                    "type": "string",
+                    "title": "DiskFullVarLog timeout",
+                    "description": "Determines how long a machine health check should wait for a node with condition DiskFullVarLog=True before considering a machine unhealthy. Use an empty value to not consider this condition.",
+                    "examples": [
+                        "10m",
+                        "100s"
+                    ],
+                    "default": ""
+                },
                 "enabled": {
                     "type": "boolean",
-                    "title": "Enabled",
-                    "description": "Enable machine health checks.",
+                    "title": "Enable",
                     "default": true
                 },
                 "maxUnhealthy": {
                     "type": "string",
-                    "title": "Max unhealthy",
-                    "description": "Maximum number or percentage of unhealthy nodes.",
+                    "title": "Maximum unhealthy nodes",
+                    "description": "Defaults to 40% for control plane nodes and 20% for worker nodes.",
+                    "examples": [
+                        "40%"
+                    ],
                     "default": "40%"
                 },
                 "nodeStartupTimeout": {
                     "type": "string",
                     "title": "Node startup timeout",
-                    "description": "Time to wait for a node to become healthy.",
+                    "description": "Determines how long a machine health check should wait for a node to join the cluster, before considering a machine unhealthy.",
+                    "examples": [
+                        "10m",
+                        "100s"
+                    ],
                     "default": "20m0s"
                 },
                 "unhealthyNotReadyTimeout": {
                     "type": "string",
-                    "title": "Unhealthy not ready timeout",
-                    "description": "Time to wait for a node to become ready.",
+                    "title": "Timeout for ready",
+                    "description": "If a node is not in condition 'Ready' after this timeout, it will be considered unhealthy.",
+                    "examples": [
+                        "300s"
+                    ],
                     "default": "10m0s"
                 },
                 "unhealthyUnknownTimeout": {
                     "type": "string",
-                    "title": "Unhealthy unknown timeout",
-                    "description": "Time to wait for a node to become known.",
+                    "title": "Timeout for unknown condition",
+                    "description": "If a node is in 'Unknown' condition after this timeout, it will be considered unhealthy.",
+                    "examples": [
+                        "300s"
+                    ],
                     "default": "10m0s"
                 }
             }
@@ -233,6 +277,9 @@
                         "nodeExporter": {
                             "configTemplateName": "vSphereNodeExporterHelmValues",
                             "enable": true
+                        },
+                        "nodeProblemDetector": {
+                            "enable": false
                         },
                         "observabilityBundle": {
                             "enable": true
