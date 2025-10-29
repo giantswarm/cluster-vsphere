@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.4.0] - 2025-10-29
+
 ### Changed
 
 - Chart: Update `cluster` to v4.4.0.
@@ -919,7 +921,8 @@ at least 1 public IP is always needed for the ingress controller to be able to e
 
 - Initial chart implementation.
 
-[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v3.3.0...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v3.4.0...HEAD
+[3.4.0]: https://github.com/giantswarm/cluster-vsphere/compare/v3.3.0...v3.4.0
 [3.3.0]: https://github.com/giantswarm/cluster-vsphere/compare/v3.2.0...v3.3.0
 [3.2.0]: https://github.com/giantswarm/cluster-vsphere/compare/v3.1.0...v3.2.0
 [3.1.0]: https://github.com/giantswarm/cluster-vsphere/compare/v3.0.2...v3.1.0
