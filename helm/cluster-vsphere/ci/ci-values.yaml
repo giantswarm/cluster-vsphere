@@ -1,4 +1,5 @@
 global:
+  managementCluster: test-mc
   metadata:
     description: "test cluster"
     name: "test"
