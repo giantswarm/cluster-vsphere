@@ -1,11 +1,10 @@
 apiVersion: {{ include "infrastructureApiVersion" . }}
 kind: VSphereCluster
 metadata:
-  {{- if .Values.global.providerSpecific.additionalVsphereClusterAnnotations }}
   annotations:
+    "helm.sh/resource-policy": keep
   {{- range $annotation := .Values.global.providerSpecific.additionalVsphereClusterAnnotations }}
   {{ $annotation | indent 2 }}
-  {{- end }}
   {{- end }}
   name: {{ include "resource.default.name" $ }}
   namespace: {{ .Release.Namespace }}
