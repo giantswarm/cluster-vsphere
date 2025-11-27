@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.5.0] - 2025-11-27
+
 ### Added
 
 - Add the `priority-classes` default app, enabled by default. This app provides standardised `PriorityClass` resources like `giantswarm-critical` and `giantswarm-high`, which should replace the previous inconsistent per-app priority classes.
@@ -934,7 +936,8 @@ at least 1 public IP is always needed for the ingress controller to be able to e
 
 - Initial chart implementation.
 
-[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v3.4.0...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v3.5.0...HEAD
+[3.5.0]: https://github.com/giantswarm/cluster-vsphere/compare/v3.4.0...v3.5.0
 [3.4.0]: https://github.com/giantswarm/cluster-vsphere/compare/v3.3.0...v3.4.0
 [3.3.0]: https://github.com/giantswarm/cluster-vsphere/compare/v3.2.0...v3.3.0
 [3.2.0]: https://github.com/giantswarm/cluster-vsphere/compare/v3.1.0...v3.2.0
