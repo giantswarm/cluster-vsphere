@@ -246,7 +246,9 @@ global:
       network: {}
       numCPUs: 4
       resourcePool: '*/Resources'
-    oidc: {}
+    oidc:
+      structuredAuthentication:
+        enabled: false
   metadata:
     preventDeletion: false
     servicePriority: highest
