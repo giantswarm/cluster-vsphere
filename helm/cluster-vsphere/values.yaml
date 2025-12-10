@@ -201,6 +201,8 @@ global:
           - /etc/cdi
           - /var/run/cdi
       containerRegistries: {}
+      debug:
+        level: info
       localRegistryCache:
         enabled: false
         mirroredRegistries: []
@@ -246,7 +248,9 @@ global:
       network: {}
       numCPUs: 4
       resourcePool: '*/Resources'
-    oidc: {}
+    oidc:
+      structuredAuthentication:
+        enabled: false
   metadata:
     preventDeletion: false
     servicePriority: highest
