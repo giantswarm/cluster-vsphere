@@ -18,6 +18,12 @@
     {{- end }}
 {{- end }}
 
+{{- define "isKamaji" -}}
+    {{- if eq $.Values.cluster.providerIntegration.resourcesApi.controlPlaneResource.provider "kamaji" }}
+        {{- printf "true" -}}
+    {{- end }}
+{{- end }}
+
 
 {{/*
     The cluster.x-k8s.io/cluster-name label must not be added to IPAddressClaim resource,
