@@ -49,3 +49,20 @@ spec:
       region: "{{ .Values.global.providerSpecific.vcenter.region }}"
       zone: "{{ .Values.global.providerSpecific.vcenter.zone }}"
       thumbprint: "{{ .Values.global.providerSpecific.vcenter.thumbprint }}"
+    {{- if eq $.Values.cluster.providerIntegration.resourcesApi.controlPlaneResource.provider "kamaji" }}
+    daemonset:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/os
+                operator: In
+                values:
+                - linux
+      tolerations:
+      - effect: NoExecute
+        operator: Exists
+      - effect: NoSchedule
+        operator: Exists
+    {{- end }}

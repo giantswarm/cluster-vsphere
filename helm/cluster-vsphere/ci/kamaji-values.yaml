@@ -1,0 +1,130 @@
+global:
+  managementCluster: test-mc
+  metadata:
+    description: "test cluster"
+    name: "test"
+    organization: "giantswarm"
+  connectivity:
+    network:
+      controlPlaneEndpoint:
+        host: "10.10.222.241"
+        port: 6443
+      loadBalancers:
+        cidrBlocks:
+          - "10.10.222.224/30"
+    baseDomain: k8s.test
+  controlPlane:
+    replicas: 1
+    machineTemplate:
+      cloneMode: "linkedClone"
+      diskGiB: 25
+      numCPUs: 2
+      memoryMiB: 8192
+      resourcePool: "grasshopper"
+      network:
+        devices:
+          - networkName: 'grasshopper-capv'
+            dhcp4: true
+  nodePools:
+    worker:
+      replicas: 2
+      cloneMode: "linkedClone"
+      diskGiB: 25
+      numCPUs: 2
+      memoryMiB: 8192
+      resourcePool: "grasshopper"
+      network:
+        devices:
+          - networkName: 'grasshopper-capv'
+            dhcp4: true
+  providerSpecific:
+    # templateSuffix: "paris"
+    vcenter:
+      server: "https://foo.example.com"
+      username: "vcenter-admin"
+      password: "vcenter-admin-password"
+      datacenter: "Datacenter"
+      datastore: "vsanDatastore"
+      # openssl s_client -connect https://foo.example.com < /dev/null 2>/dev/null | openssl x509 -fingerprint -noout -in /dev/stdin
+      thumbprint: "F7:CF:F9:E5:99:39:FF:C1:D7:14:F1:3F:8A:42:21:95:3B:A1:6E:16"
+      region: "k8s-region"
+      zone: "k8s-zone"
+  release:
+    version: v27.0.0
+cluster:
+  internal:
+    ephemeralConfiguration:
+      offlineTesting:
+        renderWithoutReleaseResource: true
+  providerIntegration:
+    resourcesApi:
+      controlPlaneResource:
+        enabled: true
+        provider: kamaji
+    controlPlane:
+      resources:
+        controlPlane:
+          api:
+            group: controlplane.cluster.x-k8s.io
+            kind: KamajiControlPlane
+            version: v1alpha1
+      kamaji:
+        dataStoreName: default
+        apiServer:
+          extraArgs:
+          - "--enable-admission-plugins=PodSecurity"
+          - "--audit-log-path=/var/log/kubernetes/audit.log"
+        controllerManager:
+          extraArgs:
+          - "--bind-address=0.0.0.0"
+        scheduler:
+          extraArgs:
+          - "--bind-address=0.0.0.0"
+        addons:
+        deployment:
+          additionalMetadata:
+            labels:
+              app: kamaji-control-plane
+            annotations:
+              example.io/annotation: "value"
+          podAdditionalMetadata:
+            labels:
+              pod-label: "true"
+            annotations:
+              pod-annotation: "value"
+          affinity:
+            podAntiAffinity:
+              preferredDuringSchedulingIgnoredDuringExecution:
+              - weight: 100
+                podAffinityTerm:
+                  labelSelector:
+                    matchExpressions:
+                    - key: app
+                      operator: In
+                      values:
+                      - kamaji-control-plane
+                  topologyKey: kubernetes.io/hostname
+          nodeSelector:
+            node-role.kubernetes.io/control-plane: ""
+          tolerations:
+          - key: node-role.kubernetes.io/control-plane
+            operator: Exists
+            effect: NoSchedule
+          topologySpreadConstraints:
+          - maxSkew: 1
+            topologyKey: topology.kubernetes.io/zone
+            whenUnsatisfiable: DoNotSchedule
+            labelSelector:
+              matchLabels:
+                app: kamaji-control-plane
+        kubelet:
+          cgroupfs: systemd
+          preferredAddressTypes:
+          - InternalIP
+          - ExternalIP
+        network:
+          serviceType: LoadBalancer
+          serviceAddress: "10.96.0.1"
+          certSANs:
+          - "kamaji-test.example.gigantic.io"
+          - "10.96.0.1"

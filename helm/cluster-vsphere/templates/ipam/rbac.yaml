@@ -36,9 +36,15 @@ rules:
     resources: ["ipaddresses"]
     verbs: ["get", "list"]
   - apiGroups: ["controlplane.cluster.x-k8s.io"]
-    resources: ["kubeadmcontrolplanes","kamajicontrolplanes"]
+    resources: ["kubeadmcontrolplanes"]
     resourceNames: ["{{ include "resource.default.name" $ }}"]
     verbs: ["get", "patch"]
+{{- if eq $.Values.cluster.providerIntegration.resourcesApi.controlPlaneResource.provider "kamaji" }}
+  - apiGroups: ["controlplane.cluster.x-k8s.io"]
+    resources: ["kamajicontrolplanes"]
+    resourceNames: ["{{ include "resource.default.name" $ }}"]
+    verbs: ["get", "patch"]
+{{- end }}
   - apiGroups: [""]
     resources: ["secrets"]
     resourceNames: ["{{ include "resource.default.name" $ }}-kubevip-pod"]
