@@ -3,7 +3,7 @@
 {{- define "vSphereNetworkPoliciesHelmValues" }}
 allowEgressToDNS:
   enabled: true
-{{- if eq $.Values.cluster.providerIntegration.resourcesApi.controlPlaneResource.provider "kamaji" }}
+{{- if eq .Values.providerIntegration.resourcesApi.controlPlaneResource.provider "kamaji" }}
 kamaji: 
   enabled: true
 {{- end }}
