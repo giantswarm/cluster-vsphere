@@ -31,7 +31,10 @@ spec:
   interval: {{ (((.Values.internal).helmReleases).kubeVIPCPI).interval | default "10m" }}
   install:
     remediation:
-      retries: 30
+      retries: -1
     cm:
       data:
         cidr-global: '{{ join "," .Values.global.connectivity.network.loadBalancers.cidrBlocks }}'
+  upgrade:
+    remediation:
+      retries: -1
