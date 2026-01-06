@@ -61,9 +61,7 @@ cluster:
     controlPlane:
       kamaji:
         addons:
-          coreDNS: {}
           konnectivity: {}
-          kubeProxy: {}
         apiServer:
           extraArgs:
             - --enable-admission-plugins=PodSecurity

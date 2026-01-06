@@ -306,9 +306,7 @@
                     "controlPlane": {
                         "kamaji": {
                             "addons": {
-                                "coreDNS": {},
-                                "konnectivity": {},
-                                "kubeProxy": {}
+                                "konnectivity": {}
                             },
                             "apiServer": {
                                 "extraArgs": [
