@@ -20,7 +20,7 @@ restrictions:
     - vsphere
 dependencies:
   - name: cluster
-    version: "5.1.0-937968ede9b595e3ee805e467de17e98cb9de764"
+    version: "5.1.0-3578a432d9aa0d2770b4d3732aef00b0ca138c0d"
     repository: "https://giantswarm.github.io/cluster-test-catalog"
   - name: cluster-shared
     version: "0.7.1"
