@@ -306,7 +306,11 @@
                     "controlPlane": {
                         "kamaji": {
                             "addons": {
-                                "konnectivity": {}
+                                "konnectivity": {
+                                    "server": {
+                                        "port": "8132"
+                                    }
+                                }
                             },
                             "apiServer": {
                                 "extraArgs": [
