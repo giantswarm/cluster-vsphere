@@ -71,7 +71,6 @@ cluster:
           extraArgs:
             - --cloud-provider=external
             - --bind-address=0.0.0.0
-        dataStoreName: ""
         deployment:
           additionalMetadata:
             annotations: {}
