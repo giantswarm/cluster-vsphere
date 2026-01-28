@@ -27,6 +27,7 @@ spec:
   install:
     remediation:
       retries: -1
+  serviceAccountName: automation
   upgrade:
     remediation:
       retries: -1
