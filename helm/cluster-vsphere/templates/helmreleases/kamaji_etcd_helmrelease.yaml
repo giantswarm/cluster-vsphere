@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: {{ include "resource.default.name" $ }}-etcd
+  name: {{ include "resource.default.name" $ }}-kamaji-etcd
   namespace: {{ $.Release.Namespace }}
   annotations:
     cluster.giantswarm.io/description: "{{ .Values.global.metadata.description }}"
