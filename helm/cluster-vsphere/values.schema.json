@@ -323,7 +323,7 @@
                                     "--bind-address=0.0.0.0"
                                 ]
                             },
-                            "dataStoreName": "default",
+                            "dataStoreName": "",
                             "deployment": {
                                 "additionalMetadata": {
                                     "annotations": {},
