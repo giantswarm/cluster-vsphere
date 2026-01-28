@@ -12,7 +12,7 @@ metadata:
     {{- include "labels.common" . | nindent 4 }}
 spec:
   suspend: false
-  releaseName: kamaji-etcd
+  releaseName: {{ include "resource.default.name" $ }}-kamaji-etcd
   targetNamespace: {{ $.Release.Namespace }}
   storageNamespace: {{ $.Release.Namespace }}
   chart:
@@ -27,7 +27,7 @@ spec:
   install:
     remediation:
       retries: -1
-  serviceAccountName: automation
+  serviceAccountName: {{ include "resource.default.name" $ }}-kamaji-etcd-helmrelease
   upgrade:
     remediation:
       retries: -1

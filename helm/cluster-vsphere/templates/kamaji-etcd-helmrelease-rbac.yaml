@@ -1,0 +1,191 @@
+---
+# ServiceAccount for Flux HelmRelease to install kamaji-etcd-app
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ include "resource.default.name" $ }}-kamaji-etcd-helmrelease
+  namespace: org-giantswarm
+---
+# Role for namespace-scoped resources
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "resource.default.name" $ }}-kamaji-etcd-helmrelease
+  namespace: org-giantswarm
+rules:
+  # Core Kubernetes resources
+  - apiGroups: [""]
+    resources:
+      - configmaps
+      - secrets
+      - services
+      - serviceaccounts
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch  # Required to grant watch permission in chart's RBAC
+  # Additional core resources for metrics RBAC (if ServiceMonitor enabled)
+  - apiGroups: [""]
+    resources:
+      - endpoints
+      - pods
+    verbs:
+      - get
+      - list
+      - watch
+  # Apps resources
+  - apiGroups: ["apps"]
+    resources:
+      - statefulsets
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch  # Required to grant watch permission in chart's RBAC
+  # Batch resources (for pre-install and post-delete jobs)
+  - apiGroups: ["batch"]
+    resources:
+      - jobs
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+  # RBAC resources (chart creates its own ServiceAccount, Role, RoleBinding)
+  - apiGroups: ["rbac.authorization.k8s.io"]
+    resources:
+      - roles
+      - rolebindings
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+  # cert-manager resources
+  - apiGroups: ["cert-manager.io"]
+    resources:
+      - certificates
+      - issuers
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+  # Monitoring resources (optional, if ServiceMonitor/PrometheusRule are in same namespace)
+  - apiGroups: ["monitoring.coreos.com"]
+    resources:
+      - servicemonitors
+      - prometheusrules
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+---
+# RoleBinding for namespace-scoped resources
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "resource.default.name" $ }}-kamaji-etcd-helmrelease
+  namespace: org-giantswarm
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ include "resource.default.name" $ }}-kamaji-etcd-helmrelease
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "resource.default.name" $ }}-kamaji-etcd-helmrelease
+    namespace: org-giantswarm
+---
+# Role for PolicyException (created in policy-exceptions namespace)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ include "resource.default.name" $ }}-kamaji-etcd-helmrelease-polex
+  namespace: policy-exceptions
+rules:
+  # For operations on existing PolicyExceptions (with name restriction)
+  - apiGroups: ["kyverno.io"]
+    resources:
+      - policyexceptions
+    resourceNames:
+      - {{ include "resource.default.name" $ }}-kamaji-etcd  # Only this specific PolicyException
+    verbs:
+      - delete
+      - get
+      - patch
+      - update
+  # For listing and creating (can't use resourceNames with these verbs)
+  - apiGroups: ["kyverno.io"]
+    resources:
+      - policyexceptions
+    verbs:
+      - create
+      - list
+---
+# RoleBinding for PolicyException in policy-exceptions namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ include "resource.default.name" $ }}-kamaji-etcd-helmrelease-polex
+  namespace: policy-exceptions
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ include "resource.default.name" $ }}-kamaji-etcd-helmrelease-polex
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "resource.default.name" $ }}-kamaji-etcd-helmrelease
+    namespace: org-giantswarm
+---
+# ClusterRole for DataStore (cluster-scoped resource)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ include "resource.default.name" $ }}-kamaji-etcd-helmrelease-datastores
+rules:
+  - apiGroups: ["kamaji.clastix.io"]
+    resources:
+      - datastores
+    resourceNames:
+      - {{ include "resource.default.name" $ }}
+    verbs:
+      - delete
+      - get
+      - patch
+      - update
+  - apiGroups: ["kamaji.clastix.io"]
+    resources:
+      - datastores
+    verbs:
+      - create
+      - list
+---
+# ClusterRoleBinding for DataStore
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ include "resource.default.name" $ }}-kamaji-etcd-helmrelease-datastores
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ include "resource.default.name" $ }}-kamaji-etcd-helmrelease-datastores
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "resource.default.name" $ }}-kamaji-etcd-helmrelease
+    namespace: org-giantswarm
