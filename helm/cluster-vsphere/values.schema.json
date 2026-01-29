@@ -339,6 +339,7 @@
                                 "tolerations": [],
                                 "topologySpreadConstraints": []
                             },
+                            "enabled": false,
                             "kubelet": {
                                 "cgroupfs": "systemd",
                                 "preferredAddressTypes": [
