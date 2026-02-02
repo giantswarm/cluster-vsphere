@@ -6,6 +6,7 @@ metadata:
   namespace: {{ $.Release.Namespace }}
   annotations:
     cluster.giantswarm.io/description: "{{ .Values.global.metadata.description }}"
+    helm.sh/resource-policy: keep  # Remove when tenantcontrolplane no longer depends on it
   labels:
     cluster-apps-operator.giantswarm.io/watching: ""
     giantswarm.io/service-priority: "{{ .Values.global.metadata.servicePriority }}"
@@ -17,7 +18,7 @@ spec:
   storageNamespace: {{ $.Release.Namespace }}
   chart:
     spec:
-      chart: kamaji-etcd
+      chart: kamaji-etcd 
       {{- $_ := set $ "appName" "kamaji-etcd" }}
       version: {{ include "cluster.app.version" $ }}
       sourceRef:
@@ -27,7 +28,7 @@ spec:
   install:
     remediation:
       retries: -1
-  serviceAccountName: {{ include "resource.default.name" $ }}-kamaji-etcd-helmrelease
+  serviceAccountName: automation
   upgrade:
     remediation:
       retries: -1
