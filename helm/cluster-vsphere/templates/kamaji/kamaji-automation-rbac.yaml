@@ -5,7 +5,7 @@ kind: ClusterRole
 metadata:
   name: {{ include "resource.default.name" $ }}-kamaji-etcd-helmrelease-datastores
   annotations:
-    helm.sh/resource-policy: keep
+    helm.sh/resource-policy: "keep"
   labels:
     {{- include "labels.common" $ | nindent 4 }}
 rules:
@@ -32,7 +32,7 @@ kind: ClusterRoleBinding
 metadata:
   name: {{ include "resource.default.name" $ }}-kamaji-etcd-helmrelease-datastores
   annotations:
-    helm.sh/resource-policy: keep
+    helm.sh/resource-policy: "keep"
   labels:
     {{- include "labels.common" $ | nindent 4 }}
 roleRef:
@@ -48,12 +48,10 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: {{ include "resource.default.name" $ }}-kamaji-etcd-helmrelease-polex
+  name: {{ include "resource.default.name" $ }}-kamaji-etcd-polex
   namespace: policy-exceptions
   annotations:
-    helm.sh/resource-policy: keep
-  labels:
-    {{- include "labels.common" $ | nindent 4 }}
+    helm.sh/resource-policy: "keep"
 rules:
   # For operations on existing PolicyExceptions (with name restriction)
   - apiGroups: ["kyverno.io"]
@@ -78,16 +76,14 @@ rules:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: {{ include "resource.default.name" $ }}-kamaji-etcd-helmrelease-polex
+  name: {{ include "resource.default.name" $ }}-kamaji-etcd-polex
   namespace: policy-exceptions
   annotations:
-    helm.sh/resource-policy: keep
-  labels:
-    {{- include "labels.common" $ | nindent 4 }}
+    helm.sh/resource-policy: "keep"
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: {{ include "resource.default.name" $ }}-kamaji-etcd-helmrelease-polex
+  name: {{ include "resource.default.name" $ }}-kamaji-etcd-polex
 subjects:
   - kind: ServiceAccount
     name: automation

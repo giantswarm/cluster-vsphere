@@ -4,7 +4,7 @@ kind: PolicyException
 metadata:
   labels:
     app.kubernetes.io/managed-by: kyverno-policy-operator
-  name: {{ include "resource.default.name" $ }}-kamaji-tenantcontrolplane
+  name: {{ include "resource.default.name" $ }}-kamaji
   namespace: policy-exceptions
 spec:
   background: true

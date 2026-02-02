@@ -6,7 +6,7 @@ metadata:
   namespace: {{ $.Release.Namespace }}
   annotations:
     cluster.giantswarm.io/description: "{{ .Values.global.metadata.description }}"
-    helm.sh/resource-policy: keep  # Remove when tenantcontrolplane no longer depends on it
+    helm.sh/resource-policy: "keep"  # Remove when tenantcontrolplane no longer depends on it
   labels:
     cluster-apps-operator.giantswarm.io/watching: ""
     giantswarm.io/service-priority: "{{ .Values.global.metadata.servicePriority }}"
