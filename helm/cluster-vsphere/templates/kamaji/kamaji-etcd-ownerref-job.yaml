@@ -43,6 +43,17 @@ rules:
       - patch
       - update
       - delete
+  - apiGroups: [""]
+      resources: ["persistentvolumeclaims"]
+      verbs: ["list"]
+    - apiGroups: [""]
+      resources: ["persistentvolumeclaims"]
+      resourceNames:
+        # I don't think we'll ever have more than 6 etcd members
+        {{- range $i := until 6 }}
+        - {{ include "resource.default.name" $ }}-kamaji-etcd-{{ $i }}
+        {{- end }}
+      verbs: ["get", "patch", "update", "delete"]
 ---
 # RoleBinding for the ownerRef job
 apiVersion: rbac.authorization.k8s.io/v1
@@ -106,7 +117,7 @@ spec:
               HELMRELEASE_NAME="{{ include "resource.default.name" $ }}-kamaji-etcd"
               NAMESPACE="{{ $.Release.Namespace }}"
               
-              for i in {1..24}; do
+              for i in {1..30}; do
                 if kubectl get tenantcontrolplane.kamaji.clastix.io -n "${NAMESPACE}" "${CP_NAME}" >/dev/null 2>&1; then
                   echo "Resource found."
                   break
@@ -125,8 +136,7 @@ spec:
               CP_API_VERSION=$(kubectl get tenantcontrolplane.kamaji.clastix.io -n ${NAMESPACE} ${CP_NAME} -o jsonpath='{.apiVersion}')
               CP_KIND=$(kubectl get tenantcontrolplane.kamaji.clastix.io -n ${NAMESPACE} ${CP_NAME} -o jsonpath='{.kind}')
               
-              # Add ownerReference to HelmRelease
-              kubectl patch helmrelease "${HELMRELEASE_NAME}" -n "${NAMESPACE}" --type=merge -p "{
+              OWNER_REF_JSON="{
                 \"metadata\": {
                   \"ownerReferences\": [
                     {
@@ -140,4 +150,21 @@ spec:
                   ]
                 }
               }"
+
+              # PATCHING HelmRelease
+              echo "Adding ownerReference to HelmRelease ${HELMRELEASE_NAME}..."
+              kubectl patch helmrelease "${HELMRELEASE_NAME}" -n "${NAMESPACE}" --type=merge -p "$OWNER_REF_JSON"
+             
+              # PATCHING PVCs
+              SELECTOR="app.kubernetes.io/instance=${HELMRELEASE_NAME},app.kubernetes.io/name=kamaji-etcd"
+              PVC_LIST=$(kubectl get pvc -n "${NAMESPACE}" -l "app.kubernetes.io/instance=${HELMRELEASE_NAME},app.kubernetes.io/name=kamaji-etcd" -o jsonpath='{.items[*].metadata.name}')
+
+              if [ -z "$PVC_LIST" ]; then
+                echo "No PVCs found matching the combined label selector."
+              else
+                for PVC in $PVC_LIST; do
+                  echo "Adding ownerReference to PVC: ${PVC}"
+                  kubectl patch pvc "${PVC}" -n "${NAMESPACE}" --type=merge -p "$OWNER_REF_JSON"
+                done
+              fi
 {{- end }}
