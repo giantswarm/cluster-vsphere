@@ -81,3 +81,12 @@ MachineDeployments.
 {{- end -}}
 {{ toYaml $nodeMap }}
 {{- end }}
+
+{{/*
+Creates a flag indicating whether Kamaji is being used as control plane provider.
+*/}}
+{{- define "isKamaji" -}}
+    {{- if eq $.Values.cluster.providerIntegration.resourcesApi.controlPlaneResource.provider "kamaji" }}
+        {{- printf "true" -}}
+    {{- end }}
+{{- end }}

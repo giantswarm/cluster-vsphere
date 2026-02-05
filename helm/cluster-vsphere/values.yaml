@@ -59,6 +59,44 @@ cluster:
       verticalPodAutoscalerCrd:
         enable: true
     controlPlane:
+      kamaji:
+        addons:
+          konnectivity:
+            server:
+              port: "8132"
+        apiServer:
+          extraArgs:
+            - --enable-admission-plugins=PodSecurity
+        controllerManager:
+          extraArgs:
+            - --cloud-provider=external
+            - --bind-address=0.0.0.0
+        deployment:
+          additionalMetadata:
+            annotations: {}
+            labels: {}
+          affinity: {}
+          nodeSelector:
+            kubernetes.io/os: linux
+          podAdditionalMetadata:
+            annotations: {}
+            labels: {}
+          tolerations: []
+          topologySpreadConstraints: []
+        kubelet:
+          cgroupfs: systemd
+          preferredAddressTypes:
+            - InternalIP
+            - ExternalIP
+        network:
+          certSANs: []
+          serviceAddress: ""
+          serviceAnnotations: {}
+          serviceLabels: {}
+          serviceType: LoadBalancer
+        scheduler:
+          extraArgs:
+            - --bind-address=0.0.0.0
       kubeadmConfig:
         files:
           - contentFrom:

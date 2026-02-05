@@ -31,7 +31,10 @@ spec:
   interval: {{ (((.Values.internal).helmReleases).cpi).interval | default "10m" }}
   install:
     remediation:
-      retries: 30
+      retries: -1
+  upgrade:
+    remediation:
+      retries: -1
   valuesFrom:
     - kind: Secret
       name: {{ include "credentialSecretName" $ }}
@@ -49,3 +52,22 @@ spec:
       region: "{{ .Values.global.providerSpecific.vcenter.region }}"
       zone: "{{ .Values.global.providerSpecific.vcenter.zone }}"
       thumbprint: "{{ .Values.global.providerSpecific.vcenter.thumbprint }}"
+    {{- if eq $.Values.cluster.providerIntegration.resourcesApi.controlPlaneResource.provider "kamaji" }}
+    kamaji:
+      enabled: true
+    daemonset:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/os
+                operator: In
+                values:
+                - linux
+      tolerations:
+      - effect: NoExecute
+        operator: Exists
+      - effect: NoSchedule
+        operator: Exists
+    {{- end }}
