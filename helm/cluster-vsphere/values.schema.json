@@ -264,6 +264,9 @@
                         "k8sDnsNodeCache": {
                             "enable": true
                         },
+                        "kamajiEtcd": {
+                            "enable": true
+                        },
                         "metricsServer": {
                             "enable": true
                         },
