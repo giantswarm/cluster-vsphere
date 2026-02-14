@@ -32,6 +32,8 @@ cluster:
         enable: true
       k8sDnsNodeCache:
         enable: true
+      kamajiEtcd:
+        enable: true
       metricsServer:
         enable: true
       netExporter:
