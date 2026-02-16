@@ -7,6 +7,10 @@ cluster:
         apiServer:
           extraArgs:
             requestheader-allowed-names: front-proxy-client
+    kubectlImage:
+      name: giantswarm/kubectl
+      registry: gsoci.azurecr.io
+      tag: 1.29.9
   providerIntegration:
     apps:
       certExporter:
@@ -326,8 +330,3 @@ global:
     templateSuffix: ""
     vcenter: {}
   release: {}
-internal:
-  kubectlImage:
-    name: giantswarm/kubectl
-    registry: gsoci.azurecr.io
-    tag: 1.29.9

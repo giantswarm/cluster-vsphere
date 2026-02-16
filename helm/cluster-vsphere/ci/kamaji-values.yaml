@@ -69,7 +69,6 @@ cluster:
             kind: KamajiControlPlane
             version: v1alpha1
       kamaji:
-        dataStoreName: default
         apiServer:
           extraArgs:
           - "--enable-admission-plugins=PodSecurity"

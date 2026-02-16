@@ -227,6 +227,11 @@
                                 }
                             }
                         }
+                    },
+                    "kubectlImage": {
+                        "name": "giantswarm/kubectl",
+                        "registry": "gsoci.azurecr.io",
+                        "tag": "1.29.9"
                     }
                 },
                 "providerIntegration": {
@@ -1553,35 +1558,6 @@
                         "version": {
                             "type": "string",
                             "title": "Version"
-                        }
-                    }
-                }
-            }
-        },
-        "internal": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "kubectlImage": {
-                    "type": "object",
-                    "title": "Kubectl image",
-                    "description": "Used by cluster-shared library chart to configure coredns in-cluster.",
-                    "additionalProperties": false,
-                    "properties": {
-                        "name": {
-                            "type": "string",
-                            "title": "Repository",
-                            "default": "giantswarm/kubectl"
-                        },
-                        "registry": {
-                            "type": "string",
-                            "title": "Registry",
-                            "default": "gsoci.azurecr.io"
-                        },
-                        "tag": {
-                            "type": "string",
-                            "title": "Tag",
-                            "default": "1.29.9"
                         }
                     }
                 }
