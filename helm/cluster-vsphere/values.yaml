@@ -69,10 +69,11 @@ cluster:
         addons:
           konnectivity:
             server:
-              port: "8132"
+              port: 8132
         apiServer:
           extraArgs:
             - --enable-admission-plugins=PodSecurity
+            - --audit-log-path=/var/log/apiserver/audit.log
         controllerManager:
           extraArgs:
             - --cloud-provider=external
@@ -81,7 +82,18 @@ cluster:
           additionalMetadata:
             annotations: {}
             labels: {}
-          affinity: {}
+          affinity:
+            podAntiAffinity:
+              preferredDuringSchedulingIgnoredDuringExecution:
+                - podAffinityTerm:
+                    labelSelector:
+                      matchExpressions:
+                        - key: app
+                          operator: In
+                          values:
+                            - kamaji-control-plane
+                    topologyKey: kubernetes.io/hostname
+                  weight: 100
           nodeSelector:
             kubernetes.io/os: linux
           podAdditionalMetadata:
