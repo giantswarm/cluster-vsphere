@@ -10,7 +10,7 @@ cluster:
     kubectlImage:
       name: giantswarm/kubectl
       registry: gsoci.azurecr.io
-      tag: 1.29.9
+      tag: 1.33.4
   providerIntegration:
     apps:
       certExporter:
