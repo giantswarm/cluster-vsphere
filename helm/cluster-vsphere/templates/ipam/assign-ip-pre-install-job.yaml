@@ -108,7 +108,7 @@ spec:
 
                 echo "patching the ${PROVIDER_CP_KIND} resource - certSANs"
                 kubectl patch ${PROVIDER_CP_KIND} -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} --type json \
-                  -p '[{"op":"replace", "path":"/spec/network/certSANs/0", "value": "'${new_ip}'"}]'
+                  -p '[{"op":"add", "path":"/spec/network/certSANs", "value": ["'${new_ip}'"]}]'
 
               elif [ "${PROVIDER}" = "kubeadm" ] ; then
                 
