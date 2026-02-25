@@ -8,9 +8,9 @@ cluster:
           extraArgs:
             requestheader-allowed-names: front-proxy-client
     kubectlImage:
-      name: giantswarm/kubectl
+      name: giantswarm/docker-kubectl
       registry: gsoci.azurecr.io
-      tag: 1.33.4
+      tag: 1.34.4
   providerIntegration:
     apps:
       certExporter:
