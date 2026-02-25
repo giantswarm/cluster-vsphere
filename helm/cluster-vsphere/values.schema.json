@@ -765,7 +765,9 @@
                                             "items": {
                                                 "type": "string"
                                             },
-                                            "default": []
+                                            "default": [
+                                                "gsoci.azurecr.io"
+                                            ]
                                         }
                                     }
                                 },
