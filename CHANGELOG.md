@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.0.0] - 2026-02-26
+
 > [!WARNING]
 > IP address assignment for Loadbalancer Services has been broken since v1.0.0. This release fixes the issue.
 
@@ -967,7 +969,8 @@ at least 1 public IP is always needed for the ingress controller to be able to e
 
 - Initial chart implementation.
 
-[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v4.1.3...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v5.0.0...HEAD
+[5.0.0]: https://github.com/giantswarm/cluster-vsphere/compare/v4.1.3...v5.0.0
 [4.1.3]: https://github.com/giantswarm/cluster-vsphere/compare/v4.1.2...v4.1.3
 [4.1.2]: https://github.com/giantswarm/cluster-vsphere/compare/v4.1.1...v4.1.2
 [4.1.1]: https://github.com/giantswarm/cluster-vsphere/compare/v4.1.0...v4.1.1
