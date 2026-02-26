@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+> [!WARNING]
+> IP address assignment for Loadbalancer Services has been broken since v1.0.0. This release fixes the issue.
+
 ### Fixed
 
 - Add missing `values` key to `kube-vip-cloud-provider` HelmRelease.
