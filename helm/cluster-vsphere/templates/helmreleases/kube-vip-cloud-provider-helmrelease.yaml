@@ -32,6 +32,7 @@ spec:
   install:
     remediation:
       retries: 30
+  values:
     cm:
       data:
         cidr-global: '{{ join "," .Values.global.connectivity.network.loadBalancers.cidrBlocks }}'
