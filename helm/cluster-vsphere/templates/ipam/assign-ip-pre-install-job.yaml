@@ -43,7 +43,7 @@ spec:
         - name: pre-upgrade-job
           {{- include "ipamJobContainerCommon" . | nindent 10 }}
           command:
-            - "/bin/bash"
+            - "/bin/sh"
             - "-xc"
             - kubectl patch cluster.cluster.x-k8s.io -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} --type=merge -p '{"spec":{"paused":true}}'
 {{- if (include "isIpamSvcLoadBalancerEnabled" $) }}
@@ -80,7 +80,7 @@ spec:
         - name: get-ip-for-control-plane
           {{- include "ipamJobContainerCommon" . | nindent 10 }}
           command:
-            - "/bin/bash"
+            - "/bin/sh"
             - "-c"
             - |
               set -o errexit
@@ -124,7 +124,7 @@ spec:
               
               # patch also the static pod for kube-vip
               encoded=$(kubectl get secret -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }}-kubevip-pod -o jsonpath={.data.content} \
-                | base64 --decode \
+                | base64 -d \
                 | tr '\n' '\r' \
                 | sed -e "s/vip_address\\r[^$(printf '\r')]*/vip_address\\r      value: ${new_ip}/" \
                 | tr '\r' '\n' \
@@ -136,7 +136,7 @@ spec:
         - name: get-ip-for-svc-lb
           {{- include "ipamJobContainerCommon" . | nindent 10 }}
           command:
-            - "/bin/bash"
+            - "/bin/sh"
             - "-c"
             - |
               set -o errexit
@@ -175,7 +175,7 @@ spec:
         - name: resume-cluster
           {{- include "ipamJobContainerCommon" . | nindent 10 }}
           command:
-            - "/bin/bash"
+            - "/bin/sh"
             - "-c"
             - |
               set -o errexit
@@ -188,7 +188,7 @@ spec:
         - name: update-kamaji-lb-ip-hook
           {{- include "ipamJobContainerCommon" . | nindent 10 }}
           command:
-            - "/bin/bash"
+            - "/bin/sh"
             - "-c"
             - |
               echo "Waiting for service {{ include "resource.default.name" $ }}"
