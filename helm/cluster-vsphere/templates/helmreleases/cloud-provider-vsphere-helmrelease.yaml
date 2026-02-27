@@ -28,7 +28,7 @@ spec:
   kubeConfig:
     secretRef:
       name: {{ include "resource.default.name" $ }}-kubeconfig
-  interval: {{ (((.Values.internal).helmReleases).cpi).interval | default "10m" }}
+  interval: {{ (((.Values.internal).helmReleases).cpi).interval | default "5m" }}
   install:
     remediation:
       retries: 30
