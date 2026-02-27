@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- HelmReleases: Reduce hard-coded default interval from 10m to 5m.
+
 ## [4.1.3] - 2026-02-18
 
 ### Changed
