@@ -1,7 +1,11 @@
+{{/*
+Generates template spec for worker machines.
+*/}}
 {{- define "worker-vspheremachinetemplate-spec" -}}
 {{- $pool := $.nodePool.config | deepCopy -}}
 {{- $pool = unset $pool "replicas" -}}
 {{- $pool = unset $pool "machineHealthCheck" -}}
+{{- $pool = unset $pool "strategy" -}}
 
 {{- $osName := include "cluster.os.name" $ }}
 {{- $osReleaseChannel := include "cluster.os.releaseChannel" $ }}
