@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Allow adding additonial properties into global.metadata. 
+- Allow adding additional properties into global.metadata. 
 
 ## [6.1.0] - 2026-03-18
 
