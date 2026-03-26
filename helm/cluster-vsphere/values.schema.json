@@ -1254,7 +1254,7 @@
                 "metadata": {
                     "type": "object",
                     "title": "Metadata",
-                    "additionalProperties": false,
+                    "additionalProperties": true,
                     "properties": {
                         "description": {
                             "type": "string",
