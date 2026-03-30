@@ -62,6 +62,7 @@ cluster:
         enable: true
       verticalPodAutoscalerCrd:
         enable: true
+    clusterAnnotationsTemplateName: vSphereClusterAnnotations
     controlPlane:
       kubeadmConfig:
         files:
@@ -219,6 +220,7 @@ global:
         enabled: false
   connectivity:
     containerRegistries: {}
+    dns: {}
     localRegistryCache:
       enabled: false
       mirroredRegistries: []
