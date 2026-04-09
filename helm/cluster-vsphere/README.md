@@ -4,16 +4,6 @@ This page lists all available configuration options, based on the [configuration
 
 <!-- DOCS_START -->
 
-### 
-Properties within the `.internal` top-level object
-
-| **Property** | **Description** | **More Details** |
-| :----------- | :-------------- | :--------------- |
-| `internal.kubectlImage` | **Kubectl image** - Used by cluster-shared library chart to configure coredns in-cluster.|**Type:** `object`<br/>|
-| `internal.kubectlImage.name` | **Repository**|**Type:** `string`<br/>**Default:** `"giantswarm/kubectl"`|
-| `internal.kubectlImage.registry` | **Registry**|**Type:** `string`<br/>**Default:** `"gsoci.azurecr.io"`|
-| `internal.kubectlImage.tag` | **Tag**|**Type:** `string`<br/>**Default:** `"1.29.9"`|
-
 ### Components
 Properties within the `.global.components` object
 Advanced configuration of components that are running on all nodes.
@@ -263,6 +253,16 @@ Information about the workload cluster release.
 | **Property** | **Description** | **More Details** |
 | :----------- | :-------------- | :--------------- |
 | `global.release.version` | **Version**|**Type:** `string`<br/>|
+
+### internal
+Properties within the `.internal` top-level object
+
+| **Property** | **Description** | **More Details** |
+| :----------- | :-------------- | :--------------- |
+| `internal.kubectlImage` | **Kubectl image** - Used by cluster-shared library chart to configure coredns in-cluster.|**Type:** `object`<br/>|
+| `internal.kubectlImage.name` | **Repository**|**Type:** `string`<br/>**Default:** `"giantswarm/kubectl"`|
+| `internal.kubectlImage.registry` | **Registry**|**Type:** `string`<br/>**Default:** `"gsoci.azurecr.io"`|
+| `internal.kubectlImage.tag` | **Tag**|**Type:** `string`<br/>**Default:** `"1.29.9"`|
 
 ### Other
 
