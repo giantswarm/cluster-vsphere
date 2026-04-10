@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Update `giantswarm/cluster` to v6.3.0.
 
+### Removed
+
+- Chart: Remove unused `cluster-shared` library chart dependency.
+
 ## [6.1.1] - 2026-03-27
 
 ### Fixed
