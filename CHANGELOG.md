@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [5.1.3] - 2026-04-15
+
 ### Fixed
 
 - Allow adding additional properties into global.metadata.
@@ -998,7 +1000,8 @@ at least 1 public IP is always needed for the ingress controller to be able to e
 
 - Initial chart implementation.
 
-[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v5.1.2...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v5.1.3...HEAD
+[5.1.3]: https://github.com/giantswarm/cluster-vsphere/compare/v5.1.2...v5.1.3
 [5.1.2]: https://github.com/giantswarm/cluster-vsphere/compare/v5.1.1...v5.1.2
 [5.1.1]: https://github.com/giantswarm/cluster-vsphere/compare/v5.1.0...v5.1.1
 [5.1.0]: https://github.com/giantswarm/cluster-vsphere/compare/v5.0.0...v5.1.0
