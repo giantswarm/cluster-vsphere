@@ -217,6 +217,11 @@
                                 }
                             }
                         }
+                    },
+                    "kubectlImage": {
+                        "name": "giantswarm/docker-kubectl",
+                        "registry": "gsoci.azurecr.io",
+                        "tag": "1.34.4"
                     }
                 },
                 "providerIntegration": {
@@ -261,7 +266,7 @@
                             "enable": true
                         },
                         "kamajiEtcd": {
-                            "enable": false
+                            "enable": true
                         },
                         "metricsServer": {
                             "enable": true
@@ -307,6 +312,84 @@
                     },
                     "clusterAnnotationsTemplateName": "vSphereClusterAnnotations",
                     "controlPlane": {
+                        "kamaji": {
+                            "addons": {
+                                "konnectivity": {
+                                    "server": {
+                                        "port": 8132
+                                    }
+                                }
+                            },
+                            "apiServer": {
+                                "extraArgs": [
+                                    "--enable-admission-plugins=PodSecurity",
+                                    "--audit-log-path=/var/log/apiserver/audit.log"
+                                ]
+                            },
+                            "controllerManager": {
+                                "extraArgs": [
+                                    "--cloud-provider=external",
+                                    "--bind-address=0.0.0.0"
+                                ]
+                            },
+                            "deployment": {
+                                "additionalMetadata": {
+                                    "annotations": {},
+                                    "labels": {}
+                                },
+                                "affinity": {
+                                    "podAntiAffinity": {
+                                        "preferredDuringSchedulingIgnoredDuringExecution": [
+                                            {
+                                                "podAffinityTerm": {
+                                                    "labelSelector": {
+                                                        "matchExpressions": [
+                                                            {
+                                                                "key": "app",
+                                                                "operator": "In",
+                                                                "values": [
+                                                                    "kamaji-control-plane"
+                                                                ]
+                                                            }
+                                                        ]
+                                                    },
+                                                    "topologyKey": "kubernetes.io/hostname"
+                                                },
+                                                "weight": 100
+                                            }
+                                        ]
+                                    }
+                                },
+                                "nodeSelector": {
+                                    "kubernetes.io/os": "linux"
+                                },
+                                "podAdditionalMetadata": {
+                                    "annotations": {},
+                                    "labels": {}
+                                },
+                                "tolerations": [],
+                                "topologySpreadConstraints": []
+                            },
+                            "kubelet": {
+                                "cgroupfs": "systemd",
+                                "preferredAddressTypes": [
+                                    "InternalIP",
+                                    "ExternalIP"
+                                ]
+                            },
+                            "network": {
+                                "certSANs": [],
+                                "serviceAddress": "",
+                                "serviceAnnotations": {},
+                                "serviceLabels": {},
+                                "serviceType": "LoadBalancer"
+                            },
+                            "scheduler": {
+                                "extraArgs": [
+                                    "--bind-address=0.0.0.0"
+                                ]
+                            }
+                        },
                         "kubeadmConfig": {
                             "files": [
                                 {
@@ -1511,35 +1594,6 @@
                         "version": {
                             "type": "string",
                             "title": "Version"
-                        }
-                    }
-                }
-            }
-        },
-        "internal": {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-                "kubectlImage": {
-                    "type": "object",
-                    "title": "Kubectl image",
-                    "description": "Used by cluster-shared library chart to configure coredns in-cluster.",
-                    "additionalProperties": false,
-                    "properties": {
-                        "name": {
-                            "type": "string",
-                            "title": "Repository",
-                            "default": "giantswarm/kubectl"
-                        },
-                        "registry": {
-                            "type": "string",
-                            "title": "Registry",
-                            "default": "gsoci.azurecr.io"
-                        },
-                        "tag": {
-                            "type": "string",
-                            "title": "Tag",
-                            "default": "1.29.9"
                         }
                     }
                 }

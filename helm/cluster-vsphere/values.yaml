@@ -7,6 +7,10 @@ cluster:
         apiServer:
           extraArgs:
             requestheader-allowed-names: front-proxy-client
+    kubectlImage:
+      name: giantswarm/docker-kubectl
+      registry: gsoci.azurecr.io
+      tag: 1.34.4
   providerIntegration:
     apps:
       certExporter:
@@ -37,7 +41,7 @@ cluster:
       k8sDnsNodeCache:
         enable: true
       kamajiEtcd:
-        enable: false
+        enable: true
       metricsServer:
         enable: true
       netExporter:
@@ -68,6 +72,56 @@ cluster:
         enable: true
     clusterAnnotationsTemplateName: vSphereClusterAnnotations
     controlPlane:
+      kamaji:
+        addons:
+          konnectivity:
+            server:
+              port: 8132
+        apiServer:
+          extraArgs:
+            - --enable-admission-plugins=PodSecurity
+            - --audit-log-path=/var/log/apiserver/audit.log
+        controllerManager:
+          extraArgs:
+            - --cloud-provider=external
+            - --bind-address=0.0.0.0
+        deployment:
+          additionalMetadata:
+            annotations: {}
+            labels: {}
+          affinity:
+            podAntiAffinity:
+              preferredDuringSchedulingIgnoredDuringExecution:
+                - podAffinityTerm:
+                    labelSelector:
+                      matchExpressions:
+                        - key: app
+                          operator: In
+                          values:
+                            - kamaji-control-plane
+                    topologyKey: kubernetes.io/hostname
+                  weight: 100
+          nodeSelector:
+            kubernetes.io/os: linux
+          podAdditionalMetadata:
+            annotations: {}
+            labels: {}
+          tolerations: []
+          topologySpreadConstraints: []
+        kubelet:
+          cgroupfs: systemd
+          preferredAddressTypes:
+            - InternalIP
+            - ExternalIP
+        network:
+          certSANs: []
+          serviceAddress: ""
+          serviceAnnotations: {}
+          serviceLabels: {}
+          serviceType: LoadBalancer
+        scheduler:
+          extraArgs:
+            - --bind-address=0.0.0.0
       kubeadmConfig:
         files:
           - contentFrom:
@@ -297,8 +351,3 @@ global:
     templateSuffix: ""
     vcenter: {}
   release: {}
-internal:
-  kubectlImage:
-    name: giantswarm/kubectl
-    registry: gsoci.azurecr.io
-    tag: 1.29.9
