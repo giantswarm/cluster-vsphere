@@ -175,16 +175,6 @@
                     "title": "Rolling update strategy",
                     "description": "Rolling update config params.",
                     "properties": {
-                        "deletePolicy": {
-                            "type": "string",
-                            "title": "Delete policy",
-                            "description": "DeletePolicy defines the policy used by the MachineDeployment to identify nodes to delete when downscaling. When no value is supplied, the default DeletePolicy of MachineSet is used.",
-                            "enum": [
-                                "Random",
-                                "Newest",
-                                "Oldest"
-                            ]
-                        },
                         "maxSurge": {
                             "type": "string",
                             "title": "Max surge",
@@ -254,6 +244,9 @@
                         "ciliumServiceMonitors": {
                             "enable": true
                         },
+                        "clusterProbes": {
+                            "enable": false
+                        },
                         "coreDns": {
                             "enable": true
                         },
@@ -265,6 +258,9 @@
                         },
                         "etcdKubernetesResourcesCountExporter": {
                             "enable": true
+                        },
+                        "externalDnsCrossplaneResources": {
+                            "enable": false
                         },
                         "k8sDnsNodeCache": {
                             "enable": true
@@ -298,6 +294,9 @@
                         "priorityClasses": {
                             "enable": true
                         },
+                        "rbacBootstrap": {
+                            "enable": true
+                        },
                         "securityBundle": {
                             "enable": true
                         },
@@ -311,6 +310,7 @@
                             "enable": true
                         }
                     },
+                    "clusterAnnotationsTemplateName": "vSphereClusterAnnotations",
                     "controlPlane": {
                         "kamaji": {
                             "addons": {
@@ -556,10 +556,6 @@
                     }
                 }
             }
-        },
-        "cluster-shared": {
-            "type": "object",
-            "title": "Library chart"
         },
         "global": {
             "type": "object",
@@ -856,6 +852,21 @@
                                 }
                             },
                             "default": {}
+                        },
+                        "dns": {
+                            "type": "object",
+                            "title": "DNS",
+                            "additionalProperties": false,
+                            "properties": {
+                                "wildcardCnameTarget": {
+                                    "type": "string",
+                                    "title": "Wildcard CNAME Target",
+                                    "description": "Override the wildcard CNAME record value. If no value is passed defaults to \"ingress\". Only subdomains from the cluster DNS zone are valid.",
+                                    "examples": [
+                                        "gateway"
+                                    ]
+                                }
+                            }
                         },
                         "localRegistryCache": {
                             "type": "object",
@@ -1344,7 +1355,7 @@
                 "metadata": {
                     "type": "object",
                     "title": "Metadata",
-                    "additionalProperties": false,
+                    "additionalProperties": true,
                     "properties": {
                         "description": {
                             "type": "string",

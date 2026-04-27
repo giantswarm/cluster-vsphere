@@ -7,6 +7,78 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [6.3.0] - 2026-04-16
+
+### Changed
+
+- Chart: Update `cluster` to v6.4.0.
+
+## [6.2.0] - 2026-04-09
+
+### Added
+
+- Add support for `network.giantswarm.io/wildcard-cname-target` annotation on the `Cluster` CR via `global.connectivity.dns.wildcardCnameTarget`.
+
+### Changed
+
+- Update `giantswarm/cluster` to v6.3.0.
+
+### Removed
+
+- Chart: Remove unused `cluster-shared` library chart dependency.
+
+## [6.1.1] - 2026-03-27
+
+### Fixed
+
+- Allow adding additional properties into global.metadata. 
+
+## [6.1.0] - 2026-03-18
+
+### Changed
+
+- Chart: Update `cluster` to v6.1.0.
+
+## [6.0.0] - 2026-03-10
+
+### Changed
+
+- Chart: Update `cluster` to v6.0.0.
+
+## [5.1.2] - 2026-03-05
+
+### Changed
+
+- Chart: Update `cluster` to v5.3.1.
+
+## [5.1.1] - 2026-02-27
+
+### Changed
+
+- HelmReleases: Reduce hard-coded default interval from 10m to 5m.
+
+## [5.1.0] - 2026-02-27
+
+### Changed
+
+- Chart: Update `cluster` to v5.3.0.
+- Apps: Enable `rbac-bootstrap` as a default HelmRelease app.
+
+## [5.0.0] - 2026-02-26
+
+> [!WARNING]
+> IP address assignment for Loadbalancer Services has been broken since v1.0.0. This release fixes the issue.
+
+### Fixed
+
+- Add missing `values` key to `kube-vip-cloud-provider` HelmRelease.
+
+## [4.1.4] - 2026-02-27
+
+### Changed
+
+- HelmReleases: Reduce hard-coded default interval from 10m to 5m.
+
 ## [4.1.3] - 2026-02-18
 
 ### Changed
@@ -960,7 +1032,17 @@ at least 1 public IP is always needed for the ingress controller to be able to e
 
 - Initial chart implementation.
 
-[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v4.1.3...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v6.3.0...HEAD
+[6.3.0]: https://github.com/giantswarm/cluster-vsphere/compare/v6.2.0...v6.3.0
+[6.2.0]: https://github.com/giantswarm/cluster-vsphere/compare/v6.1.1...v6.2.0
+[6.1.1]: https://github.com/giantswarm/cluster-vsphere/compare/v6.1.0...v6.1.1
+[6.1.0]: https://github.com/giantswarm/cluster-vsphere/compare/v6.0.0...v6.1.0
+[6.0.0]: https://github.com/giantswarm/cluster-vsphere/compare/v5.1.2...v6.0.0
+[5.1.2]: https://github.com/giantswarm/cluster-vsphere/compare/v5.1.1...v5.1.2
+[5.1.1]: https://github.com/giantswarm/cluster-vsphere/compare/v5.1.0...v5.1.1
+[5.1.0]: https://github.com/giantswarm/cluster-vsphere/compare/v5.0.0...v5.1.0
+[5.0.0]: https://github.com/giantswarm/cluster-vsphere/compare/v4.1.4...v5.0.0
+[4.1.4]: https://github.com/giantswarm/cluster-vsphere/compare/v4.1.3...v4.1.4
 [4.1.3]: https://github.com/giantswarm/cluster-vsphere/compare/v4.1.2...v4.1.3
 [4.1.2]: https://github.com/giantswarm/cluster-vsphere/compare/v4.1.1...v4.1.2
 [4.1.1]: https://github.com/giantswarm/cluster-vsphere/compare/v4.1.0...v4.1.1

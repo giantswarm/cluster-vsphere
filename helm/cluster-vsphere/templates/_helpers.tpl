@@ -58,6 +58,15 @@ giantswarm.io/prevent-deletion: "true"
 {{ end -}}
 {{- end -}}
 
+{{- define "vSphereClusterAnnotations" }}
+{{- if .Values.global.connectivity.dns.wildcardCnameTarget }}
+{{- if regexMatch "\\." .Values.global.connectivity.dns.wildcardCnameTarget }}
+{{- fail "global.connectivity.dns.wildcardCnameTarget must be a single word - no FQDNs are allowed" }}
+{{- end }}
+network.giantswarm.io/wildcard-cname-target: "{{ .Values.global.connectivity.dns.wildcardCnameTarget }}"
+{{- end }}
+{{- end }}
+
 {{- define "securityContext.runAsUser" -}}
 1000
 {{- end -}}

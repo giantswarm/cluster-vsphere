@@ -26,6 +26,8 @@ cluster:
         enable: true
       ciliumServiceMonitors:
         enable: true
+      clusterProbes:
+        enable: false
       coreDns:
         enable: true
       coreDnsExtensions:
@@ -34,6 +36,8 @@ cluster:
         enable: true
       etcdKubernetesResourcesCountExporter:
         enable: true
+      externalDnsCrossplaneResources:
+        enable: false
       k8sDnsNodeCache:
         enable: true
       kamajiEtcd:
@@ -56,6 +60,8 @@ cluster:
         enable: true
       priorityClasses:
         enable: true
+      rbacBootstrap:
+        enable: true
       securityBundle:
         enable: true
       teleportKubeAgent:
@@ -64,6 +70,7 @@ cluster:
         enable: true
       verticalPodAutoscalerCrd:
         enable: true
+    clusterAnnotationsTemplateName: vSphereClusterAnnotations
     controlPlane:
       kamaji:
         addons:
@@ -271,6 +278,7 @@ global:
         enabled: false
   connectivity:
     containerRegistries: {}
+    dns: {}
     localRegistryCache:
       enabled: false
       mirroredRegistries: []
