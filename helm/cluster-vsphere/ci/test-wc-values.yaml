@@ -7,11 +7,11 @@ global:
   connectivity:
     network:
       controlPlaneEndpoint:
-        host: "10.10.222.241"
+        host: "10.201.24.231"
         port: 6443
       loadBalancers:
         cidrBlocks:
-          - "10.10.222.224/30"
+          - "10.201.24.231/30"
     baseDomain: k8s.test
   controlPlane:
     replicas: 1
