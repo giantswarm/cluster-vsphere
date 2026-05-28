@@ -6,3 +6,6 @@ helm/rendered
 .vscode/
 Session.vim
 
+# AI coding instructions
+.github/copilot-instructions.md
+

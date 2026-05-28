@@ -39,10 +39,20 @@ rules:
     resources: ["kubeadmcontrolplanes"]
     resourceNames: ["{{ include "resource.default.name" $ }}"]
     verbs: ["get", "patch"]
+{{- if eq $.Values.cluster.providerIntegration.resourcesApi.controlPlaneResource.provider "kamaji" }}
+  - apiGroups: ["controlplane.cluster.x-k8s.io"]
+    resources: ["kamajicontrolplanes"]
+    resourceNames: ["{{ include "resource.default.name" $ }}"]
+    verbs: ["get", "patch"]
+{{- end }}
   - apiGroups: [""]
     resources: ["secrets"]
     resourceNames: ["{{ include "resource.default.name" $ }}-kubevip-pod"]
     verbs: ["get", "patch"]
+  - apiGroups: [""]
+    resources: ["services"]
+    resourceNames: ["{{ include "resource.default.name" $ }}"]
+    verbs: ["get", "list", "patch"]
 {{- if (include "isIpamSvcLoadBalancerEnabled" $) }}
   - apiGroups: ["helm.toolkit.fluxcd.io"]
     resources: ["helmreleases"]

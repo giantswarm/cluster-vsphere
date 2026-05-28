@@ -31,7 +31,10 @@ spec:
   interval: {{ (((.Values.internal).helmReleases).kubeVIPCPI).interval | default "5m" }}
   install:
     remediation:
-      retries: 30
+      retries: -1
+  upgrade:
+    remediation:
+      retries: -1
   values:
     cm:
       data:
