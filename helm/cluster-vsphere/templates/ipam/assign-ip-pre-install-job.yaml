@@ -43,7 +43,7 @@ spec:
         - name: pre-upgrade-job
           {{- include "ipamJobContainerCommon" . | nindent 10 }}
           command:
-            - "/bin/bash"
+            - "/bin/sh"
             - "-xc"
             - kubectl patch cluster.cluster.x-k8s.io -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} --type=merge -p '{"spec":{"paused":true}}'
 {{- if (include "isIpamSvcLoadBalancerEnabled" $) }}
@@ -80,7 +80,7 @@ spec:
         - name: get-ip-for-control-plane
           {{- include "ipamJobContainerCommon" . | nindent 10 }}
           command:
-            - "/bin/bash"
+            - "/bin/sh"
             - "-c"
             - |
               set -o errexit
@@ -96,13 +96,35 @@ spec:
               # patch the vspherecluster.spec.controlPlaneEndpoint.host
               kubectl patch vspherecluster -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} --type=merge -p '{"spec":{"controlPlaneEndpoint":{"host": "'${new_ip}'"}}}'
 
+              PROVIDER="{{ $.Values.cluster.providerIntegration.resourcesApi.controlPlaneResource.provider }}"
+              PROVIDER_CP_KIND="{{ $.Values.cluster.providerIntegration.controlPlane.resources.controlPlane.api.kind }}"
+
+              if [ "${PROVIDER}" = "kamaji" ] ; then
+                
+                echo "Control Plane provider is kamaji."
+                echo "patching the ${PROVIDER_CP_KIND} resource - serviceAddress"
+                kubectl patch ${PROVIDER_CP_KIND} -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} --type json \
+                  -p '[{"op":"replace", "path":"/spec/network/serviceAddress", "value": "'${new_ip}'"}]'
+
+                echo "patching the ${PROVIDER_CP_KIND} resource - certSANs"
+                kubectl patch ${PROVIDER_CP_KIND} -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} --type json \
+                  -p '[{"op":"add", "path":"/spec/network/certSANs", "value": ["'${new_ip}'"]}]'
+
+              elif [ "${PROVIDER}" = "kubeadm" ] ; then
+                
               # patch the kubeadmcontrolplane.spec.kubeadmConfigSpec.clusterConfiguration.apiServer.certSANs[0]
+              echo "Control Plane provider is Kubeadm."
+              echo "patching the ${PROVIDER_CP_KIND} resource - certSANs"
               kubectl patch kubeadmcontrolplane -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} --type json \
                 -p '[{"op":"replace", "path":"/spec/kubeadmConfigSpec/clusterConfiguration/apiServer/certSANs/0", "value": "'${new_ip}'"}]'
-
+              
+              else
+                echo "Unknown Control Plane provider: ${PROVIDER}. Skipping patching control plane endpoint host."
+              fi
+              
               # patch also the static pod for kube-vip
               encoded=$(kubectl get secret -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }}-kubevip-pod -o jsonpath={.data.content} \
-                | base64 --decode \
+                | base64 -d \
                 | tr '\n' '\r' \
                 | sed -e "s/vip_address\\r[^$(printf '\r')]*/vip_address\\r      value: ${new_ip}/" \
                 | tr '\r' '\n' \
@@ -114,7 +136,7 @@ spec:
         - name: get-ip-for-svc-lb
           {{- include "ipamJobContainerCommon" . | nindent 10 }}
           command:
-            - "/bin/bash"
+            - "/bin/sh"
             - "-c"
             - |
               set -o errexit
@@ -153,7 +175,7 @@ spec:
         - name: resume-cluster
           {{- include "ipamJobContainerCommon" . | nindent 10 }}
           command:
-            - "/bin/bash"
+            - "/bin/sh"
             - "-c"
             - |
               set -o errexit
@@ -162,5 +184,23 @@ spec:
               echo "New IPs have been assigned, upausing the Cluster '{{ include "resource.default.name" $ }}' resource.."
               kubectl get ipaddresses.ipam.cluster.x-k8s.io -n {{ $.Release.Namespace }}
               kubectl patch cluster.cluster.x-k8s.io -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} --type=merge -p '{"spec":{"paused":false}}'
+{{- if (include "isKamajiProvider" $) }}
+        - name: update-kamaji-lb-ip-hook
+          {{- include "ipamJobContainerCommon" . | nindent 10 }}
+          command:
+            - "/bin/sh"
+            - "-c"
+            - |
+              echo "Waiting for service {{ include "resource.default.name" $ }}"
+              until kubectl get service {{ include "resource.default.name" $ }} -n {{ $.Release.Namespace }} > /dev/null 2>&1; do
+                echo "Service not found. Retrying in 5 seconds..."
+                sleep 5
+              done
+
+              new_ip=$(kubectl get ipaddresses.ipam.cluster.x-k8s.io --ignore-not-found -n {{ $.Release.Namespace }} {{ include "resource.default.name" $ }} -o 'jsonpath={.spec.address}')
+
+              echo "Service found! Patching loadBalancerIP to ${new_ip}..."
+              kubectl patch service {{ include "resource.default.name" $ }} -n {{ $.Release.Namespace }} -p "{\"spec\": {\"loadBalancerIP\": \"${new_ip}\"}}"
+{{- end }}
 ---
 {{- end }}

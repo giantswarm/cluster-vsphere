@@ -47,3 +47,27 @@ In this case:
 
 - Set e.g. `global.providerSpecific.templateSuffix=paris`
 - Upload the VM image template to the Paris cluster and rename it to add the `-paris` suffix.
+
+## Using Kamaji as the control plane provider
+
+By default the control plane is provisioned as vSphere VMs via `KubeadmControlPlane`. Alternatively, the control plane can be hosted by [Kamaji](https://kamaji.clastix.io/), which runs the control plane components as pods on the management cluster. The `kamaji` app must be installed in the management cluster beforehand.
+
+To enable it, set the following values:
+
+```yaml
+    cluster:
+      providerIntegration:
+        resourcesApi:
+          controlPlaneResource:
+            enabled: true
+            provider: kamaji
+        controlPlane:
+          resources:
+            controlPlane:
+              api:
+                group: controlplane.cluster.x-k8s.io
+                kind: KamajiControlPlane
+                version: v1alpha1
+```
+
+With these values applied, the chart renders a `KamajiControlPlane` resource instead of a `KubeadmControlPlane`, and no control plane VMs are created in vSphere.
