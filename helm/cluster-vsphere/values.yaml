@@ -277,12 +277,7 @@ global:
       selinux:
         enabled: false
   connectivity:
-    containerRegistries: {}
     dns: {}
-    localRegistryCache:
-      enabled: false
-      mirroredRegistries: []
-      port: 32767
     network:
       controlPlaneEndpoint:
         ipPoolName: wc-cp-ips
