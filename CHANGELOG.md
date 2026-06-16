@@ -7,13 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Removed
-
-- Values: Remove dead container registry cache schema.
-
 ### Added
 
 - Add support for Kamaji control planes.
+
+### Changed
+
+- Make: Fix application variable.
+
+### Removed
+
+- Values: Remove dead container registry cache schema.
 
 ## [6.5.0] - 2026-06-02
 
