@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Updated `cert-manager` to v4.0.0 and migrated the values to match the new chart's schema.
+
 ## [6.6.0] - 2026-06-18
 
 ### Added
@@ -58,7 +62,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Allow adding additional properties into global.metadata. 
+- Allow adding additional properties into global.metadata.
 
 ## [6.1.0] - 2026-03-18
 
