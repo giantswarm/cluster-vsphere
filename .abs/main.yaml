@@ -1,5 +1,5 @@
+chart-dir: helm/cluster-vsphere
 replace-chart-version-with-git: true
+helm-template-extra-values: helm/cluster-vsphere/ci/ci-values.yaml
 generate-metadata: true
-chart-dir: ./helm/cluster-vsphere
-destination: ./build
-ct-config: ./.circleci/ct-config.yaml
+ct-config: .abs/ct.yaml
