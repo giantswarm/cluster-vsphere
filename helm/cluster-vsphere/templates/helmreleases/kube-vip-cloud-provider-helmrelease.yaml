@@ -1,33 +1,45 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: OCIRepository
+metadata:
+  name: {{ include "resource.default.name" . }}-kube-vip-cloud-provider
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    cluster.giantswarm.io/description: {{ .Values.global.metadata.description | quote }}
+  labels:
+    cluster-apps-operator.giantswarm.io/watching: ""
+    {{- include "labels.common" . | nindent 4 }}
+spec:
+  {{- $_ := set $ "appName" "kube-vip-cloud-provider" }}
+  url: oci://gsoci.azurecr.io/charts/giantswarm/kube-vip-cloud-provider
+  ref:
+    tag: {{ include "cluster.app.version" . }}
+  interval: 24h
+  timeout: 60s
+---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: {{ include "resource.default.name" $ }}-kube-vip-cloud-provider
-  namespace: {{ $.Release.Namespace }}
+  name: {{ include "resource.default.name" . }}-kube-vip-cloud-provider
+  namespace: {{ .Release.Namespace }}
   annotations:
-    cluster.giantswarm.io/description: "{{ .Values.global.metadata.description }}"
+    cluster.giantswarm.io/description: {{ .Values.global.metadata.description | quote }}
   labels:
     cluster-apps-operator.giantswarm.io/watching: ""
-    giantswarm.io/service-priority: "{{ .Values.global.metadata.servicePriority }}"
+    giantswarm.io/service-priority: {{ .Values.global.metadata.servicePriority }}
     {{- include "labels.common" . | nindent 4 }}
 spec:
-  suspend: {{ include "isIpamSvcLoadBalancerEnabled" $ }} # It is unsuspended by the post-install/post-upgrade hook.
   releaseName: kube-vip-cloud-provider
   targetNamespace: kube-system
   storageNamespace: kube-system
-  chart:
-    spec:
-      chart: kube-vip-cloud-provider
-      {{- $_ := set $ "appName" "kube-vip-cloud-provider" }}
-      version: {{ include "cluster.app.version" $ }}
-      sourceRef:
-        kind: HelmRepository
-        name: {{ include "resource.default.name" $ }}-{{ include "cluster.app.catalog" $ }}
+  chartRef:
+    kind: OCIRepository
+    name: {{ include "resource.default.name" . }}-kube-vip-cloud-provider
   dependsOn:
-    - name: {{ include "resource.default.name" $ }}-cilium
-      namespace: {{ $.Release.Namespace }}
+  - name: {{ include "resource.default.name" . }}-cilium
+    namespace: {{ .Release.Namespace }}
   kubeConfig:
     secretRef:
-      name: {{ include "resource.default.name" $ }}-kubeconfig
+      name: {{ include "resource.default.name" . }}-kubeconfig
   interval: {{ (((.Values.internal).helmReleases).kubeVIPCPI).interval | default "5m" }}
   install:
     remediation:
@@ -38,4 +50,6 @@ spec:
   values:
     cm:
       data:
-        cidr-global: '{{ join "," .Values.global.connectivity.network.loadBalancers.cidrBlocks }}'
+        cidr-global: {{ join "," .Values.global.connectivity.network.loadBalancers.cidrBlocks | quote }}
+  {{- /* It gets unsuspended by the post-install/post-upgrade hook. */}}
+  suspend: {{ include "isIpamSvcLoadBalancerEnabled" . }}

@@ -1,24 +1,24 @@
 apiVersion: v2
 name: cluster-vsphere
+description: A helm chart for creating Cluster API clusters with the vSphere provider (CAPV).
 version: 8.0.0
 home: https://github.com/giantswarm/cluster-vsphere
 icon: https://s.giantswarm.io/app-icons/vsphere/2/icon-light.png
 sources:
-  - https://github.com/giantswarm/cluster-vsphere
-description: "A helm chart for creating Cluster API clusters with the vSphere provider (CAPV)."
-keywords:
-  - capv
-  - vsphere
-  - vmware
-annotations:
-  application.giantswarm.io/team: rocket
+- https://github.com/giantswarm/cluster-vsphere
 maintainers:
-  - name: Team Rocket
-    email: team-rocket@giantswarm.io
+- name: Team Rocket
+  email: team-rocket@giantswarm.io
+keywords:
+- capv
+- vsphere
+annotations:
+  application.giantswarm.io/app-type: cluster
+  application.giantswarm.io/team: rocket
 restrictions:
   compatibleProviders:
-    - vsphere
+  - vsphere
 dependencies:
-  - name: cluster
-    version: "7.0.0"
-    repository: "https://giantswarm.github.io/cluster-catalog"
+- repository: https://giantswarm.github.io/cluster-test-catalog
+  name: cluster
+  version: 7.0.1-dev.migrate-app--elmreleases.2026-08-04.14-15-21.h66e00d7
