@@ -19,6 +19,8 @@ cluster:
       certManager:
         configTemplateName: vSphereCertManagerHelmValues
         enable: true
+      certManagerCrossplaneResources:
+        enable: false
       chartOperatorExtensions:
         enable: true
       cilium:
