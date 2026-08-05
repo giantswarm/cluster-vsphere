@@ -1,33 +1,45 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: OCIRepository
+metadata:
+  name: {{ include "resource.default.name" . }}-vsphere-csi-driver
+  namespace: {{ .Release.Namespace }}
+  annotations:
+    cluster.giantswarm.io/description: {{ .Values.global.metadata.description | quote }}
+  labels:
+    cluster-apps-operator.giantswarm.io/watching: ""
+    {{- include "labels.common" . | nindent 4 }}
+spec:
+  {{- $_ := set $ "appName" "vsphere-csi-driver" }}
+  url: oci://gsoci.azurecr.io/charts/giantswarm/vsphere-csi-driver
+  ref:
+    tag: {{ include "cluster.app.version" . }}
+  interval: 24h
+  timeout: 60s
+---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: {{ include "resource.default.name" $ }}-vsphere-csi-driver
-  namespace: {{ $.Release.Namespace }}
+  name: {{ include "resource.default.name" . }}-vsphere-csi-driver
+  namespace: {{ .Release.Namespace }}
   annotations:
-    cluster.giantswarm.io/description: "{{ .Values.global.metadata.description }}"
+    cluster.giantswarm.io/description: {{ .Values.global.metadata.description | quote }}
   labels:
     cluster-apps-operator.giantswarm.io/watching: ""
-    giantswarm.io/service-priority: "{{ .Values.global.metadata.servicePriority }}"
+    giantswarm.io/service-priority: {{ .Values.global.metadata.servicePriority }}
     {{- include "labels.common" . | nindent 4 }}
 spec:
-  suspend: false
   releaseName: vsphere-csi-driver
   targetNamespace: kube-system
   storageNamespace: kube-system
-  chart:
-    spec:
-      chart: vsphere-csi-driver
-      {{- $_ := set $ "appName" "vsphere-csi-driver" }}
-      version: {{ include "cluster.app.version" $ }}
-      sourceRef:
-        kind: HelmRepository
-        name: {{ include "resource.default.name" $ }}-{{ include "cluster.app.catalog" $ }}
+  chartRef:
+    kind: OCIRepository
+    name: {{ include "resource.default.name" . }}-vsphere-csi-driver
   dependsOn:
-    - name: {{ include "resource.default.name" $ }}-cilium
-      namespace: {{ $.Release.Namespace }}
+  - name: {{ include "resource.default.name" . }}-cilium
+    namespace: {{ .Release.Namespace }}
   kubeConfig:
     secretRef:
-      name: {{ include "resource.default.name" $ }}-kubeconfig
+      name: {{ include "resource.default.name" . }}-kubeconfig
   interval: {{ (((.Values.internal).helmReleases).CSIDriver).interval | default "5m" }}
   install:
     remediation:
@@ -36,22 +48,22 @@ spec:
     remediation:
       retries: -1
   valuesFrom:
-    - kind: Secret
-      name: {{ include "credentialSecretName" $ }}
-      valuesKey: "username"
-      targetPath: "config.username"
-    - kind: Secret
-      name: {{ include "credentialSecretName" $ }}
-      valuesKey: "escapedPassword"
-      targetPath: "config.password"
+  - kind: Secret
+    name: {{ include "credentialSecretName" . }}
+    valuesKey: username
+    targetPath: config.username
+  - kind: Secret
+    name: {{ include "credentialSecretName" . }}
+    valuesKey: escapedPassword
+    targetPath: config.password
   values:
     config:
-      clusterId: {{ include "resource.default.name" $ }}
-      vcenter: "{{ .Values.global.providerSpecific.vcenter.server }}"
-      datacenter: "{{ .Values.global.providerSpecific.vcenter.datacenter }}"
-      region: "{{ .Values.global.providerSpecific.vcenter.region }}"
-      zone: "{{ .Values.global.providerSpecific.vcenter.zone }}"
-      thumbprint: "{{ .Values.global.providerSpecific.vcenter.thumbprint }}"
+      clusterId: {{ include "resource.default.name" . }}
+      vcenter: {{ .Values.global.providerSpecific.vcenter.server | quote }}
+      datacenter: {{ .Values.global.providerSpecific.vcenter.datacenter | quote }}
+      region: {{ .Values.global.providerSpecific.vcenter.region | quote }}
+      zone: {{ .Values.global.providerSpecific.vcenter.zone | quote }}
+      thumbprint: {{ .Values.global.providerSpecific.vcenter.thumbprint | quote }}
     storageClass:
       {{- with .Values.global.providerSpecific.defaultStorageClass }}
       enabled: {{ .enabled }}
@@ -60,7 +72,7 @@ spec:
       storageProfileName: {{ .storagePolicyName }}
       {{- end }}
       {{- end }}
-    {{- if eq $.Values.cluster.providerIntegration.resourcesApi.controlPlaneResource.provider "kamaji" }}
+    {{- if eq .Values.cluster.providerIntegration.resourcesApi.controlPlaneResource.provider "kamaji" }}
     controller:
       affinity:
         nodeAffinity:
