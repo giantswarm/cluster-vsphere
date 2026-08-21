@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Unblock cluster creation with cilium-app >= 1.5.0 by tolerating all taints in cilium's `certgen`. Since 1.5.0 Hubble TLS is issued by a `hubble-generate-certs` pod, which cannot be scheduled while nodes still carry the uninitialized taints - and the CPI that clears them waits for the cilium HelmRelease to become ready. Towards https://github.com/giantswarm/giantswarm/issues/37473
+- Unblock cluster creation with cilium-app >= 1.5.0: drop the `cilium` dependency from the `cloud-provider-vsphere` HelmRelease, matching `cluster-aws` and `cluster-azure`, and let cilium's `certgen` tolerate the uninitialized taints. Since 1.5.0 Hubble TLS is issued by a `hubble-generate-certs` pod, which cannot be scheduled while nodes carry those taints - and the CPI that clears them was waiting for the cilium HelmRelease to become ready. Towards https://github.com/giantswarm/giantswarm/issues/37473
 
 ### Added
 

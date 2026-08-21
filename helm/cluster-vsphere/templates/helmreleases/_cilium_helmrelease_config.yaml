@@ -2,11 +2,18 @@
 {{/* https://github.com/giantswarm/cilium-app/blob/main/helm/cilium/values.yaml */}}
 {{- define "vSphereCiliumHelmValues" }}
 certgen:
-  # The certs job has to run while nodes still carry both uninitialized taints
-  # (cloudprovider and cluster-api), because the CPI that clears the first one
-  # waits for this HelmRelease to become ready.
+  # The Hubble certs job has to be schedulable while nodes still carry the
+  # uninitialized taints, so that a slow CPI or CAPI node link does not stall
+  # the whole cilium release. node.cilium.io/agent-not-ready is deliberately
+  # not tolerated: the job needs pod networking, so it should wait for a node
+  # whose agent is ready.
   tolerations:
-  - operator: "Exists"
+  - key: "node-role.kubernetes.io/control-plane"
+    operator: "Exists"
+  - key: "node.cloudprovider.kubernetes.io/uninitialized"
+    operator: "Exists"
+  - key: "node.cluster.x-k8s.io/uninitialized"
+    operator: "Exists"
 hubble:
   relay:
     tolerations:

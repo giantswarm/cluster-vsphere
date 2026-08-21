@@ -22,9 +22,12 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: {{ include "resource.default.name" $ }}-{{ include "cluster.app.catalog" $ }}
-  dependsOn:
-    - name: {{ include "resource.default.name" $ }}-cilium
-      namespace: {{ $.Release.Namespace }}
+  # No dependsOn on cilium, matching cluster-aws and cluster-azure: the CPI runs
+  # with hostNetwork and tolerates the uninitialized/control-plane/not-ready
+  # taints, so it does not need the CNI. It is also what removes
+  # node.cloudprovider.kubernetes.io/uninitialized and sets spec.providerID,
+  # which every other workload waits on - gating it behind cilium deadlocks
+  # cluster creation.
   kubeConfig:
     secretRef:
       name: {{ include "resource.default.name" $ }}-kubeconfig
