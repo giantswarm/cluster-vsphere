@@ -1,6 +1,12 @@
 {{/* vSphere-specific cilium Helm values*/}}
 {{/* https://github.com/giantswarm/cilium-app/blob/main/helm/cilium/values.yaml */}}
 {{- define "vSphereCiliumHelmValues" }}
+certgen:
+  # The certs job has to run while nodes still carry both uninitialized taints
+  # (cloudprovider and cluster-api), because the CPI that clears the first one
+  # waits for this HelmRelease to become ready.
+  tolerations:
+  - operator: "Exists"
 hubble:
   relay:
     tolerations:

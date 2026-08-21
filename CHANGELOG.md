@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Unblock cluster creation with cilium-app >= 1.5.0 by tolerating all taints in cilium's `certgen`. Since 1.5.0 Hubble TLS is issued by a `hubble-generate-certs` pod, which cannot be scheduled while nodes still carry the uninitialized taints - and the CPI that clears them waits for the cilium HelmRelease to become ready. Towards https://github.com/giantswarm/giantswarm/issues/37473
+
 ### Added
 
 - CI: Run the full set of E2E test suites automatically on release PRs, via `.github/release-pr-body.md`. Towards https://github.com/giantswarm/roadmap/issues/4334
