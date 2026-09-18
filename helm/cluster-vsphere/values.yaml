@@ -62,6 +62,8 @@ cluster:
         enable: true
       priorityClasses:
         enable: true
+      prometheusBlackboxExporter:
+        enable: true
       rbacBootstrap:
         enable: true
       securityBundle:
