@@ -44,7 +44,7 @@ https://github.com/giantswarm/giantswarm/issues/22441
 */}}
 {{- define "labels.common" -}}
 {{- include "labels.selector" . }}
-app.kubernetes.io/version: {{ $.Chart.Version | quote }}
+app.kubernetes.io/version: {{ $.Chart.AppVersion | quote }}
 helm.sh/chart: {{ include "chart" . | quote }}
 release.giantswarm.io/version: {{ .Values.global.release.version | trimPrefix "v" | quote }}
 {{- end -}}

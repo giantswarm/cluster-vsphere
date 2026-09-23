@@ -1,5 +1,6 @@
 chart-dir: helm/cluster-vsphere
 replace-chart-version-with-git: true
+replace-app-version-with-git: true
 helm-template-extra-values: helm/cluster-vsphere/ci/ci-values.yaml
 generate-metadata: true
 ct-config: .abs/ct.yaml
