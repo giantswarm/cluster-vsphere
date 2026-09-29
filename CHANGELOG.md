@@ -11,6 +11,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Helpers: Use `.Chart.AppVersion` in `app.kubernetes.io/version` label.
 
+### Changed
+
+- Enable `blackbox-exporter` by default.
+
+## [9.3.2] - 2026-09-25
+
+### Changed
+
+- Chart: Update `cluster` to v8.3.2.
+
+## [9.3.1] - 2026-09-23
+
+### Changed
+
+- Chart: Update `cluster` to v8.3.1.
+
 ## [9.2.0] - 2026-09-10
 
 ### Changed
@@ -1109,7 +1125,9 @@ at least 1 public IP is always needed for the ingress controller to be able to e
 
 - Initial chart implementation.
 
-[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v9.2.0...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v9.3.2...HEAD
+[9.3.2]: https://github.com/giantswarm/cluster-vsphere/compare/v9.3.1...v9.3.2
+[9.3.1]: https://github.com/giantswarm/cluster-vsphere/compare/v9.2.0...v9.3.1
 [9.2.0]: https://github.com/giantswarm/cluster-vsphere/compare/v9.1.0...v9.2.0
 [9.1.0]: https://github.com/giantswarm/cluster-vsphere/compare/v9.0.0...v9.1.0
 [9.0.0]: https://github.com/giantswarm/cluster-vsphere/compare/v8.0.0...v9.0.0
