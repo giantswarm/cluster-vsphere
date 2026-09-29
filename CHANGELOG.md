@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Enable `blackbox-exporter` by default.
+- Chart: Update `cluster` to v8.4.0.
 
 ## [9.3.2] - 2026-09-25
 
