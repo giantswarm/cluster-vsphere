@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [10.0.1] - 2026-10-05
+
 ### Changed
 
 - Chart: Use `.Chart.AppVersion` in `app.kubernetes.io/version` label.
@@ -1141,7 +1143,8 @@ at least 1 public IP is always needed for the ingress controller to be able to e
 
 - Initial chart implementation.
 
-[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v10.0.0...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v10.0.1...HEAD
+[10.0.1]: https://github.com/giantswarm/cluster-vsphere/compare/v10.0.0...v10.0.1
 [10.0.0]: https://github.com/giantswarm/cluster-vsphere/compare/v9.4.1...v10.0.0
 [9.4.1]: https://github.com/giantswarm/cluster-vsphere/compare/v9.4.0...v9.4.1
 [9.4.0]: https://github.com/giantswarm/cluster-vsphere/compare/v9.3.2...v9.4.0
