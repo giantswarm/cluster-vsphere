@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Update resources to ensure compatibility with Flux 2.8.
+
 ### Fixed
 
 - Chart: Use `.Chart.AppVersion` in `app.kubernetes.io/version` label.
