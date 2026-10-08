@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [9.3.3] - 2026-10-08
+
 ### Changed
 
 - Update resources to ensure compatibility with Flux 2.8.
@@ -1115,7 +1117,8 @@ at least 1 public IP is always needed for the ingress controller to be able to e
 
 - Initial chart implementation.
 
-[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v9.3.1...HEAD
+[Unreleased]: https://github.com/giantswarm/cluster-vsphere/compare/v9.3.3...HEAD
+[9.3.3]: https://github.com/giantswarm/cluster-vsphere/compare/v9.3.1...v9.3.3
 [9.3.1]: https://github.com/giantswarm/cluster-vsphere/compare/v9.2.0...v9.3.1
 [9.2.0]: https://github.com/giantswarm/cluster-vsphere/compare/v9.1.0...v9.2.0
 [9.1.0]: https://github.com/giantswarm/cluster-vsphere/compare/v9.0.0...v9.1.0
