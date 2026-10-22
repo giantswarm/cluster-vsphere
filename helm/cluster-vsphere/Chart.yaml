@@ -19,6 +19,6 @@ restrictions:
   compatibleProviders:
     - vsphere
 dependencies:
-  - repository: https://giantswarm.github.io/cluster-catalog
+  - repository: https://giantswarm.github.io/cluster-test-catalog
     name: cluster
-    version: 9.2.0
+    version: 9.2.1-r10f3160ct20261022104244hdbe1197
