@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - The `helm.sh/chart` label is valid for long chart versions: the 63-character cut trims the whole trailing run of `-`, `.` and `_`.
 - Chart: Update `cluster` to v9.2.0.
+- Chart: Update `cluster` to v9.3.0.
 
 ## [11.1.0] - 2026-10-14
 
