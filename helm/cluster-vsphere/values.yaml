@@ -324,6 +324,9 @@ global:
   nodePools:
     worker:
       cloneMode: linkedClone
+      kernel:
+        sysctls: {}
+        sysfs: {}
       machineHealthCheck:
         diskFullContainerdTimeout: ""
         diskFullKubeletTimeout: ""
