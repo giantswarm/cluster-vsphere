@@ -5,6 +5,7 @@ cluster:
     advancedConfiguration:
       controlPlane:
         apiServer:
+          enableAggregatorRouting: false
           extraArgs:
             requestheader-allowed-names: front-proxy-client
     kubectlImage:
