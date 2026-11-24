@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Test: no chart change, control run for cilium-app 1.8.1 upgrades.
+
 ## [11.6.0] - 2026-11-17
 
 ### Changed
